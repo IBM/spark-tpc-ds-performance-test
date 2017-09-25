@@ -25,5 +25,5 @@ and ws_ext_discount_amt
           and d_date_sk = ws_sold_date_sk 
       ) 
 order by sum(ws_ext_discount_amt)
- limit 100; 
+ limit 100;
 -- end query 92 in stream 0 using template query92.tpl

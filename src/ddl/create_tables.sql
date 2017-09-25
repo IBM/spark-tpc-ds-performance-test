@@ -8,12 +8,9 @@
 -- disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 ------------------------------------------------------------------------------
 
---
--- 021.create.orc.tables.sql
---
-
 USE ${TPCDS_DBNAME};
 
+drop table if exists call_center_text;
 create table call_center_text
 (
     cc_call_center_sk         int,
@@ -49,10 +46,17 @@ create table call_center_text
     cc_tax_percentage         double
 )
 USING csv
-LOCATION '${TPCDS_GENDATA_DIR}/call_center.dat'
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/call_center.dat")
 ;
+drop table if exists call_center;
+create table call_center 
+using parquet
+as (select * from call_center_text)
+;
+drop table if exists call_center_text;
 
-create external table catalog_page
+drop table if exists catalog_page_text;
+create table catalog_page_text
 (
     cp_catalog_page_sk        int,
     cp_catalog_page_id        string,
@@ -64,12 +68,18 @@ create external table catalog_page
     cp_description            string,
     cp_type                   string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/catalog_page.dat")
 ;
+drop table if exists catalog_page;
+create table catalog_page
+using parquet
+as (select * from catalog_page_text)
+;
+drop table if exists catalog_page_text;
 
-create external table catalog_returns
+drop table if exists catalog_returns_text;
+create table catalog_returns_text
 (
     cr_returned_date_sk       int,
     cr_returned_time_sk       int,
@@ -99,12 +109,19 @@ create external table catalog_returns
     cr_store_credit           double,
     cr_net_loss               double
 )
-clustered by (cr_item_sk)
-sorted by (cr_order_number, cr_item_sk) into 271 buckets
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/catalog_returns.dat")
 ;
+drop table if exists catalog_returns;
+create table catalog_returns
+using parquet
+as (select * from catalog_returns_text)
+;
+drop table if exists catalog_returns_text;
 
-create external table catalog_sales
+
+drop table if exists catalog_sales_text;
+create table catalog_sales_text
 (
     cs_sold_date_sk           int,
     cs_sold_time_sk           int,
@@ -141,12 +158,18 @@ create external table catalog_sales
     cs_net_paid_inc_ship_tax  double,
     cs_net_profit             double
 )
-clustered by (cs_item_sk)
-sorted by (cs_order_number, cs_item_sk) into 271 buckets
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/catalog_sales.dat")
 ;
+drop table if exists catalog_sales;
+create table catalog_sales
+using parquet
+as (select * from catalog_sales_text)
+;
+drop table if exists catalog_sales_text;
 
-create external table customer
+drop table if exists customer_text;
+create table customer_text
 (
     c_customer_sk             int,
     c_customer_id             string,
@@ -167,12 +190,19 @@ create external table customer
     c_email_address           string,
     c_last_review_date        string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/customer.dat")
 ;
+drop table if exists customer;
+create table customer
+using parquet
+as (select * from customer_text)
+;
+drop table if exists customer_text;
 
-create external table customer_address
+
+drop table if exists customer_address_text;
+create table customer_address_text
 (
     ca_address_sk             int,
     ca_address_id             string,
@@ -188,12 +218,18 @@ create external table customer_address
     ca_gmt_offset             double,
     ca_location_type          string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/customer_address.dat")
 ;
+drop table if exists customer_address;
+create table customer_address
+using parquet
+as (select * from customer_address_text)
+;
+drop table if exists customer_address_text;
 
-create external table customer_demographics
+drop table if exists customer_demographics_text;
+create table customer_demographics_text
 (
     cd_demo_sk                int,
     cd_gender                 string,
@@ -205,12 +241,18 @@ create external table customer_demographics
     cd_dep_employed_count     int,
     cd_dep_college_count      int
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/customer_demographics.dat")
 ;
+drop table if exists customer_demographics;
+create table customer_demographics
+using parquet
+as (select * from customer_demographics_text)
+;
+drop table if exists customer_demographics_text;
 
-create external table date_dim
+drop table if exists date_dim_text;
+create table date_dim_text
 (
     d_date_sk                 int,
     d_date_id                 string,
@@ -241,12 +283,18 @@ create external table date_dim
     d_current_quarter         string,
     d_current_year            string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/date_dim.dat")
 ;
+drop table if exists date_dim;
+create table date_dim
+using parquet
+as (select * from date_dim_text)
+;
+drop table if exists date_dim_text;
 
-create external table household_demographics
+drop table if exists household_demographics_text;
+create table household_demographics_text
 (
     hd_demo_sk                int,
     hd_income_band_sk         int,
@@ -254,35 +302,53 @@ create external table household_demographics
     hd_dep_count              int,
     hd_vehicle_count          int
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/household_demographics.dat")
 ;
+drop table if exists household_demographics;
+create table household_demographics
+using parquet
+as (select * from household_demographics_text)
+;
+drop table if exists household_demographics_text;
 
-create external table income_band
+drop table if exists income_band_text;
+create table income_band_text
 (
     ib_income_band_sk         int,
     ib_lower_bound            int,
     ib_upper_bound            int
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/income_band.dat")
 ;
+drop table if exists income_band;
+create table income_band 
+using parquet
+as (select * from income_band_text)
+;
+drop table if exists income_band_text;
 
-create external table inventory
+drop table if exists inventory_text;
+create table inventory_text
 (
     inv_date_sk               int,
     inv_item_sk               int,
     inv_warehouse_sk          int,
     inv_quantity_on_hand      bigint
 )
-clustered by (inv_item_sk)
-sorted by (inv_date_sk, inv_item_sk, inv_warehouse_sk) into 89 buckets
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/inventory.dat")
 ;
+drop table if exists inventory;
+create table inventory 
+using parquet
+as (select * from inventory_text)
+;
+drop table if exists inventory_text;
 
-create external table item
+drop table if exists item_text;
+create table item_text
 (
     i_item_sk                 int,
     i_item_id                 string,
@@ -307,12 +373,18 @@ create external table item
     i_manager_id              int,
     i_product_name            string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/item.dat")
 ;
+drop table if exists item;
+create table item
+using parquet
+as (select * from item_text)
+;
+drop table if exists item_text;
 
-create external table promotion
+drop table if exists promotion_text;
+create table promotion_text
 (
     p_promo_sk                int,
     p_promo_id                string,
@@ -334,23 +406,35 @@ create external table promotion
     p_purpose                 string,
     p_discount_active         string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/promotion.dat")
 ;
+drop table if exists promotion;
+create table promotion
+using parquet
+as (select * from promotion_text)
+;
+drop table if exists promotion_text;
 
-create external table reason
+drop table if exists reason_text;
+create table reason_text
 (
     r_reason_sk               int,
     r_reason_id               string,
     r_reason_desc             string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/reason.dat")
 ;
+drop table if exists reason;
+create table reason 
+using parquet
+as (select * from reason_text)
+;
+drop table if exists reason_text;
 
-create external table ship_mode
+drop table if exists ship_mode_text;
+create table ship_mode_text
 (
     sm_ship_mode_sk           int,
     sm_ship_mode_id           string,
@@ -359,12 +443,18 @@ create external table ship_mode
     sm_carrier                string,
     sm_contract               string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/ship_mode.dat")
 ;
+drop table if exists ship_mode;
+create table ship_mode
+using parquet
+as (select * from ship_mode_text)
+;
+drop table if exists ship_mode_text;
 
-create external table store
+drop table if exists store_text;
+create table store_text
 (
     s_store_sk                int,
     s_store_id                string,
@@ -396,12 +486,18 @@ create external table store
     s_gmt_offset              double,
     s_tax_precentage          double
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store.dat")
 ;
+drop table if exists store;
+create table store 
+using parquet
+as (select * from store_text)
+;
+drop table if exists store_text;
 
-create external table store_returns
+drop table if exists store_returns_text;
+create table store_returns_text
 (
     sr_returned_date_sk       int,
     sr_return_time_sk         int,
@@ -424,12 +520,18 @@ create external table store_returns
     sr_store_credit           double,
     sr_net_loss               double
 )
-clustered by (sr_item_sk)
-sorted by (sr_ticket_number, sr_item_sk) into 271 buckets
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store_returns.dat")
 ;
+drop table if exists store_returns;
+create table store_returns 
+using parquet
+as (select * from store_returns_text)
+;
+drop table if exists store_returns_text;
 
-create external table store_sales
+drop table if exists store_sales_text;
+create table store_sales_text
 (
     ss_sold_date_sk           int,
     ss_sold_time_sk           int,
@@ -455,12 +557,18 @@ create external table store_sales
     ss_net_paid_inc_tax       double,
     ss_net_profit             double
 )
-clustered by (ss_item_sk)
-sorted by (ss_ticket_number, ss_item_sk) into 271 buckets
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store_sales.dat")
 ;
+drop table if exists store_sales;
+create table store_sales
+using parquet
+as (select * from store_sales_text)
+;
+drop table if exists store_sales_text;
 
-create external table time_dim
+drop table if exists time_dim_text;
+create table time_dim_text
 (
     t_time_sk                 int,
     t_time_id                 string,
@@ -473,12 +581,18 @@ create external table time_dim
     t_sub_shift               string,
     t_meal_time               string
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/time_dim.dat")
 ;
+drop table if exists time_dim;
+create table time_dim
+using parquet
+as (select * from time_dim_text)
+;
+drop table if exists time_dim_text;
 
-create external table warehouse
+drop table if exists warehouse_text;
+create table warehouse_text
 (
     w_warehouse_sk            int,
     w_warehouse_id            string,
@@ -495,12 +609,18 @@ create external table warehouse
     w_country                 string,
     w_gmt_offset              double
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/warehouse.dat")
 ;
+drop table if exists warehouse;
+create table warehouse
+using parquet
+as (select * from warehouse_text)
+;
+drop table if exists warehouse_text;
 
-create external table web_page
+drop table if exists web_page_text;
+create table web_page_text
 (
     wp_web_page_sk            int,
     wp_web_page_id            string,
@@ -517,12 +637,18 @@ create external table web_page
     wp_image_count            int,
     wp_max_ad_count           int
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/web_page.dat")
 ;
+drop table if exists web_page;
+create table web_page 
+using parquet
+as (select * from web_page_text)
+;
+drop table if exists web_page_text;
 
-create external table web_returns
+drop table if exists web_returns_text;
+create table web_returns_text
 (
     wr_returned_date_sk       int,
     wr_returned_time_sk       int,
@@ -549,12 +675,18 @@ create external table web_returns
     wr_account_credit         double,
     wr_net_loss               double
 )
-clustered by (wr_item_sk)
-sorted by (wr_order_number, wr_item_sk) into 271 buckets
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/web_returns.dat")
 ;
+drop table if exists web_returns;
+create table web_returns
+using parquet
+as (select * from web_returns_text)
+;
+drop table if exists web_returns_text;
 
-create external table web_sales
+drop table if exists web_sales_text;
+create table web_sales_text
 (
     ws_sold_date_sk           int,
     ws_sold_time_sk           int,
@@ -591,12 +723,18 @@ create external table web_sales
     ws_net_paid_inc_ship_tax  double,
     ws_net_profit             double
 )
-clustered by (ws_item_sk)
-sorted by (ws_order_number, ws_item_sk) into 271 buckets
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/web_sales.dat")
 ;
+drop table if exists web_sales;
+create table web_sales
+using parquet
+as (select * from web_sales_text)
+;
+drop table if exists web_sales_text;
 
-create external table web_site
+drop table if exists web_site_text;
+create table web_site_text
 (
     web_site_sk               int,
     web_site_id               string,
@@ -625,7 +763,12 @@ create external table web_site
     web_gmt_offset            double,
     web_tax_percentage        double
 )
-row format delimited
-fields terminated by '|'
-stored as PARQUET
+USING csv
+OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/web_site.dat")
 ;
+drop table if exists web_site;
+create table web_site
+using parquet
+as (select * from web_site_text)
+;
+drop table if exists web_site_text;

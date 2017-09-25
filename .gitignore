@@ -1,0 +1,11 @@
+*.swp
+*~
+genqueries/*
+gendata/*
+work/*
+log/*
+*.o
+dsdgen
+dsqgen
+bin/**
+src/toolkit/*

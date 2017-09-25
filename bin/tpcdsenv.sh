@@ -3,7 +3,11 @@
 # tpcdsenv.sh - UNIX Environment Setup
 #
 
-export SPARK_HOME=~/mygit/apache/spark
+#######################################################################
+# This is a manadatory parameter. Please provide the location of
+# spark installation.
+#######################################################################
+export SPARK_HOME=
 
 #######################################################################
 # Script enviroment parameters. When they are not set the script

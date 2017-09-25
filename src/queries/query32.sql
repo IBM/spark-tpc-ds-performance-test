@@ -1,5 +1,5 @@
 -- start query 32 in stream 0 using template query32.tpl and seed QUALIFICATION
- select  sum(cs_ext_discount_amt)  as excess_discount_amount
+select  sum(cs_ext_discount_amt)  as excess_discount_amount
 from 
    catalog_sales 
    ,item 
@@ -23,5 +23,5 @@ and cs_ext_discount_amt
                              date_add(cast('2000-01-27' as date), 90 )
           and d_date_sk = cs_sold_date_sk 
       ) 
- limit 100; 
+ limit 100;
 -- end query 32 in stream 0 using template query32.tpl

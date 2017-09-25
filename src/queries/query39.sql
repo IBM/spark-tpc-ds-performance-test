@@ -15,14 +15,14 @@ with inv as
       group by w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy) foo
  where case mean when 0 then 0 else stdev/mean end > 1)
 select inv1.w_warehouse_sk,inv1.i_item_sk,inv1.d_moy,inv1.mean, inv1.cov
-        ,inv2.w_warehouse_sk,inv2.i_item_sk,inv2.d_moy,inv2.mean, inv2.cov
+        ,inv2.w_warehouse_sk as w_warehouse_sk_2,inv2.i_item_sk as i_item_sk_2,inv2.d_moy as d_moy_2,inv2.mean as mean_2, inv2.cov as cov_2
 from inv inv1,inv inv2
 where inv1.i_item_sk = inv2.i_item_sk
   and inv1.w_warehouse_sk =  inv2.w_warehouse_sk
   and inv1.d_moy=1
   and inv2.d_moy=1+1
 order by inv1.w_warehouse_sk,inv1.i_item_sk,inv1.d_moy,inv1.mean,inv1.cov
-        ,inv2.d_moy,inv2.mean, inv2.cov
+        ,d_moy_2,mean_2, cov_2
 ;
 with inv as
 (select w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy
@@ -40,7 +40,7 @@ with inv as
       group by w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy) foo
  where case mean when 0 then 0 else stdev/mean end > 1)
 select inv1.w_warehouse_sk,inv1.i_item_sk,inv1.d_moy,inv1.mean, inv1.cov
-        ,inv2.w_warehouse_sk,inv2.i_item_sk,inv2.d_moy,inv2.mean, inv2.cov
+        ,inv2.w_warehouse_sk as w_warehouse_sk_2,inv2.i_item_sk as i_item_sk_2,inv2.d_moy as d_moy_2,inv2.mean as mean_2, inv2.cov as cov_2
 from inv inv1,inv inv2
 where inv1.i_item_sk = inv2.i_item_sk
   and inv1.w_warehouse_sk =  inv2.w_warehouse_sk
@@ -48,6 +48,6 @@ where inv1.i_item_sk = inv2.i_item_sk
   and inv2.d_moy=1+1
   and inv1.cov > 1.5
 order by inv1.w_warehouse_sk,inv1.i_item_sk,inv1.d_moy,inv1.mean,inv1.cov
-        ,inv2.d_moy,inv2.mean, inv2.cov
+        ,d_moy_2,mean_2, cov_2
 ;
 -- end query 39 in stream 0 using template query39.tpl

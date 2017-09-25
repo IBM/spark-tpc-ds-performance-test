@@ -2,13 +2,15 @@
 
 my $debug = 0;
 
-print ">> Generating TPC-DS Qualification Queries...\n";
+#print "INFO: Generating TPC-DS Qualification Queries...\n";
 read_qualification_parameters();
 gen_qualification_queries();
+#print "INFO: Completed generating TPC-DS Qualification Queries...\n";
 
 sub read_qualification_parameters
 {
-  my $appendixbfile = "appendixb.txt";
+  # my $appendixbfile = "appendixb.txt";
+  my $appendixbfile = $ENV{'TPCDS_ROOT_DIR'} . "/src". "/properties" . "/appendixb.txt";
   my $query;
   my $template;
 
@@ -43,9 +45,9 @@ sub read_qualification_parameters
 
   close FH;
 
-  my $dsgenDir    = $ENV{'TPCDS_ROOT_DIR'} . "/toolkit";
+  my $dsgenDir    = $ENV{'TPCDS_ROOT_DIR'} . "/src". "/toolkit";
   my $toolsDir    = $dsgenDir . "/tools";
-  my $tplDir      = $ENV{'TPCDS_ROOT_DIR'} . "/temp";
+  my $tplDir      = $ENV{'TPCDS_WORK_DIR'};
 
   my $dialectfile = $tplDir. "/spark.tpl";
 
@@ -102,11 +104,11 @@ omp;
 
 sub gen_qualification_queries
 {
-  my $dsgenDir    = $ENV{'TPCDS_ROOT_DIR'} . "/toolkit";
+  my $dsgenDir    = $ENV{'TPCDS_ROOT_DIR'} . "/src". "/toolkit";
   my $toolsDir    = $dsgenDir . "/tools";
-  my $tplDir      = $ENV{'TPCDS_ROOT_DIR'} . "/temp";
+  my $tplDir      = $ENV{'TPCDS_WORK_DIR'};
 
-  my $outdir = $ENV{'TPCDS_ROOT_DIR'} . "/queries";
+  my $outdir = $ENV{'TPCDS_ROOT_DIR'} . "/genqueries";
 
   $debug && print "DEBUG: Using templates from $tplDir...\n";
 

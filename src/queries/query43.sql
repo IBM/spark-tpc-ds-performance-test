@@ -14,5 +14,5 @@
        d_year = 2000 
  group by s_store_name, s_store_id
  order by s_store_name, s_store_id,sun_sales,mon_sales,tue_sales,wed_sales,thu_sales,fri_sales,sat_sales
-  limit 100; 
+  limit 100;
 -- end query 43 in stream 0 using template query43.tpl

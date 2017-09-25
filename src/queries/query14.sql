@@ -174,8 +174,8 @@ with  cross_items as
                        and d_dom = 11)
  group by i_brand_id,i_class_id,i_category_id
  having sum(ss_quantity*ss_list_price) > (select average_sales from avg_sales)) this_year,
- (select 'store' channel, i_brand_id,i_class_id
-        ,i_category_id, sum(ss_quantity*ss_list_price) sales, count(*) number_sales
+ (select 'store' channel_2, i_brand_id as i_brand_id_2, i_class_id as i_class_id_2
+        ,i_category_id as i_category_id_2 , sum(ss_quantity*ss_list_price) sales_2, count(*) number_sales_2
  from store_sales
      ,item
      ,date_dim
@@ -189,9 +189,9 @@ with  cross_items as
                        and d_dom = 11)
  group by i_brand_id,i_class_id,i_category_id
  having sum(ss_quantity*ss_list_price) > (select average_sales from avg_sales)) last_year
- where this_year.i_brand_id= last_year.i_brand_id
-   and this_year.i_class_id = last_year.i_class_id
-   and this_year.i_category_id = last_year.i_category_id
+ where this_year.i_brand_id= last_year.i_brand_id_2
+   and this_year.i_class_id = last_year.i_class_id_2
+   and this_year.i_category_id = last_year.i_category_id_2
  order by this_year.channel, this_year.i_brand_id, this_year.i_class_id, this_year.i_category_id
   limit 100;
 -- end query 14 in stream 0 using template query14.tpl
