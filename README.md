@@ -1,8 +1,8 @@
 # Explore Spark SQL and its performance using TPC-DS workload
 
 # Overview
-Apache Spark is a popular distributed data processing engine that is built around speed, ease of use and a sophisticated analytics, with APIs in Java, Scala, Python, R, and SQL. Like other data processing engines, Spark has a unified optimization engine that computes the optimal way to execute a workload with the main purpose of reducing the disk IO and CPU usage.   
-We can evaluate and measure the performance of Spark SQL using TPC-DS benchmark. TPC-DS is a widely used industry standard decision support benchmark that is used to evaluate performance of the data processing engines. Given TPC-DS excercises some key data warehouse features, running TPC-DS successfully reflects the readiness of spark in terms of addressing the need of a data warehouse application. Apache Spark v2.0 supports all 99 decision support queries that is part of this benchmark.
+[Apache Spark](https://spark.apache.org) is a popular distributed data processing engine that is built around speed, ease of use and a sophisticated analytics, with APIs in Java, Scala, Python, R, and SQL. Like other data processing engines, Spark has a unified optimization engine that computes the optimal way to execute a workload with the main purpose of reducing the disk IO and CPU usage.   
+We can evaluate and measure the performance of Spark SQL using TPC-DS benchmark. [TPC-DS](http://www.tpc.org/tpcds) is a widely used industry standard decision support benchmark that is used to evaluate performance of the data processing engines. Given TPC-DS excercises some key data warehouse features, running TPC-DS successfully reflects the readiness of spark in terms of addressing the need of a data warehouse application. Apache Spark v2.0 supports all the ninty nine decision support queries that is part of this benchmark.
 
 This journey is aimed at helping spark developers to quickly setup and run the TPC-DS benchmark in their
 development setup. When the reader has completed this journey, they will understand the following:
