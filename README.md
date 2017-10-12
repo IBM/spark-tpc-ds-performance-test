@@ -362,6 +362,25 @@ options to specify exactly what you want shared from your notebook:
 * `All content, including code`: displays the notebook as is.
 * A variety of `download as` options are also available in the menu.
 
-# License
+## Considerations while increasing the scale factor.
+This journey walks us through the steps that need to be performed to run the TPC-DS 
+bench-mark in the qualification scale factor(1GB).Since this is a performance bench-mark, typically 
+we need to run the bench-mark in varying scale factors to gauge the throughput of the underlying data
+processing engine. In the section below, we will briefly touch up on things to be considered while increasing
+the data and running the workload against a production cluster.
 
+* Generation of the data in larger scale factor.
+  In order to increase the scale, please follow the section titled "Scaling and Database Population" in
+  the [bench-mark spec](http://www.tpc.org/tpc_documents_current_versions/pdf/tpc-ds_v2.2.0.pdf).
+* Movement of data to the distributed file system.
+  After generting the data, we need to copy or move them to the underlying distributed file system (typically hdfs)
+  that your spark cluster is configured to work with.
+* Creating of spark tables.
+  Modify the create table ddl script to change the path to the location of the data after the above copy step.
+  Additionally we may consider to partition the fact tables for better performance.
+* We need to tune several spark configs to get optimal performance. Some of them are discussed in the following
+  links.
+  ** [Troubleshooting and Tuning spark for heavy work loads](https://developer.ibm.com/hadoop/2016/07/18/troubleshooting-and-tuning-spark-for-heavy-workloads) 
+  ** [Scaling up to 100TB](https://developer.ibm.com/hadoop/2017/02/07/experiences-comparing-big-sql-and-spark-sql-at-100tb)
+# License
 [Apache 2.0](LICENSE)
