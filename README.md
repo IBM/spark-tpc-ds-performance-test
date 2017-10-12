@@ -380,7 +380,7 @@ the data and running the workload against a production cluster.
   Additionally we may consider to partition the fact tables for better performance.
 * We need to tune several spark configs to get optimal performance. Some of them are discussed in the following
   links.
-  ** [Troubleshooting and Tuning spark for heavy work loads](https://developer.ibm.com/hadoop/2016/07/18/troubleshooting-and-tuning-spark-for-heavy-workloads) 
-  ** [Scaling up to 100TB](https://developer.ibm.com/hadoop/2017/02/07/experiences-comparing-big-sql-and-spark-sql-at-100tb)
+     * [Troubleshooting and Tuning spark for heavy work loads](https://developer.ibm.com/hadoop/2016/07/18/troubleshooting-and-tuning-spark-for-heavy-workloads) 
+     * [Scaling up to 100TB](https://developer.ibm.com/hadoop/2017/02/07/experiences-comparing-big-sql-and-spark-sql-at-100tb)
 # License
 [Apache 2.0](LICENSE)
