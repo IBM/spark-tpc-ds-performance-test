@@ -39,7 +39,7 @@ and integrate your systems more effectively.
 
 There are two modes of excercising this journey:
 * Run locally using a simple interactive command line shell script.
-* Use a Jupyter notebook running in the IBM Data Science Experience (DSX) on IBM Bluemix. To run in this mode, jump down to the "Run using a Jupyter notebook ..." instructions listed below.
+* [Run using a Jupyter notebook in the IBM Data Science Experience](run-using-the-ibm-data-science-experience).
 
 ## Run locally
 1. [Clone the repo](#1-clone-the-repo)
@@ -52,15 +52,19 @@ There are two modes of excercising this journey:
 Clone the `spark-tpc-ds-performance-test` repo locally. In a terminal, run:
 
 ``` 
-git clone https://github.com/spark-tpc-ds-performance-test 
+$ git clone https://github.com/spark-tpc-ds-performance-test 
 ```
 
 ### 2. Setup development tools
 
-Make sure the required development tools are installed in your platform. This journey is supported on Mac and Linux platforms only.
-* **Ubuntu:** ``` sudo apt-get install gcc make flex bison byacc git ```
-* **CentOS/RHEL:** ``` sudo yum install gcc make flex bison byacc git ```
-* **MacOS:** ``` xcode-select --install ```
+Make sure the required development tools are installed in your platform. This journey is supported on Mac and Linux platforms only. Depending on your platform, run the following command to install the necessary development tools:
+
+* **Ubuntu:**  
+``` $ sudo apt-get install gcc make flex bison byacc git ```
+* **CentOS/RHEL:**  
+``` $ sudo yum install gcc make flex bison byacc git ```
+* **MacOS:**  
+``` $ xcode-select --install ```
 
 ### 3. Install Spark
 
@@ -310,7 +314,7 @@ This will clean up all of the files generated during option steps 1, 2, 3, and 4
 
 This will exit the script.
 
-## Run using a Jupyter notebook in the IBM Data Science Experience (DSX) on IBM Bluemix
+## Run using a Jupyter notebook in the IBM Data Science Experience
 
 1. [Sign up for the Data Science Experience](#1-sign-up-for-the-data-science-experience)
 2. [Create the notebook](#2-create-the-notebook)
