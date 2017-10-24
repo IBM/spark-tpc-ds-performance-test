@@ -1,11 +1,12 @@
 # Explore Spark SQL and its performance using TPC-DS workload
 
-# Overview
-[Apache Spark](https://spark.apache.org) is a popular distributed data processing engine that is built around speed, ease of use and a sophisticated analytics, with APIs in Java, Scala, Python, R, and SQL. Like other data processing engines, Spark has a unified optimization engine that computes the optimal way to execute a workload with the main purpose of reducing the disk IO and CPU usage.   
-We can evaluate and measure the performance of Spark SQL using TPC-DS benchmark. [TPC-DS](http://www.tpc.org/tpcds) is a widely used industry standard decision support benchmark that is used to evaluate performance of the data processing engines. Given TPC-DS excercises some key data warehouse features, running TPC-DS successfully reflects the readiness of spark in terms of addressing the need of a data warehouse application. Apache Spark v2.0 supports all the ninty nine decision support queries that is part of this benchmark.
+[Apache Spark](https://spark.apache.org) is a popular distributed data processing engine that is built around speed, ease of use and sophisticated analytics, with APIs in Java, Scala, Python, R, and SQL. Like other data processing engines, Spark has a unified optimization engine that computes the optimal way to execute a workload with the main purpose of reducing the disk IO and CPU usage.   
 
-This journey is aimed at helping spark developers to quickly setup and run the TPC-DS benchmark in their
-development setup. When the reader has completed this journey, they will understand the following:
+We can evaluate and measure the performance of Spark SQL using the TPC-DS benchmark. [TPC-DS](http://www.tpc.org/tpcds) is a widely used industry standard decision support benchmark that is used to evaluate performance of data processing engines. Given that TPC-DS excercises some key data warehouse features, running TPC-DS successfully reflects the readiness of Spark in terms of addressing the need of a data warehouse application. Apache Spark v2.0 supports all the ninty nine decision support queries that is part of this TPC-DS benchmark.
+
+This journey is aimed at helping Spark developers quickly setup and run the TPC-DS benchmark in their own development setup. 
+
+When the reader has completed this journey, they will understand the following:
 
 * How to setup the TPC-DS toolkit 
 * How to generate TPC-DS datasets at different scale factor 
@@ -13,48 +14,74 @@ development setup. When the reader has completed this journey, they will underst
 * How to run TPC-DS benchmark queries on Spark in local mode and see the results 
 * Things to consider when increasing the data scale and run against a spark cluster 
 
+![Architecture diagram](doc/source/images/architecture.png)
+
+## Flow
+1.
+2.
+3.
+
+## Included components
+
+* [Apache Spark](http://spark.apache.org/): An open-source, fast and general-purpose cluster computing system
+* [Jupyter Notebooks](http://jupyter.org/): An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.
+
+## Featured technologies
+
+* [Data Science](https://medium.com/ibm-data-science-experience/): Systems and scientific methods to analyze
+structured and unstructured data in order to extract knowledge and insights.
+* [Artificial Intelligence](https://medium.com/ibm-data-science-experience): Artificial intelligence can be
+applied to disparate solution spaces to deliver disruptive technologies.
+* [Python](https://www.python.org/): Python is a programming language that lets you work more quickly
+and integrate your systems more effectively.
+
+# Steps
+
 There are two modes of excercising this journey:
-* By using a simple interactive command line shell script
-* By using a Jupyter notebook run in IBM Data Science Experience (DSX) on IBM Bluemix
+* Run locally using a simple interactive command line shell script.
+* [Run using a Jupyter notebook in the IBM Data Science Experience](run-using-the-ibm-data-science-experience).
 
+## Run locally
+1. [Clone the repo](#1-clone-the-repo)
+2. [Setup developement tools](#2-setup-development-tools)
+3. [Install Spark](#3-install-spark)
+4. [Run the script](#4-run-the-script)
 
-# Quick Start
+### 1. Clone the repo
 
-## Running from command line.
-
-### Setup
-#### Development Tools
-Make sure the required development tools are installed in your platform. This journey is supported on Mac and Linux
-platforms only.
-* **Ubuntu:** ``` sudo apt-get install gcc make flex bison byacc git ```
-* **CentOS/RHEL:** ``` sudo yum install gcc make flex bison byacc git ```
-* **MacOS:** ``` xcode-select --install ```
-
-#### Journey Repository
-As one of first step users need to clone the journey repository into their workstation.  After cloning the repository all the scripts, query templates, toolkit source code will be available under ```<clone_dir>/tpcds_journey``` directory. The directory ```<clone_dir>/tpcds_journey``` will be referred to as ```<tpcds_journey_root>``` through-out this README.
+Clone the `spark-tpc-ds-performance-test` repo locally. In a terminal, run:
 
 ``` 
-git clone https://github.com/SparkTC/tpcds-journey <clone_dir> 
+$ git clone https://github.com/spark-tpc-ds-performance-test 
 ```
-##### **Example:**
-```
-git clone https://github.com/SparkTC/tpcds-journey /Users/john
-```
-After running the above command in the example, all the scripts will be available under ```/Users/john/tpcds-journey```. In this example, the directory ```/Users/john/tpcds-journey``` will be referred to as _TPCDS_JOURNEY_ROOT_ . The driver script is called tpcdsspark.sh and will be located under ```/Users/john/tpcds-journey/bin``` folder. 
 
-#### Installation of Spark
-If you have an existing spark installation that you want to use in this journey, then you need to modify ```<TPCDS_JOURNEY_ROOT>/bin/tpcdsenv.sh``` to set 
-SPARK_HOME pointing to your spark installation directory. One thing to note is that, this journey requires that the spark is configured to work with a persistent metastore. In other words, your spark instalation should have been pre-configured to work with hive metastore. If you do not have an existing spark installation
-then you can download and build using the [instructions](https://spark.apache.org/docs/latest/building-spark.html). Please make sure to build spark with hive support 
-by following ```Building With Hive and JDBC Support``` section.
+### 2. Setup development tools
 
-**Note:** Verify that the <TPCDS_JOURNEY_ROOT>/bin/tpcdsenv.sh has the SPARK_HOME setup correctly.
+Make sure the required development tools are installed in your platform. This journey is supported on Mac and Linux platforms only. Depending on your platform, run the following command to install the necessary development tools:
+
+* **Ubuntu:**  
+``` $ sudo apt-get install gcc make flex bison byacc git ```
+* **CentOS/RHEL:**  
+``` $ sudo yum install gcc make flex bison byacc git ```
+* **MacOS:**  
+``` $ xcode-select --install ```
+
+### 3. Install Spark
+
+If you have an existing Spark installation that you want to use in this journey, then you need to modify ```bin/tpcdsenv.sh``` to set `SPARK_HOME` pointing to your Spark installation directory. One thing to note is that this journey requires that Spark be configured to work with a persistent metastore. In other words, your Spark instalation should have been pre-configured to work with an [Apache Hive](https://hive.apache.org/) metastore. 
+
+If you do not have an existing Spark installation then you can download and build it using the these [instructions](https://spark.apache.org/docs/latest/building-spark.html). Please make sure to build Spark with Hive support by following the `Building With Hive and JDBC Support` section.
+
+**Note:** Verify that the `bin/tpcdsenv.sh` script has `SPARK_HOME` setup correctly.
  
-### Running the script
-Now that we have Spark setup and the TPCDS scripts with us, we are ready to setup and start running the TPC-DS queries using the tpcdsspark.sh utility script in ```<TPCDS_JOURNEY_ROOT>/bin``` This script is the driver script and it will let you compile the TPC-DS toolkit to produce the data and the queries and run them and collect results.  
+### 4. Run the script
+
+Now that we have Spark setup and the TPC-DS scripts downloaded, we are ready to setup and start running the TPC-DS queries using the `bin/tpcdsspark.sh` utility script. This driver script will allow you to compile the TPC-DS toolkit to produce the data and the queries, and then run them to collect results.  
+
+Perform the following steps to complete the execution of the script:
 
 ```
- $ cd ```<TPCDS_JOURNEY_ROOT>```
+ $ cd spark-tpc-ds-performance-test
  $ bin/tpcdsspark.sh 
 
 ==============================================
@@ -74,10 +101,14 @@ CLEANUP
 ----------------------------------------------
 Please enter your choice followed by [ENTER]: 
 ```
-### Option (1) - Compile TPC-DS toolkit
-The most recent toolkit can be downloaded from http://www.tpc.org/tpcds/. To make it easier for users a toolkit
-based on 2.4 is already made available to the script. The source code of this toolkit is available under ```src/toolkit```
-folder. This option compiles the toolkit to produce the data generation(dsdgen) and query generation binaries(dsqgen). Below is the screen-shot when this option is choosen.
+
+#### Setup Option: "(1) - Compile TPC-DS toolkit"
+
+The most recent toolkit can be downloaded from http://www.tpc.org/tpcds/. To make it easier for users, a toolkit based on `v2.4` is available locally in [src/toolkit](src/toolkit). 
+
+This option compiles the toolkit to produce the data generation (dsdgen) and query generation (dsqgen) binaries. 
+
+Below is the screen-shot when this option is choosen.
 
 ```
 ==============================================
@@ -104,9 +135,13 @@ INFO: Completed building toolkit successfully..
 Press any key to continue
 ```
 
-### Option (2) - Generate TPC-DS data with 1GB scale
-This option uses the data generation binary produced in option-1 to generate the test data at 1GB scale factor. The data
-is generated in TPCDS_GENDATA_DIR. The default location of TPCDS_GENDATA_DIR is ```<TPCDS_JOURNEY_ROOT>/gendata```. This can be changed my modifying tpcdsenv.sh located in the ```<TPCDS_JOURNEY_ROOT>/bin```. Techically this option can be used to generate data at different scale. However since this journey is targetted towards developer environment, the scale has been fixed at 1GB. This script can be modified to generate data at a different scale factor and is discussed in ```scaling upto 100TB``` section. Below is the screenshot.
+#### Setup Option: "(2) - Generate TPC-DS data with 1GB scale"
+
+This option uses the data generation binary produced in the previous step to generate the test data at a 1GB scale factor. The data is generated in the directory `TPCDS_GENDATA_DIR`. The default location of `TPCDS_GENDATA_DIR` is the local directory `gendata`. This can be changed by modifying the script `bin/tpcdsenv.sh`.  
+
+Techically, this option can be used to generate data at a different scale. However, since this journey is targetted towards the developer environment, the scale has been fixed at 1GB. To modify this script to generate data at a different scale factor, see the discussion in the `scaling upto 100TB` section below. 
+
+Below is the screenshot when this option is choosen.
 
 ```
 ==============================================
@@ -129,14 +164,17 @@ Please enter your choice followed by [ENTER]: 2
 
 INFO: Starting to generate data. Will take a few minutes ...
 INFO: Progress : [########################################] 100%
-INFO: TPCDS data is generated successfully at <TPCDS_JOURNEY_ROOT>/gendata
+INFO: TPCDS data is generated successfully at spark-tpc-ds-performance-test/gendata
 Press any key to continue
 ``` 
 
-### Option (3) - Create Spark Tables
-After the generation of data in option-2, this option creates the tables under database specified in TPCDS_DBNAME
-variable in ```bin/tpcdsenv.sh```. By default TPCDS_DBNAME assumes the value of ```TPCDS``` and can be changed
-by users as required. The sql statements to create the tables can be found at ```<TPCDS_JOURNEY_ROOT>/src/ddl/create_tables.sql```. The tables are created in parquet format.  Below is the screenshot.
+#### Setup Option: "(3) - Create Spark Tables"
+
+After data generation has completed, this option creates the tables in the database name specified by `TPCDS_DBNAME` defined in `bin/tpcdsenv.sh`. The default name is `TPCDS` bug can be changed if needed. 
+
+The SQL statements to create the tables can be found in `src/ddl/create_tables.sql`, and are created in parquet format.  
+
+Below is the screenshot when this option is choosen.
 
 ```
 ==============================================
@@ -163,8 +201,11 @@ INFO: Spark tables created successfully..
 Press any key to continue
 ```
 
-### Option (4) - Generate TPC-DS queries
-This option uses the query generation binary (dsqgen) produced in option-1 to generate the 99 TPC-DS queries. The queries are generated in TPCDS_GEN_QUERIES_DIR. The default location of TPCDS_GENDATA_DIR is ```<TPCDS_JOURNEY_ROOT>/genqueries```. This can be changed my modifying tpcdsenv.sh located in the ```<TPCDS_JOURNEY_ROOT>/bin```. Below is the screenshot.
+#### Setup Option: "(4) - Generate TPC-DS queries"
+
+This option uses the query generation binary (dsqgen) produced in "option (1)" to generate the 99 TPC-DS queries. The queries are generated in the `TPCDS_GEN_QUERIES_DIR`, with a default location of `genqueries`. This can be changed my modifying the `bin/tpcdsenv.sh' script. 
+
+Below is the screenshot when this option is choosen.
 
 ```
 ==============================================
@@ -190,11 +231,15 @@ INFO: Completed generating TPC-DS qualification queries.
 Press any key to continue
 ```
  
-### Option (5) - Run a subset of TPC-DS queries
-A comma separated list of queries can be specified in this option. The result of each query in the supplied list is generated in TPCDS_WORK_DIR. The format of the result file is query<number>.res. One summary file ```run_summary.txt``` is also made available that has information about query number, execution time and number of rows returned. 
+#### Run Option: "(5) - Run a subset of TPC-DS queries"
 
-Note:  The query number is a two digit number, so if you run query 1 , the results will be in query01.res
-Note:  If you are debugging and running queries using this option, make sure to save your run_summary.txt for each of your runs
+A comma separated list of queries can be specified in this option. The result of each query in the supplied list is generated in `TPCDS_WORK_DIR`, with a default directory location of `work`. The format of the result file is `query<number>.res`. 
+
+A summary file named `run_summary.txt` is also generated. It contains information about query number, execution time and number of rows returned. 
+
+*Note:*  The query number is a two digit number, so for query 1 the results will be in `query01.res`.
+
+*Note:*  If you are debugging and running queries using this option, make sure to save `run_summary.txt` after each of your runs.
 
 ```
 ==============================================
@@ -222,13 +267,16 @@ INFO: Checking pre-reqs for running TPC-DS queries is successful.
 INFO: Running TPCDS queries. Will take a few minutes depending upon the number of queries specified.. 
 INFO: Progress : [########################################] 100%
 INFO: TPCDS queries ran successfully. Below are the result details
-INFO: Individual result files: <TPCDS_JOURNEY_ROOT>/work/query<number>.res
-INFO: Summary file: <TPCDS_JOURNEY_ROOT>/work/run_summary.txt
+INFO: Individual result files: spark-tpc-ds-performance-test/work/query<number>.res
+INFO: Summary file: spark-tpc-ds-performance-test/work/run_summary.txt
 Press any key to continue
 ```
-### Option (6) - Run all (99) TPC-DS queries
-The only difference between this option and option-5 is that all 99 TPC-DS queries are run instead of a subset.
-Note: If you are running this on your laptop, it can take a few hours to run all the 99 TPC-DS queries.
+
+#### Run Option: "(6) - Run all (99) TPC-DS queries"
+
+The only difference between this and option `(5)` is that all 99 TPC-DS queries are run instead of a subset.
+
+*Note:* If you are running this on your laptop, it can take a few hours to run all  99 TPC-DS queries.
 
 ```
 ==============================================
@@ -253,21 +301,20 @@ INFO: Checking pre-reqs for running TPC-DS queries is successful.
 INFO: Running TPCDS queries. Will take a few minutes depending upon the number of queries specified.. 
 INFO: Progress : [########################################] 100%
 INFO: TPCDS queries ran successfully. Below are the result details
-INFO: Individual result files: <TPCDS_JOURNEY_ROOT>/work/query<number>.res
-INFO: Summary file: <TPCDS_JOURNEY_ROOT>/work/run_summary.txt
+INFO: Individual result files: spark-tpc-ds-performance-test/work/query<number>.res
+INFO: Summary file: spark-tpc-ds-performance-test/work/run_summary.txt
 Press any key to continue
 ```
 
-### Option (7) - Cleanup toolkit
-This will cleanup all the files generated during setup steps 1, 2, 3, 4. If you use this option, make sure to run the setup steps ( 1, 2, 3, 4) before running queries using option (5, 6)
+#### Cleanup option: "(7) - Cleanup toolkit"
 
-### Option (Q) - Quit
-This will exit the script
+This will clean up all of the files generated during option steps 1, 2, 3, and 4. If you use this option, make sure to run the setup steps ( 1, 2, 3, 4) before running queries using option 5 and 6.
 
-## Running using Notebook.
-### Steps
+#### Cleanup option: "(Q) - Quit"
 
-Follow these steps to setup and run this developer journey. These steps are described in detail below.
+This will exit the script.
+
+## Run using a Jupyter notebook in the IBM Data Science Experience
 
 1. [Sign up for the Data Science Experience](#1-sign-up-for-the-data-science-experience)
 2. [Create the notebook](#2-create-the-notebook)
@@ -304,7 +351,7 @@ Create the Notebook:
 * Click on your project to open up the project details panel.
 * Click ``add notebooks``.
 * Click the tab for ``From URL`` and enter a ``Name`` and optional ``Description``.
-* For ``Notebook URL`` enter: https://github.com/IBM/SystemML_Usage/blob/master/notebooks/Machine-Learning-Using-Apache-SystemML.ipynb
+* For ``Notebook URL`` enter: https://github.com/IBM/spark-tpc-ds-performance-test/blob/master/notebooks/run-tpcds-on-spark.ipynb
 * For ``Spark Service``, select your Apache Spark service name.
 * Click ``Create Notebook``.
 
