@@ -46,7 +46,7 @@ and integrate your systems more effectively.
 
 There are two modes of excercising this journey:
 * Run locally using a simple interactive command line shell script.
-* [Run using a Jupyter notebook in the IBM Data Science Experience](run-using-the-ibm-data-science-experience).
+* [Run using a Jupyter notebook in the IBM Data Science Experience](#run-using-a-jupyter-notebook-in-the-ibm-data-science-experience).
 
 ## Run locally
 1. [Clone the repo](#1-clone-the-repo)
