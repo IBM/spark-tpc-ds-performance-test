@@ -18,9 +18,15 @@ When the reader has completed this journey, they will understand the following:
 ![Architecture diagram-2](doc/source/images/architecture2.png)
 
 ## Flow
-1.
-2.
-3.
+* Commandline
+  1. Compile the toolkit and generate the TPC-DS dataset by using the toolkit.
+  2. Create the spark tables and generate the TPC-DS queries.
+  3. Run the entire query set or a subset of queries and monitor the results.
+* Notebook
+  1. Create the spark tables with pre-generated dataset.
+  2. Run the entire query set or individual query.
+  3. View the query results or performance summary.
+  4. View the performance graph. 
 
 ## Included components
 
