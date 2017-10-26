@@ -2,7 +2,7 @@
 
 [Apache Spark](https://spark.apache.org) is a popular distributed data processing engine that is built around speed, ease of use and sophisticated analytics, with APIs in Java, Scala, Python, R, and SQL. Like other data processing engines, Spark has a unified optimization engine that computes the optimal way to execute a workload with the main purpose of reducing the disk IO and CPU usage.   
 
-We can evaluate and measure the performance of Spark SQL using the TPC-DS benchmark. [TPC-DS](http://www.tpc.org/tpcds) is a widely used industry standard decision support benchmark that is used to evaluate performance of data processing engines. Given that TPC-DS excercises some key data warehouse features, running TPC-DS successfully reflects the readiness of Spark in terms of addressing the need of a data warehouse application. Apache Spark v2.0 supports all the ninty nine decision support queries that is part of this TPC-DS benchmark.
+We can evaluate and measure the performance of Spark SQL using the TPC-DS benchmark. [TPC-DS](http://www.tpc.org/tpcds) is a widely used industry standard decision support benchmark that is used to evaluate performance of data processing engines. Given that TPC-DS exercises some key data warehouse features, running TPC-DS successfully reflects the readiness of Spark in terms of addressing the need of a data warehouse application. Apache Spark v2.0 supports all the ninety-nine decision support queries that is part of this TPC-DS benchmark.
 
 This journey is aimed at helping Spark developers quickly setup and run the TPC-DS benchmark in their own development setup. 
 
@@ -49,12 +49,12 @@ There are two modes of excercising this journey:
 * [Run using a Jupyter notebook in the IBM Data Science Experience](#run-using-a-jupyter-notebook-in-the-ibm-data-science-experience).
 
 ## Run locally
-1. [Clone the repo](#1-clone-the-repo)
+1. [Clone the repository](#1-clone-the-repo)
 2. [Setup developement tools](#2-setup-development-tools)
 3. [Install Spark](#3-install-spark)
 4. [Run the script](#4-run-the-script)
 
-### 1. Clone the repo
+### 1. Clone the repository
 
 Clone the `spark-tpc-ds-performance-test` repo locally. In a terminal, run:
 
