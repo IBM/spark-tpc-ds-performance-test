@@ -111,7 +111,7 @@ Please enter your choice followed by [ENTER]:
 
 #### Setup Option: "(1) - Compile TPC-DS toolkit"
 
-The most recent toolkit can be downloaded from http://www.tpc.org/tpcds/. To make it easier for users, a toolkit based on `v2.4` is available locally in [src/toolkit](src/toolkit). If you download the newer toolkit from the official tpc-ds then make sure you overlay the code in src/toolkit before proceeding with this option.
+The most recent toolkit can be downloaded from http://www.tpc.org/tpcds/. To make it easier for users, a toolkit based on `v2.4` is available locally in [src/toolkit](src/toolkit). If you download the newer toolkit from the official tpc-ds site, then make sure you overlay the code in src/toolkit before proceeding with this option.
 
 This option compiles the toolkit to produce the data generation (dsdgen) and query generation (dsqgen) binaries. 
 
