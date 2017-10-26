@@ -31,7 +31,7 @@ When the reader has completed this journey, they will understand the following:
 ## Included components
 
 * [Apache Spark](http://spark.apache.org/): An open-source, fast and general-purpose cluster computing system
-* [Jupyter Notebooks](http://jupyter.org/): An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.
+* [Jupyter Notebook](http://jupyter.org/): An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.
 
 ## Featured technologies
 
