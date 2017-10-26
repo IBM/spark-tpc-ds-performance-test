@@ -75,13 +75,37 @@ Make sure the required development tools are installed in your platform. This jo
 
 ### 3. Install Spark
 
-If you have an existing Spark installation that you want to use in this journey, then you need to modify ```bin/tpcdsenv.sh``` to set `SPARK_HOME` pointing to your Spark installation directory. One thing to note is that this journey requires that Spark be configured to work with a persistent metastore. In other words, your Spark instalation should have been pre-configured to work with an [Apache Hive](https://hive.apache.org/) metastore. 
+To successfully run the TPC-DS tests, Spark must be installed and pre-configured to work with an [Apache Hive](https://hive.apache.org/) metastore. 
 
-If you do not have an existing Spark installation then you can download and build it using the these [instructions](https://spark.apache.org/docs/latest/building-spark.html). Please make sure to build Spark with Hive support by following the `Building With Hive and JDBC Support` section.
+Perform 1 or more of the following options to ensure that Spark is installed and configured correctly. Once completed, modify ```bin/tpcdsenv.sh``` to set `SPARK_HOME` pointing to your Spark installation directory.
 
-**Note:** Verify that the `bin/tpcdsenv.sh` script has `SPARK_HOME` setup correctly.
+**Option 1** - If you already have Spark installed, complete the following steps to ensure your Spark version is properly configured:
+
+```
+$ cd spark-tpc-ds-performance-test
+$ bin/spark-shell
+
+  // Enter the following command at the scala prompt
+  scala> spark.conf
+  scale> spark.conf.get("spark.sql.catalogImplementation")
+  res5: String = hive
+  scala> <ctrl-c>
+```
+*Note:* You must exit out of the spark-shell process or you will encounters errors when performing the TPC-DS tests.
+
+If the prompt returns `String = hive`, then your installation is properly configured.
+
+**Option 2** - If you don't have an installed Spark version, or your current installation is not properly configured, we suggest trying to pull down version 2.2.0 from the Spark [downloads page](https://spark.apache.org/downloads.html). This version should be configured to work with Apache Hive, but please run the test in the previous option to make sure. 
+
+**Option 3** - The last option available is it to download and build it yourself. The first step is to clone the Spark repo:
+```
+$ git clone https://github.com/apache/spark.git
+```
+Then build it using these [instructions](https://spark.apache.org/docs/latest/building-spark.html). Please make sure to build Spark with Hive support by following the `Building With Hive and JDBC Support` section.
  
 ### 4. Run the script
+
+*Note:* Verify that the `bin/tpcdsenv.sh` script has `SPARK_HOME` setup correctly.
 
 Now that we have Spark setup and the TPC-DS scripts downloaded, we are ready to setup and start running the TPC-DS queries using the `bin/tpcdsspark.sh` utility script. This driver script will allow you to compile the TPC-DS toolkit to produce the data and the queries, and then run them to collect results.  
 
