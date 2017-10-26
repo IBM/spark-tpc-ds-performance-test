@@ -82,7 +82,7 @@ Perform 1 or more of the following options to ensure that Spark is installed and
 **Option 1** - If you already have Spark installed, complete the following steps to ensure your Spark version is properly configured:
 
 ```
-$ cd spark-tpc-ds-performance-test
+$ cd $SPARK_HOME
 $ bin/spark-shell
 
   // Enter the following command at the scala prompt
