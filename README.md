@@ -451,7 +451,7 @@ the data and running the workload against a production cluster.
   In order to increase the scale, please follow the section titled "Scaling and Database Population" in
   the [bench-mark spec](http://www.tpc.org/tpc_documents_current_versions/pdf/tpc-ds_v2.2.0.pdf).
 * Movement of data to the distributed file system.
-  After generting the data, we need to copy or move them to the underlying distributed file system (typically hdfs)
+  After generating the data, we need to copy or move them to the underlying distributed file system (typically hdfs)
   that your spark cluster is configured to work with.
 * Creating of spark tables.
   Modify the create table ddl script to change the path to the location of the data after the above copy step.
