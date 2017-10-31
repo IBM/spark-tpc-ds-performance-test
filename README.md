@@ -442,14 +442,14 @@ options to specify exactly what you want shared from your notebook:
 
 ## Considerations while increasing the scale factor.
 This journey walks us through the steps that need to be performed to run the TPC-DS 
-bench-mark in the qualification scale factor(1GB).Since this is a performance bench-mark, typically 
-we need to run the bench-mark in varying scale factors to gauge the throughput of the underlying data
+benchmark in the qualification scale factor(1GB). Since this is a performance benchmark, typically 
+we need to run the benchmark in varying scale factors to gauge the throughput of the underlying data
 processing engine. In the section below, we will briefly touch up on things to be considered while increasing
 the data and running the workload against a production cluster.
 
 * Generation of the data in larger scale factor.
   In order to increase the scale, please follow the section titled "Scaling and Database Population" in
-  the [bench-mark spec](http://www.tpc.org/tpc_documents_current_versions/pdf/tpc-ds_v2.2.0.pdf).
+  the [benchmark spec](http://www.tpc.org/tpc_documents_current_versions/pdf/tpc-ds_v2.2.0.pdf).
 * Movement of data to the distributed file system.
   After generating the data, we need to copy or move them to the underlying distributed file system (typically hdfs)
   that your spark cluster is configured to work with.
