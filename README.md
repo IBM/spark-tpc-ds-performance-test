@@ -59,7 +59,7 @@ There are two modes of excercising this journey:
 Clone the `spark-tpc-ds-performance-test` repo locally. In a terminal, run:
 
 ``` 
-$ git clone https://github.com/spark-tpc-ds-performance-test 
+$ git clone https://github.com/IBM/spark-tpc-ds-performance-test 
 ```
 
 ### 2. Setup development tools
