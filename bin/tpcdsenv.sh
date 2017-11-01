@@ -4,13 +4,13 @@
 #
 
 #######################################################################
-# This is a manadatory parameter. Please provide the location of
+# This is a mandatory parameter. Please provide the location of
 # spark installation.
 #######################################################################
 export SPARK_HOME=
 
 #######################################################################
-# Script enviroment parameters. When they are not set the script
+# Script environment parameters. When they are not set the script
 # defaults to paths relative from the script directory.
 #######################################################################
 
