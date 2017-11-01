@@ -44,13 +44,13 @@ and integrate your systems more effectively.
 
 # Steps
 
-There are two modes of excercising this journey:
+There are two modes of exercising this journey:
 * Run locally using a simple interactive command line shell script.
 * [Run using a Jupyter notebook in the IBM Data Science Experience](#run-using-a-jupyter-notebook-in-the-ibm-data-science-experience).
 
 ## Run locally
 1. [Clone the repository](#1-clone-the-repo)
-2. [Setup developement tools](#2-setup-development-tools)
+2. [Setup development tools](#2-setup-development-tools)
 3. [Install Spark](#3-install-spark)
 4. [Run the script](#4-run-the-script)
 
@@ -139,7 +139,7 @@ The most recent toolkit can be downloaded from http://www.tpc.org/tpcds/. To mak
 
 This option compiles the toolkit to produce the data generation (dsdgen) and query generation (dsqgen) binaries. 
 
-Below is the screen-shot when this option is choosen.
+Below is the screen-shot when this option is chosen.
 
 ```
 ==============================================
@@ -170,9 +170,9 @@ Press any key to continue
 
 This option uses the data generation binary produced in the previous step to generate the test data at a 1GB scale factor. The data is generated in the directory `TPCDS_GENDATA_DIR`. The default location of `TPCDS_GENDATA_DIR` is the local directory `gendata`. This can be changed by modifying the script `bin/tpcdsenv.sh`.  
 
-Techically, this option can be used to generate data at a different scale. However, since this journey is targetted towards the developer environment, the scale has been fixed at 1GB. To modify this script to generate data at a different scale factor, see the discussion in the `scaling upto 100TB` section below. 
+Technically, this option can be used to generate data at a different scale. However, since this journey is targeted towards the developer environment, the scale has been fixed at 1GB. To modify this script to generate data at a different scale factor, see the discussion in the `scaling upto 100TB` section below. 
 
-Below is the screenshot when this option is choosen.
+Below is the screenshot when this option is chosen.
 
 ```
 ==============================================
@@ -201,11 +201,11 @@ Press any key to continue
 
 #### Setup Option: "(3) - Create Spark Tables"
 
-After data generation has completed, this option creates the tables in the database name specified by `TPCDS_DBNAME` defined in `bin/tpcdsenv.sh`. The default name is `TPCDS` bug can be changed if needed. 
+After data generation has completed, this option creates the tables in the database name specified by `TPCDS_DBNAME` defined in `bin/tpcdsenv.sh`. The default name is `TPCDS` but can be changed if needed. 
 
 The SQL statements to create the tables can be found in `src/ddl/create_tables.sql`, and are created in parquet format.  
 
-Below is the screenshot when this option is choosen.
+Below is the screenshot when this option is chosen.
 
 ```
 ==============================================
@@ -236,7 +236,7 @@ Press any key to continue
 
 This option uses the query generation binary (dsqgen) produced in "option (1)" to generate the 99 TPC-DS queries. The queries are generated in the `TPCDS_GEN_QUERIES_DIR`, with a default location of `genqueries`. This can be changed my modifying the `bin/tpcdsenv.sh' script. 
 
-Below is the screenshot when this option is choosen.
+Below is the screenshot when this option is chosen.
 
 ```
 ==============================================
@@ -442,18 +442,18 @@ options to specify exactly what you want shared from your notebook:
 
 ## Considerations while increasing the scale factor.
 This journey walks us through the steps that need to be performed to run the TPC-DS 
-benchmark in the qualification scale factor(1GB). Since this is a performance benchmark, typically 
-we need to run the benchmark in varying scale factors to gauge the throughput of the underlying data
-processing engine. In the section below, we will briefly touch up on things to be considered while increasing
+benchmark with the qualification scale factor(1GB). Since this is a performance benchmark, typically 
+we need to run the benchmark with varying scale factors to gauge the throughput of the underlying data
+processing engine. In the section below, we will briefly touch on things to be considered while increasing
 the data and running the workload against a production cluster.
 
-* Generation of the data in larger scale factor.
+* Generation of the data in larger scale factor:
   In order to increase the scale, please follow the section titled "Scaling and Database Population" in
   the [benchmark spec](http://www.tpc.org/tpc_documents_current_versions/pdf/tpc-ds_v2.2.0.pdf).
-* Movement of data to the distributed file system.
+* Movement of data to the distributed file system:
   After generating the data, we need to copy or move them to the underlying distributed file system (typically hdfs)
   that your spark cluster is configured to work with.
-* Creating of spark tables.
+* Creation of spark tables:
   Modify the create table ddl script to change the path to the location of the data after the above copy step.
   Additionally we may consider to partition the fact tables for better performance.
 * We need to tune several spark configs to get optimal performance. Some of them are discussed in the following
