@@ -14,8 +14,7 @@ When the reader has completed this journey, they will understand the following:
 * How to run TPC-DS benchmark queries on Spark in local mode and see the results 
 * Things to consider when increasing the data scale and run against a spark cluster 
 
-![Architecture diagram-1](doc/source/images/architecture.png)
-![Architecture diagram-2](doc/source/images/architecture2.png)
+![Architecture diagram](doc/source/images/architecture.png)
 
 ## Flow
 * Commandline
