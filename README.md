@@ -4,9 +4,9 @@
 
 We can evaluate and measure the performance of Spark SQL using the TPC-DS benchmark. [TPC-DS](http://www.tpc.org/tpcds) is a widely used industry standard decision support benchmark that is used to evaluate performance of data processing engines. Given that TPC-DS exercises some key data warehouse features, running TPC-DS successfully reflects the readiness of Spark in terms of addressing the need of a data warehouse application. Apache Spark v2.0 supports all the ninety-nine decision support queries that is part of this TPC-DS benchmark.
 
-This journey is aimed at helping Spark developers quickly setup and run the TPC-DS benchmark in their own development setup. 
+This Code Pattern is aimed at helping Spark developers quickly setup and run the TPC-DS benchmark in their own development setup. 
 
-When the reader has completed this journey, they will understand the following:
+When the reader has completed this Code Pattern, they will understand the following:
 
 * How to setup the TPC-DS toolkit 
 * How to generate TPC-DS datasets at different scale factor 
@@ -43,7 +43,7 @@ and integrate your systems more effectively.
 
 # Steps
 
-There are two modes of exercising this journey:
+There are two modes of exercising this Code Pattern:
 * Run locally using a simple interactive command line shell script.
 * [Run using a Jupyter notebook in the IBM Data Science Experience](#run-using-a-jupyter-notebook-in-the-ibm-data-science-experience).
 
@@ -63,7 +63,7 @@ $ git clone https://github.com/IBM/spark-tpc-ds-performance-test
 
 ### 2. Setup development tools
 
-Make sure the required development tools are installed in your platform. This journey is supported on Mac and Linux platforms only. Depending on your platform, run the following command to install the necessary development tools:
+Make sure the required development tools are installed in your platform. This Code Pattern is supported on Mac and Linux platforms only. Depending on your platform, run the following command to install the necessary development tools:
 
 * **Ubuntu:**  
 ``` $ sudo apt-get install gcc make flex bison byacc git ```
@@ -169,7 +169,7 @@ Press any key to continue
 
 This option uses the data generation binary produced in the previous step to generate the test data at a 1GB scale factor. The data is generated in the directory `TPCDS_GENDATA_DIR`. The default location of `TPCDS_GENDATA_DIR` is the local directory `gendata`. This can be changed by modifying the script `bin/tpcdsenv.sh`.  
 
-Technically, this option can be used to generate data at a different scale. However, since this journey is targeted towards the developer environment, the scale has been fixed at 1GB. To modify this script to generate data at a different scale factor, see the discussion in the `scaling upto 100TB` section below. 
+Technically, this option can be used to generate data at a different scale. However, since this Code Pattern is targeted towards the developer environment, the scale has been fixed at 1GB. To modify this script to generate data at a different scale factor, see the discussion in the `scaling upto 100TB` section below. 
 
 Below is the screenshot when this option is chosen.
 
@@ -440,7 +440,7 @@ options to specify exactly what you want shared from your notebook:
 * A variety of `download as` options are also available in the menu.
 
 ## Considerations while increasing the scale factor.
-This journey walks us through the steps that need to be performed to run the TPC-DS 
+This Code Pattern walks us through the steps that need to be performed to run the TPC-DS 
 benchmark with the qualification scale factor(1GB). Since this is a performance benchmark, typically 
 we need to run the benchmark with varying scale factors to gauge the throughput of the underlying data
 processing engine. In the section below, we will briefly touch on things to be considered while increasing
