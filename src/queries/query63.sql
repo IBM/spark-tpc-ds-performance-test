@@ -1,5 +1,5 @@
 -- start query 63 in stream 0 using template query63.tpl and seed QUALIFICATION
- select  * 
+ select  *
 from (select i_manager_id
              ,sum(ss_sales_price) sum_sales
              ,avg(sum(ss_sales_price)) over (partition by i_manager_id) avg_monthly_sales

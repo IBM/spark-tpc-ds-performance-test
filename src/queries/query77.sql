@@ -7,8 +7,8 @@
       date_dim,
       store
  where ss_sold_date_sk = d_date_sk
-       and d_date between cast('2000-08-23' as date) 
-                  and date_add(cast('2000-08-23' as date), 30 ) 
+       and d_date between cast('2000-08-23' as date)
+                  and date_add(cast('2000-08-23' as date), 30 )
        and ss_store_sk = s_store_sk
  group by s_store_sk)
  ,
@@ -23,7 +23,7 @@
        and d_date between cast('2000-08-23' as date)
                   and date_add(cast('2000-08-23' as date),  30 )
        and sr_store_sk = s_store_sk
- group by s_store_sk), 
+ group by s_store_sk),
  cs as
  (select cs_call_center_sk,
         sum(cs_ext_sales_price) as sales,
@@ -33,8 +33,8 @@
  where cs_sold_date_sk = d_date_sk
        and d_date between cast('2000-08-23' as date)
                   and date_add(cast('2000-08-23' as date), 30 )
- group by cs_call_center_sk 
- ), 
+ group by cs_call_center_sk
+ ),
  cr as
  (select cr_call_center_sk,
          sum(cr_return_amount) as returns,
@@ -45,7 +45,7 @@
        and d_date between cast('2000-08-23' as date)
                   and date_add(cast('2000-08-23' as date),  30 )
  group by cr_call_center_sk
- ), 
+ ),
  ws as
  ( select wp_web_page_sk,
         sum(ws_ext_sales_price) as sales,
@@ -57,7 +57,7 @@
        and d_date between cast('2000-08-23' as date)
                   and date_add(cast('2000-08-23' as date), 30 )
        and ws_web_page_sk = wp_web_page_sk
- group by wp_web_page_sk), 
+ group by wp_web_page_sk),
  wr as
  (select wp_web_page_sk,
         sum(wr_return_amt) as returns,
@@ -75,7 +75,7 @@
         , sum(sales) as sales
         , sum(returns) as returns
         , sum(profit) as profit
- from 
+ from
  (select 'store channel' as channel
         , ss.s_store_sk as id
         , sales

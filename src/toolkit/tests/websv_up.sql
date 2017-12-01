@@ -1,5 +1,5 @@
 drop table s_web_site;
-create table s_web_site as 
+create table s_web_site as
 select * from
 (select web_site_id wsit_web_site_id
        ,d1.d_date wsit_open_date
@@ -15,4 +15,4 @@ select * from
    and web_close_date_sk = d2.d_date_sk
    and web_rec_end_date is null)
 where rownum < 6;
- 
+

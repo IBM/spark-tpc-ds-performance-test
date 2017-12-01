@@ -11,8 +11,8 @@ select cust_customer_id
       ,cust_zip
       ,cust_country
       ,zipg_gmt_offset
-from s_customer_m  
-    ,s_zip_to_gmt 
+from s_customer_m
+    ,s_zip_to_gmt
 where cust_zip = zipg_zip;
 select count(*) from s_customer_m;
 select count(*) from cadrv;

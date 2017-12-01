@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 
 /*** includes ***/
 #include "config.h"
@@ -47,14 +47,14 @@
 
 /*
  * Routine: set_precision(decimal_t *dest, int size, int precision)
- * Purpose: 
+ * Purpose:
  * Algorithm:
  * Data Structures:
  *
- * Params:	
+ * Params:
  * Returns: None
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -72,15 +72,15 @@ set_precision(decimal_t *dest, int scale, int precision)
 
 /*
  * Routine: mk_decimal(int size, int precision)
- * Purpose: initialize a decimal_t 
+ * Purpose: initialize a decimal_t
  * Algorithm:
  * Data Structures:
  *
  * Params:	int size:		total number of places in the decimal
  *			int precision:	number of places in the fraction
  * Returns: decimal_t *
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -92,7 +92,7 @@ mk_decimal(int s, int p)
 
 	if ((s < 0) || (p < 0))
 		return(NULL);
-	
+
 	res = (decimal_t *)malloc(sizeof(struct DECIMAL_T));
 	MALLOC_CHECK(res);
 
@@ -112,11 +112,11 @@ mk_decimal(int s, int p)
  *
  * Params: source integer
  * Returns: decimal_t *
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
- * TODO: 
+ * TODO:
  * 20000104 need to set errno on error
  */
 int
@@ -124,7 +124,7 @@ itodec(decimal_t *dest, int src)
 {
 	int scale = 1,
 		bound = 1;
-	
+
 	while ((bound * 10) <= src)
 		{
 		scale += 1;
@@ -146,8 +146,8 @@ itodec(decimal_t *dest, int src)
  *
  * Params: double f
  * Returns: decimal_t *
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -158,7 +158,7 @@ ftodec(decimal_t *dest, double f)
 	static char valbuf[20];
 
 	sprintf(valbuf, "%f", f);
-	
+
 	return(strtodec(dest, valbuf));
 }
 
@@ -170,8 +170,8 @@ ftodec(decimal_t *dest, double f)
  *
  * Params: char *s
  * Returns: decimal_t *
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -202,7 +202,7 @@ strtodec(decimal_t *dest, char *s)
 			dest->number *=10;
 		dest->number += atoi(d_pt);
 		}
-	
+
 	if (*s == '-' && dest->number > 0)
 		dest->number *= -1;
 
@@ -215,10 +215,10 @@ strtodec(decimal_t *dest, char *s)
  * Algorithm:
  * Data Structures:
  *
- * Params: 
+ * Params:
  * Returns: char *; NULL on success
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -236,7 +236,7 @@ dectostr(char *dest, decimal_t *d)
       sprintf(szFormat, "%s.%s", HUGE_FORMAT, HUGE_FORMAT);
       bInit = 1;
    }
-	
+
 	if (d == NULL || dest == NULL)
 		return(-1);
 	for (number=d->number, i=0; i < d->precision; i++)
@@ -253,10 +253,10 @@ dectostr(char *dest, decimal_t *d)
  * Algorithm:
  * Data Structures:
  *
- * Params: 
+ * Params:
  * Returns: char *; NULL on success
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -275,7 +275,7 @@ dectoflt(double *dest, decimal_t *d)
 #endif
 	while (--d->precision > 0)
 		*dest /= 10.0;
-	
+
 	return(0);
 }
 
@@ -287,8 +287,8 @@ dectoflt(double *dest, decimal_t *d)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -300,7 +300,7 @@ decimal_t_op(decimal_t *dest, int op, decimal_t *d1, decimal_t *d2)
 		np;
 	float f1,
 		f2;
-	
+
 	if ((d1 == NULL) || (d2 == NULL))
 		return(-1);
 
@@ -357,7 +357,7 @@ decimal_t_op(decimal_t *dest, int op, decimal_t *d1, decimal_t *d2)
 			exit(1);
 			break;
 		}
-	
+
 	return(0);
 }
 

@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -57,18 +57,18 @@ struct W_CUSTOMER_TBL g_w_customer;
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 */
 int
 mk_w_customer (void * row, ds_key_t index)
 {
 	int res = 0,
 		nTemp;
-	
+
 	static int nBaseDate;
 	/* begin locals declarations */
 	int nNameIndex,
@@ -76,7 +76,7 @@ mk_w_customer (void * row, ds_key_t index)
 	struct W_CUSTOMER_TBL *r;
 	static int bInit = 0;
 	date_t dtTemp;
-	static date_t dtBirthMin, 
+	static date_t dtBirthMin,
 		dtBirthMax,
 		dtToday,
 		dt1YearAgo,
@@ -89,7 +89,7 @@ mk_w_customer (void * row, ds_key_t index)
 		r = row;
 
 	if (!bInit)
-	{			
+	{
         nBaseDate = dttoj (strtodate (DATE_MINIMUM));
 		strtodt(&dtBirthMax, "1992-12-31");
 		strtodt(&dtBirthMin, "1924-01-01");
@@ -99,7 +99,7 @@ mk_w_customer (void * row, ds_key_t index)
 
 		bInit = 1;
 	}
-	
+
 	nullSet(&pT->kNullBitMap, C_NULLS);
 	r->c_customer_sk = index;
 	mk_bkey(&r->c_customer_id[0], index, C_CUSTOMER_ID);
@@ -107,10 +107,10 @@ mk_w_customer (void * row, ds_key_t index)
 	r->c_preferred_cust_flag = (nTemp < C_PREFERRED_PCT) ? 1 : 0;
 
 	/* demographic keys are a composite of values. rebuild them a la bitmap_to_dist */
-	r->c_current_hdemo_sk = 
+	r->c_current_hdemo_sk =
 		mk_join(C_CURRENT_HDEMO_SK, HOUSEHOLD_DEMOGRAPHICS, 1);
 
-	r->c_current_cdemo_sk = 
+	r->c_current_cdemo_sk =
 		mk_join(C_CURRENT_CDEMO_SK, CUSTOMER_DEMOGRAPHICS, 1);
 
 	r->c_current_addr_sk =
@@ -136,20 +136,20 @@ mk_w_customer (void * row, ds_key_t index)
 
     pick_distribution(&r->c_birth_country, "countries", 1, 1, C_BIRTH_COUNTRY);
 
-	
+
 	return (res);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -189,15 +189,15 @@ pr_w_customer(void *row)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None

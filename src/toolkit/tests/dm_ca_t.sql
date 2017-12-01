@@ -12,10 +12,10 @@ select ca_address_id ca_address_id
       ,cust_country ca_country
       ,zipg_gmt_offset ca_gmt_offset
       ,cust_loc_type ca_location_type
-from s_customer_m  
+from s_customer_m
     ,customer
     ,customer_address
-    ,s_zip_to_gmt_m 
+    ,s_zip_to_gmt_m
 where cust_zip = zipg_zip
   and cust_customer_id = c_customer_id
   and c_current_addr_sk = ca_address_sk;

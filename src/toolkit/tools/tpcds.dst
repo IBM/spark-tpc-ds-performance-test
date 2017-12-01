@@ -56,7 +56,7 @@
 ------
 create gender;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 add ("M": 50);
 add ("F": 50);
 
@@ -65,7 +65,7 @@ add ("F": 50);
 ------
 create marital_status;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 add ("M": 1);
 add ("S": 1);
 add ("D": 1);
@@ -83,7 +83,7 @@ add ("U": 1);
 ------
 create education;
 set types = (varchar);
-set weights = 4; 
+set weights = 4;
 add ("Primary": 1, 650, 250, 100);
 add ("Secondary": 1, 3250, 1250, 500);
 add ("College": 1, 650, 250, 100);
@@ -97,7 +97,7 @@ add ("Unknown": 1, 10, 10, 10);
 ------
 create purchase_band;
 set types = (int);
-set weights = 1; 
+set weights = 1;
 add (500: 7);
 add (1000: 7);
 add (1500: 7);
@@ -124,7 +124,7 @@ add (10000: 1);
 ------
 create buy_potential;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 add ("0-500": 17);
 add ("501-1000": 17);
 add ("1001-5000": 35);
@@ -137,7 +137,7 @@ add ("Unknown": 4);
 ------
 create credit_rating;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 add ("Good": 65);
 add ("Low Risk": 25);
 add ("High Risk": 10);
@@ -148,7 +148,7 @@ add ("Unknown": 4);
 ------
 create income_band;
 set types = (int, int);
-set weights = 1; 
+set weights = 1;
 add (0, 10000: 7);
 add (10001, 20000: 7);
 add (20001, 30000: 7);
@@ -176,7 +176,7 @@ add (190001, 200000: 8);
 ------
 create dependent_count;
 set types = (int);
-set weights = 1; 
+set weights = 1;
 add (0: 25);
 add (1: 25);
 add (2: 10);
@@ -193,7 +193,7 @@ add (9: 2);
 ------
 create vehicle_count;
 set types = (int);
-set weights = 1; 
+set weights = 1;
 add (0: 17);
 add (1: 17);
 add (2: 35);
@@ -206,7 +206,7 @@ add (-1: 4);
 ------
 create promo_purpose;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 
 add ("Unknown": 4);
 
@@ -215,7 +215,7 @@ add ("Unknown": 4);
 ------
 create return_reasons;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 add ("Package was damaged": 1, 0, 0, 0, 0, 0);
 add ("Stopped working": 1, 0, 0, 0, 0, 0);
 add ("Did not get it on time": 1, 0, 0, 0, 0, 0);
@@ -305,7 +305,7 @@ add ("reason 75": 1, 1, 1, 1, 1, 1);
 ------
 create store_type;
 set types = (varchar, int, int, int, int, int, int);
-set weights = 1; 
+set weights = 1;
 
 add ("Big Box", 200, 300, 5000000, 10000000, 10000, 20000: 1);
 
@@ -314,7 +314,7 @@ add ("Big Box", 200, 300, 5000000, 10000000, 10000, 20000: 1);
 ------
 create geography_class;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 
 add ("Unknown": 4);
 ------
@@ -322,7 +322,7 @@ add ("Unknown": 4);
 ------
 create divisions;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 
 add ("Unknown": 4);
 ------
@@ -330,7 +330,7 @@ add ("Unknown": 4);
 ------
 create stores;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 
 add ("Unknown": 4);
 ------
@@ -345,7 +345,7 @@ add ("Unknown": 4);
 ------
 create hours;
 set types = (int, varchar, varchar, varchar, varchar);
-set weights = 3; 
+set weights = 3;
 add (0, "AM", "third", "night", "": 1, 0, 1);
 add (1, "AM", "third", "night", "": 1, 0, 2);
 add (2, "AM", "third", "night", "": 1, 0, 2);
@@ -380,7 +380,7 @@ add (23, "PM", "third", "evening", "": 1, 0, 1);
 ------
 create call_centers;
 set types = (varchar);
-set weights = 2; 
+set weights = 2;
 add ("New England": 1, 8);
 add ("NY Metro": 1, 16);
 add ("Mid Atlantic": 1, 10);

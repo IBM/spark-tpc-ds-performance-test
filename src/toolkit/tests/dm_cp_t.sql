@@ -5,8 +5,8 @@ select cpag_id cp_catalog_page_id
       ,endd.d_date_sk cp_end_date_sk
       ,cpag_department cp_department
       ,cpag_catalog_number cp_catalog_number
-      ,cpag_description cp_description 
-      ,cpag_type cp_type  
+      ,cpag_description cp_description
+      ,cpag_type cp_type
 from s_catalog_page
     ,date_dim startd
     ,date_dim endd

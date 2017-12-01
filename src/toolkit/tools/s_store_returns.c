@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -52,15 +52,15 @@ extern struct S_PURCHASE_TBL g_s_purchase;
 extern struct S_PURCHASE_LINEITEM_TBL g_s_purchase_lineitem;
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -71,7 +71,7 @@ mk_s_store_returns(void *pDest, ds_key_t kIndex)
 	static int bInit = 0;
 	struct S_STORE_RETURNS_TBL *r;
 	int nReturnLag;
-	
+
 	if (pDest == NULL)
 		r = &g_s_store_returns;
 	else
@@ -82,7 +82,7 @@ mk_s_store_returns(void *pDest, ds_key_t kIndex)
 		memset(&g_s_store_returns, 0, sizeof(struct S_STORE_RETURNS_TBL));
 		bInit = 1;
 	}
-	
+
 	genrand_integer(&nReturnLag, DIST_UNIFORM, 0, 60, 0, S_SRET_RETURN_DATE);
    if (g_s_purchase.dtPurchaseDate.julian == -1)
       r->dtReturnDate.julian = -1;
@@ -96,20 +96,20 @@ mk_s_store_returns(void *pDest, ds_key_t kIndex)
    else
       r->Pricing.quantity = -1;
 	set_pricing(S_SRET_PRICING, &r->Pricing);
-	
+
 	return(0);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -118,12 +118,12 @@ int
 pr_s_store_returns(void *pSrc)
 {
 	struct S_STORE_RETURNS_TBL *r;
-	
+
 	if (pSrc == NULL)
 		r = &g_s_store_returns;
 	else
 		r = pSrc;
-	
+
 	print_start(S_STORE_RETURNS);
 	print_id(S_SRET_STORE_ID, g_s_purchase.kStoreID, 1);
 	print_key(S_SRET_PURCHASE_ID, g_s_purchase.kID, 1);
@@ -143,34 +143,34 @@ pr_s_store_returns(void *pSrc)
 	print_decimal(S_SRET_MERCHANT_CREDIT, &r->Pricing.store_credit, 1);
 	print_id(S_SRET_REASON_ID, r->kReasonID, 0);
 	print_end(S_STORE_RETURNS);
-	
+
 	return(0);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
 */
-int 
+int
 ld_s_store_returns(void *pSrc)
 {
 	struct S_STORE_RETURNS_TBL *r;
-		
+
 	if (pSrc == NULL)
 		r = &g_s_store_returns;
 	else
 		r = pSrc;
-	
+
 	return(0);
 }
 

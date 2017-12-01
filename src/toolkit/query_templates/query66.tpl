@@ -1,37 +1,37 @@
 --
--- Legal Notice 
--- 
--- This document and associated source code (the "Work") is a part of a 
--- benchmark specification maintained by the TPC. 
--- 
--- The TPC reserves all right, title, and interest to the Work as provided 
--- under U.S. and international laws, including without limitation all patent 
--- and trademark rights therein. 
--- 
--- No Warranty 
--- 
--- 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
---     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
---     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
---     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
---     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
---     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
---     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
---     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
---     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
---     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
---     WITH REGARD TO THE WORK. 
--- 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
---     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
---     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
---     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+-- Legal Notice
+--
+-- This document and associated source code (the "Work") is a part of a
+-- benchmark specification maintained by the TPC.
+--
+-- The TPC reserves all right, title, and interest to the Work as provided
+-- under U.S. and international laws, including without limitation all patent
+-- and trademark rights therein.
+--
+-- No Warranty
+--
+-- 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+--     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+--     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+--     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+--     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+--     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+--     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+--     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+--     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+--     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+--     WITH REGARD TO THE WORK.
+-- 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+--     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+--     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+--     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
 --     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
---     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
---     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
---     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
--- 
+--     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+--     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+--     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+--
 -- Contributors:
--- 
+--
   define YEAR= random(1998, 2002, uniform);
  define TIMEONE= random(1, 57597, uniform);
  define SMC = ulist(dist(ship_mode_carrier, 1, 1),2);
@@ -39,9 +39,9 @@
  define NETTWO = text({"cs_net_paid",1},{"cs_net_paid_inc_tax",1},{"cs_net_paid_inc_ship",1},{"cs_net_paid_inc_ship_tax",1},{"cs_net_profit",1});
  define SALESONE = text({"ws_sales_price",1},{"ws_ext_sales_price",1},{"ws_ext_list_price",1});
  define SALESTWO = text({"cs_sales_price",1},{"cs_ext_sales_price",1},{"cs_ext_list_price",1});
- define _LIMIT=100; 
- 
- [_LIMITA] select [_LIMITB]  
+ define _LIMIT=100;
+
+ [_LIMITA] select [_LIMITB]
          w_warehouse_name
  	,w_warehouse_sq_ft
  	,w_city
@@ -87,7 +87,7 @@
  	,sum(nov_net) as nov_net
  	,sum(dec_net) as dec_net
  from (
-     select 
+     select
  	w_warehouse_name
  	,w_warehouse_sq_ft
  	,w_city
@@ -96,49 +96,49 @@
  	,w_country
  	,'[SMC.1]' || ',' || '[SMC.2]' as ship_carriers
        ,d_year as year
- 	,sum(case when d_moy = 1 
+ 	,sum(case when d_moy = 1
  		then [SALESONE]* ws_quantity else 0 end) as jan_sales
- 	,sum(case when d_moy = 2 
+ 	,sum(case when d_moy = 2
  		then [SALESONE]* ws_quantity else 0 end) as feb_sales
- 	,sum(case when d_moy = 3 
+ 	,sum(case when d_moy = 3
  		then [SALESONE]* ws_quantity else 0 end) as mar_sales
- 	,sum(case when d_moy = 4 
+ 	,sum(case when d_moy = 4
  		then [SALESONE]* ws_quantity else 0 end) as apr_sales
- 	,sum(case when d_moy = 5 
+ 	,sum(case when d_moy = 5
  		then [SALESONE]* ws_quantity else 0 end) as may_sales
- 	,sum(case when d_moy = 6 
+ 	,sum(case when d_moy = 6
  		then [SALESONE]* ws_quantity else 0 end) as jun_sales
- 	,sum(case when d_moy = 7 
+ 	,sum(case when d_moy = 7
  		then [SALESONE]* ws_quantity else 0 end) as jul_sales
- 	,sum(case when d_moy = 8 
+ 	,sum(case when d_moy = 8
  		then [SALESONE]* ws_quantity else 0 end) as aug_sales
- 	,sum(case when d_moy = 9 
+ 	,sum(case when d_moy = 9
  		then [SALESONE]* ws_quantity else 0 end) as sep_sales
- 	,sum(case when d_moy = 10 
+ 	,sum(case when d_moy = 10
  		then [SALESONE]* ws_quantity else 0 end) as oct_sales
  	,sum(case when d_moy = 11
  		then [SALESONE]* ws_quantity else 0 end) as nov_sales
  	,sum(case when d_moy = 12
  		then [SALESONE]* ws_quantity else 0 end) as dec_sales
- 	,sum(case when d_moy = 1 
+ 	,sum(case when d_moy = 1
  		then [NETONE] * ws_quantity else 0 end) as jan_net
  	,sum(case when d_moy = 2
  		then [NETONE] * ws_quantity else 0 end) as feb_net
- 	,sum(case when d_moy = 3 
+ 	,sum(case when d_moy = 3
  		then [NETONE] * ws_quantity else 0 end) as mar_net
- 	,sum(case when d_moy = 4 
+ 	,sum(case when d_moy = 4
  		then [NETONE] * ws_quantity else 0 end) as apr_net
- 	,sum(case when d_moy = 5 
+ 	,sum(case when d_moy = 5
  		then [NETONE] * ws_quantity else 0 end) as may_net
- 	,sum(case when d_moy = 6 
+ 	,sum(case when d_moy = 6
  		then [NETONE] * ws_quantity else 0 end) as jun_net
- 	,sum(case when d_moy = 7 
+ 	,sum(case when d_moy = 7
  		then [NETONE] * ws_quantity else 0 end) as jul_net
- 	,sum(case when d_moy = 8 
+ 	,sum(case when d_moy = 8
  		then [NETONE] * ws_quantity else 0 end) as aug_net
- 	,sum(case when d_moy = 9 
+ 	,sum(case when d_moy = 9
  		then [NETONE] * ws_quantity else 0 end) as sep_net
- 	,sum(case when d_moy = 10 
+ 	,sum(case when d_moy = 10
  		then [NETONE] * ws_quantity else 0 end) as oct_net
  	,sum(case when d_moy = 11
  		then [NETONE] * ws_quantity else 0 end) as nov_net
@@ -156,9 +156,9 @@
         and ws_sold_time_sk = t_time_sk
  	and ws_ship_mode_sk = sm_ship_mode_sk
         and d_year = [YEAR]
- 	and t_time between [TIMEONE] and [TIMEONE]+28800 
+ 	and t_time between [TIMEONE] and [TIMEONE]+28800
  	and sm_carrier in ('[SMC.1]','[SMC.2]')
-     group by 
+     group by
         w_warehouse_name
  	,w_warehouse_sq_ft
  	,w_city
@@ -167,7 +167,7 @@
  	,w_country
        ,d_year
  union all
-     select 
+     select
  	w_warehouse_name
  	,w_warehouse_sq_ft
  	,w_city
@@ -176,49 +176,49 @@
  	,w_country
  	,'[SMC.1]' || ',' || '[SMC.2]' as ship_carriers
        ,d_year as year
- 	,sum(case when d_moy = 1 
+ 	,sum(case when d_moy = 1
  		then [SALESTWO]* cs_quantity else 0 end) as jan_sales
- 	,sum(case when d_moy = 2 
+ 	,sum(case when d_moy = 2
  		then [SALESTWO]* cs_quantity else 0 end) as feb_sales
- 	,sum(case when d_moy = 3 
+ 	,sum(case when d_moy = 3
  		then [SALESTWO]* cs_quantity else 0 end) as mar_sales
- 	,sum(case when d_moy = 4 
+ 	,sum(case when d_moy = 4
  		then [SALESTWO]* cs_quantity else 0 end) as apr_sales
- 	,sum(case when d_moy = 5 
+ 	,sum(case when d_moy = 5
  		then [SALESTWO]* cs_quantity else 0 end) as may_sales
- 	,sum(case when d_moy = 6 
+ 	,sum(case when d_moy = 6
  		then [SALESTWO]* cs_quantity else 0 end) as jun_sales
- 	,sum(case when d_moy = 7 
+ 	,sum(case when d_moy = 7
  		then [SALESTWO]* cs_quantity else 0 end) as jul_sales
- 	,sum(case when d_moy = 8 
+ 	,sum(case when d_moy = 8
  		then [SALESTWO]* cs_quantity else 0 end) as aug_sales
- 	,sum(case when d_moy = 9 
+ 	,sum(case when d_moy = 9
  		then [SALESTWO]* cs_quantity else 0 end) as sep_sales
- 	,sum(case when d_moy = 10 
+ 	,sum(case when d_moy = 10
  		then [SALESTWO]* cs_quantity else 0 end) as oct_sales
  	,sum(case when d_moy = 11
  		then [SALESTWO]* cs_quantity else 0 end) as nov_sales
  	,sum(case when d_moy = 12
  		then [SALESTWO]* cs_quantity else 0 end) as dec_sales
- 	,sum(case when d_moy = 1 
+ 	,sum(case when d_moy = 1
  		then [NETTWO] * cs_quantity else 0 end) as jan_net
- 	,sum(case when d_moy = 2 
+ 	,sum(case when d_moy = 2
  		then [NETTWO] * cs_quantity else 0 end) as feb_net
- 	,sum(case when d_moy = 3 
+ 	,sum(case when d_moy = 3
  		then [NETTWO] * cs_quantity else 0 end) as mar_net
- 	,sum(case when d_moy = 4 
+ 	,sum(case when d_moy = 4
  		then [NETTWO] * cs_quantity else 0 end) as apr_net
- 	,sum(case when d_moy = 5 
+ 	,sum(case when d_moy = 5
  		then [NETTWO] * cs_quantity else 0 end) as may_net
- 	,sum(case when d_moy = 6 
+ 	,sum(case when d_moy = 6
  		then [NETTWO] * cs_quantity else 0 end) as jun_net
- 	,sum(case when d_moy = 7 
+ 	,sum(case when d_moy = 7
  		then [NETTWO] * cs_quantity else 0 end) as jul_net
- 	,sum(case when d_moy = 8 
+ 	,sum(case when d_moy = 8
  		then [NETTWO] * cs_quantity else 0 end) as aug_net
- 	,sum(case when d_moy = 9 
+ 	,sum(case when d_moy = 9
  		then [NETTWO] * cs_quantity else 0 end) as sep_net
- 	,sum(case when d_moy = 10 
+ 	,sum(case when d_moy = 10
  		then [NETTWO] * cs_quantity else 0 end) as oct_net
  	,sum(case when d_moy = 11
  		then [NETTWO] * cs_quantity else 0 end) as nov_net
@@ -236,9 +236,9 @@
         and cs_sold_time_sk = t_time_sk
  	and cs_ship_mode_sk = sm_ship_mode_sk
         and d_year = [YEAR]
- 	and t_time between [TIMEONE] AND [TIMEONE]+28800 
+ 	and t_time between [TIMEONE] AND [TIMEONE]+28800
  	and sm_carrier in ('[SMC.1]','[SMC.2]')
-     group by 
+     group by
         w_warehouse_name
  	,w_warehouse_sq_ft
  	,w_city
@@ -247,7 +247,7 @@
  	,w_country
        ,d_year
  ) x
- group by 
+ group by
         w_warehouse_name
  	,w_warehouse_sq_ft
  	,w_city

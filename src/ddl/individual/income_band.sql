@@ -9,7 +9,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/income_band")
 ;
 drop table if exists income_band;
-create table income_band 
+create table income_band
 using parquet
 as (select * from income_band_text)
 ;

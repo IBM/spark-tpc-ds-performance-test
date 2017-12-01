@@ -1,6 +1,6 @@
 drop table s_call_center;
-create table s_call_center as 
-(select cc_call_center_id call_center_id 
+create table s_call_center as
+(select cc_call_center_id call_center_id
        ,d1.d_date call_open_date
        ,d2.d_date call_closed_date
        ,cc_name call_center_name

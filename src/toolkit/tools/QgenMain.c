@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #define DECLARER
 #include "config.h"
 #include "porting.h"
@@ -62,7 +62,7 @@ template_t *pCurrentQuery,
 list_t *TemplateList;
 
 
-int g_nQueryNumber, 
+int g_nQueryNumber,
 	g_nStreamNumber;
 StringBuffer_t *g_sbTemplateName = NULL;
 
@@ -74,15 +74,15 @@ extern 	file_ref_t *pCurrentFile;
 table_func_t w_tdef_funcs[MAX_TABLE];
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -93,14 +93,14 @@ parseTemplate(char *szFileName, int nIndex)
 	int nWarning,
 		nError;
 	char szPath[1024];
-			
+
 		pCurrentQuery = (template_t *)malloc(sizeof(struct TEMPLATE_T));
 		MALLOC_CHECK(pCurrentQuery);
 		if (!pCurrentQuery)
 			ReportErrorNoLine(QERR_NO_MEMORY, "parseQueries()", 1);
 		memset(pCurrentQuery, 0, sizeof(struct TEMPLATE_T));
 		pCurrentQuery->SegmentList = makeList(L_FL_TAIL, NULL);
-		pCurrentQuery->SubstitutionList = makeList(L_FL_SORT, compareSubstitution);	
+		pCurrentQuery->SubstitutionList = makeList(L_FL_SORT, compareSubstitution);
 		pCurrentQuery->DistributionList = makeList(L_FL_SORT, di_compare);
 
 		/*
@@ -119,12 +119,12 @@ parseTemplate(char *szFileName, int nIndex)
 		sprintf(szPath, "%s/%s.tpl", get_str("DIRECTORY"), get_str("DIALECT"));
 		if (include_file(szPath, pCurrentQuery) < 0)
 			ReportErrorNoLine(QERR_NO_FILE, szPath, 1);
-	
+
 		/* parse the template file */
 		yyparse();
 
-		/* 
-		 * add in query start substitution, now that it has been defined 
+		/*
+		 * add in query start substitution, now that it has been defined
 		 */
 		pCurrentQuery->SegmentList->nFlags &= ~L_FL_TAIL;
 		pCurrentQuery->SegmentList->nFlags |= L_FL_HEAD;
@@ -133,21 +133,21 @@ parseTemplate(char *szFileName, int nIndex)
 		((segment_t *)pCurrentQuery->SegmentList->head->pData)->pSubstitution = findSubstitution(pCurrentQuery, "_BEGIN", 0);
 		pCurrentQuery->SegmentList->nFlags &= ~L_FL_HEAD;
 		pCurrentQuery->SegmentList->nFlags |= L_FL_TAIL;
-		
+
 		/* check for any parsing errors */
 		GetErrorCounts(&nError, &nWarning);
 		if (nError)
 		{
-			printf("%d Errors encountered parsing %s\n", 
+			printf("%d Errors encountered parsing %s\n",
 				nError, szFileName);
 			exit(1);
 		}
 		if (nWarning)
 		{
-			printf("WARNING: %d warnings encountered parsing %s\nWARNING: Query output may not be correct!\n", 
+			printf("WARNING: %d warnings encountered parsing %s\nWARNING: Query output may not be correct!\n",
 				nWarning, szFileName);
 		}
-		
+
 		addList(TemplateList, pCurrentQuery);
 		pCurrentQuery->index = nIndex;
 		pCurrentQuery->name = strdup(szFileName);
@@ -156,15 +156,15 @@ parseTemplate(char *szFileName, int nIndex)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -176,14 +176,14 @@ parseQueries(void)
 		*cp;
 	FILE *pInputFile;
 	int nIndex = 1;
-	
+
 	if (!is_set("INPUT"))
 	{
 		ReportErrorNoLine(QERR_NO_QUERYLIST, NULL, 1);
 	}
 
 	strcpy(szFileName, get_str("INPUT"));
-	
+
 #ifndef WIN32
 	if ((pInputFile = fopen(szFileName, "r")) == NULL)
 #else
@@ -193,7 +193,7 @@ parseQueries(void)
 		SetErrorGlobals(szFileName, NULL);
 		ReportErrorNoLine(QERR_OPEN_FAILED, szFileName, 1);
 	}
-	
+
 	while (fgets(szFileName, 1024, pInputFile))
 	{
 		if (strncmp(szFileName, "--", 2) == 0)
@@ -202,7 +202,7 @@ parseQueries(void)
 			*cp = '\0';
 		if (!strlen(szFileName))
 			continue;
-			
+
 		parseTemplate(szFileName, nIndex++);
 	}
 
@@ -210,15 +210,15 @@ parseQueries(void)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -239,7 +239,7 @@ generateQueryStreams(void)
 
 	nQueryCount = length(TemplateList);
 	nVersionCount = get_int("COUNT");
-	
+
 	if (is_set("LOG"))
 	{
 #ifndef WIN32
@@ -255,14 +255,14 @@ generateQueryStreams(void)
 
 	for (nStream=0; nStream < get_int("STREAMS"); nStream++)
 	{
-		/* 
-		 * use stream 1 for permutation, and stream 0 for all other RNG calls in qgen, 
-		 * to assure permutation stability regardless of command line seed 
+		/*
+		 * use stream 1 for permutation, and stream 0 for all other RNG calls in qgen,
+		 * to assure permutation stability regardless of command line seed
 		 */
 		Streams[1].nInitialSeed = 19620718;
 		Streams[1].nSeed = 19620718;
 		pPermutation = makePermutation(pPermutation, nQueryCount, 1);
-	
+
 		sprintf(szPath, "%s%squery_%d.sql",
 			get_str("OUTPUT_DIR"),
 			get_str("PATH_SEP"),
@@ -313,20 +313,20 @@ generateQueryStreams(void)
 }
 
 /*
- * Routine: 
- * Purpose: 
+ * Routine:
+ * Purpose:
  * Algorithm:
  * Data Structures:
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
  */
-int 
+int
 main(int ac, char* av[])
 {
 	template_t *pTemplate;
@@ -345,17 +345,17 @@ main(int ac, char* av[])
 
 	/* sync the keyword defines between lex/yacc/qgen */
 	InitKeywords();
-	
+
 	if (is_set("YYDEBUG"))
 		yydebug = 1;
-	
+
 
 	if (is_set("TEMPLATE"))
       parseTemplate(get_str("TEMPLATE"), 1);
 	else
 		parseQueries();	/* load the query templates */
-	
-	
+
+
 	if (is_set("VERBOSE") && !is_set("QUIET"))
 		fprintf(stderr, "Parsed %d templates\n", length(TemplateList));
 	if (is_set("DUMP"))
@@ -371,5 +371,5 @@ main(int ac, char* av[])
 	exit(0);
 
 }
-		
+
 

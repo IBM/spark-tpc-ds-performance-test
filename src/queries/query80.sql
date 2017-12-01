@@ -11,7 +11,7 @@
      item,
      promotion
  where ss_sold_date_sk = d_date_sk
-       and d_date between cast('2000-08-23' as date) 
+       and d_date between cast('2000-08-23' as date)
                   and date_add(cast('2000-08-23' as date), 30 )
        and ss_store_sk = s_store_sk
        and ss_item_sk = i_item_sk
@@ -66,7 +66,7 @@ group by web_site_id)
         , sum(sales) as sales
         , sum(returns) as returns
         , sum(profit) as profit
- from 
+ from
  (select 'store channel' as channel
         , concat( 'store' , store_id )  as id
         , sales

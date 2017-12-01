@@ -18,7 +18,7 @@ mysql -utpcds -ptpcds -D$1 < $2 || exit -1
 
 load_table()
 {
-mysql -utpcds -ptpcds -D$V_DATABASE -e "load data infile '$1' replace into table $2 fields terminated by '|'" 2>&1  
+mysql -utpcds -ptpcds -D$V_DATABASE -e "load data infile '$1' replace into table $2 fields terminated by '|'" 2>&1
 }
 
 connect_to()

@@ -1,6 +1,6 @@
 drop table s_inventory;
-create table s_inventory as 
-(select w_warehouse_id invn_warehouse_id 
+create table s_inventory as
+(select w_warehouse_id invn_warehouse_id
        ,i_item_id invn_item_id
        ,d_date invn_date
        ,inv_quantity_on_hand invn_qty_on_hand

@@ -5,7 +5,7 @@ The official TPC-DS tools can be found at [tpc.org](http://www.tpc.org/tpc_docum
 This version is based on v2.5 and has been modified to:
 
 * Allow compilation under macOS (commit [2ec45c5](https://github.com/gregrahn/tpcds-kit/commit/2ec45c5ed97cc860819ee630770231eac738097c))
-* Address obvious query template bugs like 
+* Address obvious query template bugs like
   * https://github.com/gregrahn/tpcds-kit/issues/30
   * https://github.com/gregrahn/tpcds-kit/issues/31
   * https://github.com/gregrahn/tpcds-kit/issues/33
@@ -17,12 +17,12 @@ This version is based on v2.5 and has been modified to:
 
 Make sure the required development tools are installed:
 
-Ubuntu: 
+Ubuntu:
 ```
 sudo apt-get install gcc make flex bison byacc git
 ```
 
-CentOS/RHEL: 
+CentOS/RHEL:
 ```
 sudo yum install gcc make flex bison byacc git
 ```
@@ -42,7 +42,7 @@ Make sure the required development tools are installed:
 ```
 xcode-select --install
 ```
- 
+
 Then run the following commands to clone the repo and build the tools:
 
 ```

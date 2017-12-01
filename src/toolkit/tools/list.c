@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -123,7 +123,7 @@ addList(list_t *pList, void *pData)
 		}
 
 		pList->nMembers += 1;
-		
+
 		return(pList);
 	}
 
@@ -146,15 +146,15 @@ addList(list_t *pList, void *pData)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -163,7 +163,7 @@ void *
 removeItem(list_t *pList, int bHead)
 {
 	void *pResult;
-	
+
 	if (pList->nMembers == 0)
 		return(NULL);
 
@@ -186,15 +186,15 @@ removeItem(list_t *pList, int bHead)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -213,15 +213,15 @@ getHead(list_t *pList)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -240,15 +240,15 @@ getTail(list_t *pList)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -267,15 +267,15 @@ getNext(list_t *pList)
 }
 
 /*
-* Routine: 
+* Routine:
 * Purpose: findList(list_t *pList, void *pData)
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -285,7 +285,7 @@ findList(list_t *pList, void *pData)
 {
 	void *pNode;
 	struct LIST_NODE_T *pOldCurrent = pList->pCurrent;
-	
+
 	for (pNode = getHead(pList); pNode; pNode = getNext(pList))
 		if (pList->pSortFunc(pNode, pData) == 0)
 		{
@@ -298,15 +298,15 @@ findList(list_t *pList, void *pData)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -316,7 +316,7 @@ getItem(list_t *pList, int nIndex)
 {
 	void *pResult;
 	struct LIST_NODE_T *pOldCurrent = pList->pCurrent;
-	
+
 	if (nIndex > length(pList))
 		return(NULL);
 

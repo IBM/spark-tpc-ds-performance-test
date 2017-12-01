@@ -1,35 +1,35 @@
 --
--- Legal Notice 
--- 
--- This document and associated source code (the "Work") is a part of a 
--- benchmark specification maintained by the TPC. 
--- 
--- The TPC reserves all right, title, and interest to the Work as provided 
--- under U.S. and international laws, including without limitation all patent 
--- and trademark rights therein. 
--- 
--- No Warranty 
--- 
--- 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
---     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
---     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
---     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
---     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
---     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
---     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
---     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
---     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
---     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
---     WITH REGARD TO THE WORK. 
--- 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
---     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
---     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
---     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+-- Legal Notice
+--
+-- This document and associated source code (the "Work") is a part of a
+-- benchmark specification maintained by the TPC.
+--
+-- The TPC reserves all right, title, and interest to the Work as provided
+-- under U.S. and international laws, including without limitation all patent
+-- and trademark rights therein.
+--
+-- No Warranty
+--
+-- 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+--     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+--     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+--     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+--     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+--     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+--     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+--     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+--     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+--     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+--     WITH REGARD TO THE WORK.
+-- 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+--     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+--     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+--     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
 --     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
---     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
---     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
---     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
--- 
+--     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+--     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+--     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+--
 -- Contributors:
 --
  define YEAR = random(1998, 2002, uniform);
@@ -38,11 +38,11 @@
  define STATE=ulist(dist(fips_county,3,1),7);
  define MONTH=ulist(random(1,12,uniform),6);
  define _LIMIT=100;
- 
+
  with results as
  (select i_item_id,
         ca_country,
-        ca_state, 
+        ca_state,
         ca_county,
         cast(cs_quantity as decimal(12,2)) agg1,
         cast(cs_list_price as decimal(12,2)) agg2,
@@ -56,7 +56,7 @@
        cs_item_sk = i_item_sk and
        cs_bill_cdemo_sk = cd1.cd_demo_sk and
        cs_bill_customer_sk = c_customer_sk and
-       cd1.cd_gender = '[GEN]' and 
+       cd1.cd_gender = '[GEN]' and
        cd1.cd_education_status = '[ES]' and
        c_current_cdemo_sk = cd2.cd_demo_sk and
        c_current_addr_sk = ca_address_sk and
@@ -66,28 +66,28 @@
  )
  [_LIMITA] select [_LIMITB] i_item_id, ca_country, ca_state, ca_county, agg1, agg2, agg3, agg4, agg5, agg6, agg7
  from (
- 	select i_item_id, ca_country, ca_state, ca_county, avg(agg1) agg1, 
- 		avg(agg2) agg2, avg(agg3) agg3, avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7 
+ 	select i_item_id, ca_country, ca_state, ca_county, avg(agg1) agg1,
+ 		avg(agg2) agg2, avg(agg3) agg3, avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7
  	from results
 	group by i_item_id, ca_country, ca_state, ca_county
  	union all
  	select i_item_id, ca_country, ca_state, NULL as county, avg(agg1) agg1, avg(agg2) agg2, avg(agg3) agg3,
-		avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7 
+		avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7
 	from results
 	group by i_item_id, ca_country, ca_state
  	union all
 	select i_item_id, ca_country, NULL as ca_state, NULL as county, avg(agg1) agg1, avg(agg2) agg2, avg(agg3) agg3,
-		avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7 
+		avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7
 	from results
  	group by i_item_id, ca_country
  	union all
  	select i_item_id, NULL as ca_country, NULL as ca_state, NULL as county, avg(agg1) agg1, avg(agg2) agg2, avg(agg3) agg3,
-		avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7 
+		avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7
 	from results
 	group by i_item_id
 	union all
 	select NULL AS i_item_id, NULL as ca_country, NULL as ca_state, NULL as county, avg(agg1) agg1, avg(agg2) agg2, avg(agg3) agg3,
-		avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7 
+		avg(agg4) agg4, avg(agg5) agg5, avg(agg6) agg6, avg(agg7) agg7
 	from results
  ) foo
  order by ca_country, ca_state, ca_county, i_item_id

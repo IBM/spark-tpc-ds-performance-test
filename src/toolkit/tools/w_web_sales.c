@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -76,7 +76,7 @@ mk_master (void *row, ds_key_t index)
    struct W_WEB_SALES_TBL *r;
    static int bInit = 0,
 	   nItemCount;
-	
+
 	if (row == NULL)
 		r = &g_w_web_sales;
 	else
@@ -86,16 +86,16 @@ mk_master (void *row, ds_key_t index)
 	{
 		strtodec (&dMin, "1.00");
 		strtodec (&dMax, "100000.00");
-		jDate = skipDays(WEB_SALES, &kNewDateIndex);	
+		jDate = skipDays(WEB_SALES, &kNewDateIndex);
 		nItemCount = (int)getIDCount(ITEM);
 		bInit = 1;
 	}
-		
-	
+
+
 	/***
 	* some attributes reamin the same for each lineitem in an order; others are different
-	* for each lineitem. Since the number of lineitems per order is static, we can use a 
-	* modulo to determine when to change the semi-static values 
+	* for each lineitem. Since the number of lineitems per order is static, we can use a
+	* modulo to determine when to change the semi-static values
 	*/
    while (index > kNewDateIndex)	/* need to move to a new date */
    {
@@ -109,7 +109,7 @@ mk_master (void *row, ds_key_t index)
    r->ws_bill_cdemo_sk = mk_join (WS_BILL_CDEMO_SK, CUSTOMER_DEMOGRAPHICS, 1);
    r->ws_bill_hdemo_sk = mk_join (WS_BILL_HDEMO_SK, HOUSEHOLD_DEMOGRAPHICS, 1);
    r->ws_bill_addr_sk = mk_join (WS_BILL_ADDR_SK, CUSTOMER_ADDRESS, 1);
-		
+
    /* most orders are for the ordering customers, some are not */
    genrand_integer(&nGiftPct, DIST_UNIFORM, 0, 99, 0, WS_SHIP_CUSTOMER_SK);
    if (nGiftPct > WS_GIFT_PCT)
@@ -154,7 +154,7 @@ mk_detail (void *row, int bPrint)
 	{
 		jDate = skipDays(WEB_SALES, &kNewDateIndex);
 		pItemPermutation = makePermutation(NULL, nItemCount = (int)getIDCount(ITEM), WS_PERMUTATION);
-		
+
 		bInit = 1;
 	}
 
@@ -169,7 +169,7 @@ mk_detail (void *row, int bPrint)
       /* orders are shipped some number of days after they are ordered,
       * and not all lineitems ship at the same time
       */
-      genrand_integer (&nShipLag, DIST_UNIFORM, 
+      genrand_integer (&nShipLag, DIST_UNIFORM,
          WS_MIN_SHIP_DELAY, WS_MAX_SHIP_DELAY, 0, WS_SHIP_DATE_SK);
       r->ws_ship_date_sk = r->ws_sold_date_sk + nShipLag;
 
@@ -186,7 +186,7 @@ mk_detail (void *row, int bPrint)
       r->ws_promo_sk = mk_join (WS_PROMO_SK, PROMOTION, 1);
       set_pricing(WS_PRICING, &r->ws_pricing);
 
-      /** 
+      /**
       * having gone to the trouble to make the sale, now let's see if it gets returned
       */
       genrand_integer(&nTemp, DIST_UNIFORM, 0, 99, 0, WR_IS_RETURNED);
@@ -227,20 +227,20 @@ mk_w_web_sales (void *row, ds_key_t index)
 
    /**
    * and finally return 1 since we have already printed the rows
-   */	
+   */
    return (1);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -249,12 +249,12 @@ int
 pr_w_web_sales(void *row)
 {
 	struct W_WEB_SALES_TBL *r;
-	
+
 	if (row == NULL)
 		r = &g_w_web_sales;
 	else
 		r = row;
-	
+
 	print_start(WEB_SALES);
 	print_key(WS_SOLD_DATE_SK, r->ws_sold_date_sk, 1);
 	print_key(WS_SOLD_TIME_SK, r->ws_sold_time_sk, 1);
@@ -296,42 +296,42 @@ pr_w_web_sales(void *row)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
 */
-int 
+int
 ld_w_web_sales(void *pSrc)
 {
 	struct W_WEB_SALES_TBL *r;
-		
+
 	if (pSrc == NULL)
 		r = &g_w_web_sales;
 	else
 		r = pSrc;
-	
+
 	return(0);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -345,7 +345,7 @@ vld_web_sales(int nTable, ds_key_t kRow, int *Permutation)
 
 	row_skip(nTable, kRow - 1);
 	row_skip(WEB_RETURNS, (kRow - 1) );
-	jDate = skipDays(WEB_SALES, &kNewDateIndex);		
+	jDate = skipDays(WEB_SALES, &kNewDateIndex);
 	mk_master(NULL, kRow);
 	genrand_integer(&nMaxLineitem, DIST_UNIFORM, 8, 16, 9, WS_ORDER_NUMBER);
 	genrand_integer(&nLineitem, DIST_UNIFORM, 1, nMaxLineitem, 0, WS_PRICING_QUANTITY);

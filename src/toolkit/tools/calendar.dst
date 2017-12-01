@@ -1,39 +1,39 @@
--- 
--- Legal Notice 
 --
--- This document and associated source code (the "Work") is a part of a 
--- benchmark specification maintained by the TPC. 
--- 
--- The TPC reserves all right, title, and interest to the Work as provided 
--- under U.S. and international laws, including without limitation all patent 
--- and trademark rights therein. 
--- 
--- No Warranty 
--- 
--- 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
---     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
---     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
---     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
---     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
---     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
---     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
---     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
---     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
---     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
---     WITH REGARD TO THE WORK. 
--- 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
---     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
---     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
---     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+-- Legal Notice
+--
+-- This document and associated source code (the "Work") is a part of a
+-- benchmark specification maintained by the TPC.
+--
+-- The TPC reserves all right, title, and interest to the Work as provided
+-- under U.S. and international laws, including without limitation all patent
+-- and trademark rights therein.
+--
+-- No Warranty
+--
+-- 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+--     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+--     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+--     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+--     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+--     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+--     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+--     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+--     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+--     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+--     WITH REGARD TO THE WORK.
+-- 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+--     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+--     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+--     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
 --     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
---     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
---     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
---     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
--- 
+--     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+--     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+--     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+--
 -- Contributors:
 -- Gradient Systems
 --
--- 
+--
 --
 -- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 -- Begin distribution definitions
@@ -331,98 +331,98 @@ add (271,  "September", 27, "Fall",  9, 3, 245, 0:1, 1, 66, 66, 29, 29, 66, 0, 1
 add (272,  "September", 28, "Fall",  9, 3, 245, 0:1, 1, 66, 66, 29, 29, 66, 0, 1, 0);
 add (273,  "September", 29, "Fall",  9, 3, 245, 0:1, 1, 66, 66, 29, 29, 66, 0, 1, 0);
 add (274,  "September", 30, "Fall",  9, 3, 245, 0:1, 1, 66, 66, 29, 29, 66, 0, 1, 0);
-add (275,  "October",  1, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (276,  "October",  2, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (277,  "October",  3, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (278,  "October",  4, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (279,  "October",  5, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (280,  "October",  6, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (281,  "October",  7, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (282,  "October",  8, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (283,  "October",  9, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (284,  "October", 10, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (285,  "October", 11, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (286,  "October", 12, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (287,  "October", 13, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (288,  "October", 14, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (289,  "October", 15, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (290,  "October", 16, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (291,  "October", 17, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (292,  "October", 18, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (293,  "October", 19, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (294,  "October", 20, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (295,  "October", 21, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (296,  "October", 22, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (297,  "October", 23, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (298,  "October", 24, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (299,  "October", 25, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (300,  "October", 26, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (301,  "October", 27, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (302,  "October", 28, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (303,  "October", 29, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (304,  "October", 30, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (305,  "October", 31, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0); 
-add (306,  "November",  1, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (307,  "November",  2, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (308,  "November",  3, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (309,  "November",  4, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (310,  "November",  5, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (311,  "November",  6, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (312,  "November",  7, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (313,  "November",  8, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (314,  "November",  9, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (315,  "November", 10, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (316,  "November", 11, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (317,  "November", 12, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (318,  "November", 13, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (319,  "November", 14, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (320,  "November", 15, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (321,  "November", 16, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (322,  "November", 17, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (323,  "November", 18, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (324,  "November", 19, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (325,  "November", 20, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (326,  "November", 21, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (327,  "November", 22, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (328,  "November", 23, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (329,  "November", 24, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (330,  "November", 25, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (331,  "November", 26, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (332,  "November", 27, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (333,  "November", 28, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (334,  "November", 29, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (335,  "November", 30, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (336,  "December",  1, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (337,  "December",  2, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (338,  "December",  3, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (339,  "December",  4, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (340,  "December",  5, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (341,  "December",  6, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (342,  "December",  7, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (343,  "December",  8, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (344,  "December",  9, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (345,  "December", 10, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (346,  "December", 11, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (347,  "December", 12, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (348,  "December", 13, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (349,  "December", 14, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (350,  "December", 15, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (351,  "December", 16, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (352,  "December", 17, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (353,  "December", 18, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (354,  "December", 19, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (355,  "December", 20, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (356,  "December", 21, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (357,  "December", 22, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (358,  "December", 23, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (359,  "December", 24, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (360,  "December", 25, "Winter",  12, 4, 336, 1: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (361,  "December", 26, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (362,  "December", 27, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (363,  "December", 28, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (364,  "December", 29, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (365,  "December", 30, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
-add (366,  "December", 31, "Winter",  12, 4, 336, 1: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1); 
+add (275,  "October",  1, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (276,  "October",  2, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (277,  "October",  3, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (278,  "October",  4, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (279,  "October",  5, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (280,  "October",  6, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (281,  "October",  7, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (282,  "October",  8, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (283,  "October",  9, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (284,  "October", 10, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (285,  "October", 11, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (286,  "October", 12, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (287,  "October", 13, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (288,  "October", 14, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (289,  "October", 15, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (290,  "October", 16, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (291,  "October", 17, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (292,  "October", 18, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (293,  "October", 19, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (294,  "October", 20, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (295,  "October", 21, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (296,  "October", 22, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (297,  "October", 23, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (298,  "October", 24, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (299,  "October", 25, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (300,  "October", 26, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (301,  "October", 27, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (302,  "October", 28, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (303,  "October", 29, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (304,  "October", 30, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (305,  "October", 31, "Fall",  10, 4, 275, 0: 1, 1, 66, 66, 66, 66, 66, 0, 1, 0);
+add (306,  "November",  1, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (307,  "November",  2, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (308,  "November",  3, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (309,  "November",  4, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (310,  "November",  5, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (311,  "November",  6, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (312,  "November",  7, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (313,  "November",  8, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (314,  "November",  9, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (315,  "November", 10, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (316,  "November", 11, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (317,  "November", 12, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (318,  "November", 13, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (319,  "November", 14, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (320,  "November", 15, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (321,  "November", 16, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (322,  "November", 17, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (323,  "November", 18, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (324,  "November", 19, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (325,  "November", 20, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (326,  "November", 21, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (327,  "November", 22, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (328,  "November", 23, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (329,  "November", 24, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (330,  "November", 25, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (331,  "November", 26, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (332,  "November", 27, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (333,  "November", 28, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (334,  "November", 29, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (335,  "November", 30, "Fall",  11, 4, 306, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (336,  "December",  1, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (337,  "December",  2, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (338,  "December",  3, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (339,  "December",  4, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (340,  "December",  5, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (341,  "December",  6, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (342,  "December",  7, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (343,  "December",  8, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (344,  "December",  9, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (345,  "December", 10, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (346,  "December", 11, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (347,  "December", 12, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (348,  "December", 13, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (349,  "December", 14, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (350,  "December", 15, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (351,  "December", 16, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (352,  "December", 17, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (353,  "December", 18, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (354,  "December", 19, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (355,  "December", 20, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (356,  "December", 21, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (357,  "December", 22, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (358,  "December", 23, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (359,  "December", 24, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (360,  "December", 25, "Winter",  12, 4, 336, 1: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (361,  "December", 26, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (362,  "December", 27, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (363,  "December", 28, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (364,  "December", 29, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (365,  "December", 30, "Winter",  12, 4, 336, 0: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
+add (366,  "December", 31, "Winter",  12, 4, 336, 1: 1, 1, 100, 100, 66, 66, 100, 0, 0, 1);
 
 ------
 -- week_info

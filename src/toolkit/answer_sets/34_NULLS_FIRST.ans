@@ -4,7 +4,7 @@ SQL*Plus: Release 12.1.0.2.0 Production on Wed Jun 8 16:23:18 2016
 Copyright (c) 1982, 2014, Oracle.  All rights reserved.
 
 SQL> Connected.
-SQL> SQL> SQL> SQL> 
+SQL> SQL> SQL> SQL>
 C_LAST_NAME		       C_FIRST_NAME	    C_SALUTATI C SS_TICKET_NUMBER	 CNT
 ------------------------------ -------------------- ---------- - ---------------- ----------
 									   148695	  16

@@ -1,5 +1,5 @@
 -- start query 94 in stream 0 using template query94.tpl and seed QUALIFICATION
- select  
+ select
    count(distinct ws_order_number) as order_count
   ,sum(ws_ext_ship_cost) as total_shipping_cost
   ,sum(ws_net_profit) as total_net_profit
@@ -9,7 +9,7 @@ from
   ,customer_address
   ,web_site
 where
-    d_date between cast('1999-2-01' as date) and 
+    d_date between cast('1999-2-01' as date) and
            date_add(cast('1999-2-01' as date), 60 )
 and ws1.ws_ship_date_sk = d_date_sk
 and ws1.ws_ship_addr_sk = ca_address_sk

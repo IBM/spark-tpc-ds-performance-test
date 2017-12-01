@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -64,7 +64,7 @@
 #ifdef TEST
 option_t options[] =
 {
-	{"DISTRIBUTIONS", OPT_STR, 2, 
+	{"DISTRIBUTIONS", OPT_STR, 2,
 		"read distributions from file <s>", NULL, "tester_dist.idx"},
 		NULL
 };
@@ -87,8 +87,8 @@ static int load_dist(d_idx_t *d);
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -98,7 +98,7 @@ di_compare(const void *op1, const void *op2)
 {
 	d_idx_t *ie1 = (d_idx_t *)op1,
 		*ie2 = (d_idx_t *)op2;
-	
+
 	return(strcasecmp(ie1->name, ie2->name));
 }
 
@@ -110,8 +110,8 @@ di_compare(const void *op1, const void *op2)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -127,15 +127,15 @@ find_dist(char *name)
 	int i;
    FILE *ifp;
 	int32_t temp;
-	
-	
+
+
 	/* load the index if this is the first time through */
 	if (!index_loaded)
 	{
 		/* make sure that this is read one thread at a time */
 		if (!index_loaded)	/* make sure no one beat us to it */
 		{
-			
+
 			/* open the dist file */
 			if ((ifp = fopen(get_str("DISTRIBUTIONS"), "rb")) == NULL)
 				{
@@ -153,7 +153,7 @@ find_dist(char *name)
 				if ((temp = fseek(ifp, -entry_count * IDX_SIZE, SEEK_END)) < 0)
 				{
 					fprintf(stderr, "Error: lseek to index failed: ");
-					fprintf(stderr, "attempting to reach %d\nSystem error: ", 
+					fprintf(stderr, "attempting to reach %d\nSystem error: ",
 						(int)(-entry_count * IDX_SIZE));
 					perror(get_str("DISTRIBUTIONS"));
 					exit(3);
@@ -223,22 +223,22 @@ find_dist(char *name)
 				}
 				qsort((void *)idx, entry_count, sizeof(d_idx_t), di_compare);
 				index_loaded = 1;
-				
+
 				/* make sure that this is read one thread at a time */
 			fclose(ifp);
 		}
 	}
-	
+
 	/* find the distribution, if it exists and move to it */
 	strcpy(key.name, name);
-	id = (d_idx_t *)bsearch((void *)&key, (void *)idx, entry_count, 
+	id = (d_idx_t *)bsearch((void *)&key, (void *)idx, entry_count,
 		sizeof(d_idx_t), di_compare);
 	if (id != NULL)	/* found a valid distribution */
 		if (id->flags != FL_LOADED)	 /* but it needs to be loaded */
 			load_dist(id);
-		
-		
-		
+
+
+
 		return(id);
 }
 
@@ -250,8 +250,8 @@ find_dist(char *name)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -265,7 +265,7 @@ load_dist(d_idx_t *di)
 	dist_t *d;
 	int32_t temp;
 	FILE *ifp;
-	
+
 	if (di->flags != FL_LOADED)	/* make sure no one beat us to it */
 	{
 			if ((ifp = fopen(get_str("DISTRIBUTIONS"), "rb")) == NULL)
@@ -274,18 +274,18 @@ load_dist(d_idx_t *di)
 					perror(get_str("DISTRIBUTIONS"));
 					exit(1);
 				}
-		
+
 		if ((temp = fseek(ifp, di->offset, SEEK_SET)) < 0)
 		{
 			fprintf(stderr, "Error: lseek to distribution failed: ");
 			perror("load_dist()");
 			exit(2);
 		}
-		
+
 		di->dist = (dist_t *)malloc(sizeof(struct DIST_T));
 		MALLOC_CHECK(di->dist);
 		d = di->dist;
-		
+
 		/* load the type information */
 		d->type_vector = (int *)malloc(sizeof(int32_t) * di->v_width);
 		MALLOC_CHECK(d->type_vector);
@@ -299,7 +299,7 @@ load_dist(d_idx_t *di)
 			}
 			d->type_vector[i] = ntohl(temp);
 		}
-		
+
 		/* load the weights */
 		d->weight_sets = (int **)malloc(sizeof(int *) * di->w_width);
 		d->maximums = (int *)malloc(sizeof(int32_t) * di->w_width);
@@ -324,7 +324,7 @@ load_dist(d_idx_t *di)
 				d->weight_sets[i][j] = d->maximums[i];
 			}
 		}
-		
+
 		/* load the value offsets */
 		d->value_sets = (int **)malloc(sizeof(int *) * di->v_width);
 		MALLOC_CHECK(d->value_sets);
@@ -343,7 +343,7 @@ load_dist(d_idx_t *di)
 				*(*(d->value_sets + i) + j) = ntohl(temp);
 			}
 		}
-		
+
 		/* load the column aliases, if they were defined */
 		if (di->name_space)
 		{
@@ -355,7 +355,7 @@ load_dist(d_idx_t *di)
 				perror("load_dist()");
 				exit(599);
 			}
-			
+
 		}
 
 		/* and finally the values themselves */
@@ -367,13 +367,13 @@ load_dist(d_idx_t *di)
 			perror("load_dist()");
 			exit(5);
 		}
-	
+
 	fclose(ifp);
 	di->flags = FL_LOADED;
 	}
 
-	
-	
+
+
 	return(res);
 }
 
@@ -387,8 +387,8 @@ load_dist(d_idx_t *di)
 *			int vset: which set of values
 *			int wset: which set of weights
 * Returns: appropriate data type cast as a void *
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: 20000317 Need to be sure this is portable to NT and others
@@ -403,7 +403,7 @@ dist_op(void *dest, int op, char *d_name, int vset, int wset, int stream)
 		dt;
 	char *char_val;
 	int i_res = 1;
-	
+
 	if ((d = find_dist(d_name)) == NULL)
 	{
 		char msg[80];
@@ -411,14 +411,14 @@ dist_op(void *dest, int op, char *d_name, int vset, int wset, int stream)
 		INTERNAL(msg);
 		assert(d != NULL);
 	}
-		
+
 	dist = d->dist;
-	
+
 	if (op == 0)
 	{
-		genrand_integer(&level, DIST_UNIFORM, 1, 
+		genrand_integer(&level, DIST_UNIFORM, 1,
 			dist->maximums[wset - 1], 0, stream);
-		while (level > dist->weight_sets[wset - 1][index] && 
+		while (level > dist->weight_sets[wset - 1][index] &&
 			index < d->length)
 			index += 1;
 		dt = vset - 1;
@@ -427,7 +427,7 @@ dist_op(void *dest, int op, char *d_name, int vset, int wset, int stream)
 		char_val = dist->strings + dist->value_sets[dt][index];
 	}
 	else
-	{ 
+	{
 		index = vset - 1;
 		dt = wset - 1;
 		if (index >= d->length || index < 0)
@@ -441,8 +441,8 @@ dist_op(void *dest, int op, char *d_name, int vset, int wset, int stream)
 		}
 		char_val = dist->strings + dist->value_sets[dt][index];
 	}
-	
-	
+
+
 	switch(dist->type_vector[dt])
 	{
 	case TKN_VARCHAR:
@@ -471,7 +471,7 @@ dist_op(void *dest, int op, char *d_name, int vset, int wset, int stream)
 		strtodec(*(decimal_t **)dest,char_val);
 		break;
 	}
-	
+
 	return((dest == NULL)?i_res:index + 1);	/* shift back to the 1-based indexing scheme */
 }
 
@@ -485,11 +485,11 @@ dist_op(void *dest, int op, char *d_name, int vset, int wset, int stream)
 *			int index: which "row"
 *			int wset: which set of weights
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 *	20000405 need to add error checking
 */
 int
@@ -498,26 +498,26 @@ dist_weight(int *dest, char *d, int index, int wset)
 	d_idx_t *d_idx;
 	dist_t *dist;
 	int res;
-	
+
 	if ((d_idx = find_dist(d)) == NULL)
 	{
 		char msg[80];
 		sprintf(msg, "Invalid distribution name '%s'", d);
 		INTERNAL(msg);
 	}
-	
+
 	dist = d_idx->dist;
-	
+
 	res = dist->weight_sets[wset - 1][index - 1];
 	/* reverse the accumulation of weights */
 	if (index > 1)
 		res -= dist->weight_sets[wset - 1][index - 2];
-	
+
 	if (dest == NULL)
 		return(res);
-	
+
 	*dest = res;
-	
+
 	return(0);
 }
 
@@ -527,13 +527,13 @@ dist_weight(int *dest, char *d, int index, int wset)
 * Algorithm:
 * Data Structures:
 *
-* Params:	
+* Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 */
 int
 DistNameIndex(char *szDist, int nNameType, char *szName)
@@ -542,11 +542,11 @@ DistNameIndex(char *szDist, int nNameType, char *szName)
 	dist_t *dist;
 	int res;
 	char *cp = NULL;
-	
+
 	if ((d_idx = find_dist(szDist)) == NULL)
-		return(-1);	
+		return(-1);
 	dist = d_idx->dist;
-	
+
 	if (dist->names == NULL)
 		return(-1);
 
@@ -577,13 +577,13 @@ DistNameIndex(char *szDist, int nNameType, char *szName)
 * Algorithm:
 * Data Structures:
 *
-* Params:	
+* Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 *	20000405 need to add error checking
 */
 int
@@ -601,19 +601,19 @@ distsize(char *name)
 
 /*
 * Routine: int IntegrateDist(char *szDistName, int nPct, int nStartIndex, int nWeightSet)
-* Purpose: return the index of the entry which, starting from nStartIndex, would 
+* Purpose: return the index of the entry which, starting from nStartIndex, would
 *	create a range comprising nPct of the total contained in nWeightSet
 *   NOTE: the value can "wrap" -- that is, the returned value can be less than nStartIndex
 * Algorithm:
 * Data Structures:
 *
-* Params:	
+* Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 */
 
 int IntegrateDist(char *szDistName, int nPct, int nStartIndex, int nWeightSet)
@@ -624,7 +624,7 @@ int IntegrateDist(char *szDistName, int nPct, int nStartIndex, int nWeightSet)
 
 	if ((nPct <= 0) || (nPct >= 100))
 		return(QERR_RANGE_ERROR);
-	
+
 	pDistIndex=find_dist(szDistName);
 	if (pDistIndex == NULL)
 		return(QERR_BAD_NAME);
@@ -641,7 +641,7 @@ int IntegrateDist(char *szDistName, int nPct, int nStartIndex, int nWeightSet)
 		nStartIndex++;
 		nGoal -= dist_weight(NULL, szDistName, nStartIndex % nSize, nWeightSet);
 	}
-	
+
 	return(nStartIndex);
 }
 
@@ -652,13 +652,13 @@ int IntegrateDist(char *szDistName, int nPct, int nStartIndex, int nWeightSet)
 * Algorithm:
 * Data Structures:
 *
-* Params:	
+* Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 */
 int
 dist_type(char *name, int nValueSet)
@@ -672,25 +672,25 @@ dist_type(char *name, int nValueSet)
 
 	if (nValueSet < 1 || nValueSet > dist->v_width)
 		return(-1);
-	
+
 	return(dist->dist->type_vector[nValueSet - 1]);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
 */
-void 
+void
 dump_dist(char *name)
 {
 	d_idx_t *pIndex;
@@ -750,39 +750,39 @@ dump_dist(char *name)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
 */
-int 
+int
 dist_active(char *szName, int nWeightSet)
 {
 	int nSize,
 		nResult = 0,
 		i;
-	
+
 	nSize = distsize(szName);
 	for (i=1; i <= nSize; i++)
 	{
 		if (dist_weight(NULL, szName, i, nWeightSet) != 0)
 			nResult += 1;
 	}
-	
+
 	return(nResult);
 }
 
 /*
-* Routine: DistSizeToShiftWidth(char *szDist) 
+* Routine: DistSizeToShiftWidth(char *szDist)
 * Purpose: Determine the number of bits required to select a member of the distribution
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -796,7 +796,7 @@ int DistSizeToShiftWidth(char *szDist, int nWeightSet)
 
 	d = find_dist(szDist);
 	nMax = dist_max(d->dist, nWeightSet);
-	
+
 	while (nTotal < nMax)
 	{
 		nBits += 1;
@@ -807,15 +807,15 @@ int DistSizeToShiftWidth(char *szDist, int nWeightSet)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -829,25 +829,25 @@ int MatchDistWeight(void *dest, char *szDist, int nWeight, int nWeightSet, int V
 			i_res,
 			nRetcode;
 		char *char_val;
-		
+
 		if ((d = find_dist(szDist)) == NULL)
 		{
 			char msg[80];
 			sprintf(msg, "Invalid distribution name '%s'", szDist);
 			INTERNAL(msg);
 		}
-		
+
 		dist = d->dist;
 		nWeight %= dist->maximums[nWeightSet - 1];
-		
-		while (nWeight > dist->weight_sets[nWeightSet - 1][index] && 
+
+		while (nWeight > dist->weight_sets[nWeightSet - 1][index] &&
 			index < d->length)
 			index += 1;
 		dt = ValueSet - 1;
 		if (index >= d->length)
 			index = d->length - 1;
 		char_val = dist->strings + dist->value_sets[dt][index];
-		
+
 		switch(dist->type_vector[dt])
 		{
 		case TKN_VARCHAR:
@@ -876,7 +876,7 @@ int MatchDistWeight(void *dest, char *szDist, int nWeight, int nWeightSet, int V
 			strtodec(*(decimal_t **)dest,char_val);
 			break;
 		}
-		
+
 		nRetcode = 1;
 		index = 1;
 		while (index < dist->maximums[nWeightSet - 1])
@@ -896,11 +896,11 @@ int MatchDistWeight(void *dest, char *szDist, int nWeight, int nWeightSet, int V
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 * 20031024 jms this routine needs to handle all data types, not just varchar
 */
 int
@@ -934,9 +934,9 @@ main()
 	int i_res;
 	char *c_res;
 	decimal_t dec_res;
-	
+
 	init_params();
-	
+
 	dist_member(&i_res, "test_dist", 1, 1);
 	if (i_res != 10)
 	{
@@ -952,7 +952,7 @@ main()
 	dist_member((void *)&c_res, "test_dist", 1, 3);
 	if (strcmp(c_res, "El Camino"))
 	{
-		printf("dist_member(\"test_dist\", 1, 3): %s != El Camino\n", 
+		printf("dist_member(\"test_dist\", 1, 3): %s != El Camino\n",
 			c_res);
 		exit(1);
 	}

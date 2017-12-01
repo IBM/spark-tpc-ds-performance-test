@@ -1,5 +1,5 @@
 -- start query 29 in stream 0 using template query29.tpl and seed QUALIFICATION
-  select   
+  select
      i_item_id
     ,i_item_desc
     ,s_store_id
@@ -17,7 +17,7 @@
    ,store
    ,item
  where
-     d1.d_moy               = 9 
+     d1.d_moy               = 9
  and d1.d_year              = 1999
  and d1.d_date_sk           = ss_sold_date_sk
  and i_item_sk              = ss_item_sk
@@ -26,11 +26,11 @@
  and ss_item_sk             = sr_item_sk
  and ss_ticket_number       = sr_ticket_number
  and sr_returned_date_sk    = d2.d_date_sk
- and d2.d_moy               between 9 and  9 + 3 
+ and d2.d_moy               between 9 and  9 + 3
  and d2.d_year              = 1999
  and sr_customer_sk         = cs_bill_customer_sk
  and sr_item_sk             = cs_item_sk
- and cs_sold_date_sk        = d3.d_date_sk     
+ and cs_sold_date_sk        = d3.d_date_sk
  and d3.d_year              in (1999,1999+1,1999+2)
  group by
     i_item_id
@@ -38,7 +38,7 @@
    ,s_store_id
    ,s_store_name
  order by
-    i_item_id 
+    i_item_id
    ,i_item_desc
    ,s_store_id
    ,s_store_name

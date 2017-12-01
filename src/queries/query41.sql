@@ -1,12 +1,12 @@
 -- start query 41 in stream 0 using template query41.tpl and seed QUALIFICATION
   select  distinct(i_product_name)
  from item i1
- where i_manufact_id between 738 and 738+40 
+ where i_manufact_id between 738 and 738+40
    and (select count(*) as item_cnt
         from item
         where (i_manufact = i1.i_manufact and
-        ((i_category = 'Women' and 
-        (i_color = 'powder' or i_color = 'khaki') and 
+        ((i_category = 'Women' and
+        (i_color = 'powder' or i_color = 'khaki') and
         (i_units = 'Ounce' or i_units = 'Oz') and
         (i_size = 'medium' or i_size = 'extra large')
         ) or
@@ -26,8 +26,8 @@
         (i_size = 'medium' or i_size = 'extra large')
         ))) or
        (i_manufact = i1.i_manufact and
-        ((i_category = 'Women' and 
-        (i_color = 'midnight' or i_color = 'snow') and 
+        ((i_category = 'Women' and
+        (i_color = 'midnight' or i_color = 'snow') and
         (i_units = 'Pallet' or i_units = 'Gross') and
         (i_size = 'medium' or i_size = 'extra large')
         ) or

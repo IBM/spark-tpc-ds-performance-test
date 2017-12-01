@@ -8,7 +8,7 @@ select web_page_seq.nextVal wp_web_page_sk
       ,d2.d_date_sk wp_access_date_sk
       ,wpag_autogen_flag wp_autogen_flag
       ,wpag_url wp_url
-      ,wpag_type wp_type 
+      ,wpag_type wp_type
       ,wpag_char_cnt wp_char_count
       ,wpag_link_cnt wp_link_count
       ,wpag_image_cnt wp_image_count

@@ -37,7 +37,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/call_center")
 ;
 drop table if exists call_center;
-create table call_center 
+create table call_center
 using parquet
 as (select * from call_center_text)
 ;

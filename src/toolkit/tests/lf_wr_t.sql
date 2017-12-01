@@ -12,7 +12,7 @@ select d_date_sk wr_return_date_sk
       ,c2.c_current_cdemo_sk wr_returning_cdemo_sk
       ,c2.c_current_hdemo_sk wr_returning_hdemo_sk
       ,c2.c_current_addr_sk wr_returing_addr_sk
-      ,wp_web_page_sk wr_web_page_sk 
+      ,wp_web_page_sk wr_web_page_sk
       ,r_reason_sk wr_reason_sk
       ,wret_order_id wr_order_number
       ,wret_return_qty wr_return_quantity

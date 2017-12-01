@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -63,8 +63,8 @@ static ds_key_t web_join(int col, ds_key_t join_key);
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: Relies on existing RNG code, which isn't really 64bit; will probably requre a rework of the genrand_xx routines
@@ -74,7 +74,7 @@ date_join(int from_tbl, int from_col, ds_key_t join_count, int nYear)
 {
 	int nDay,
 		nTemp,
-		nMin = -1, 
+		nMin = -1,
 		nMax = -1,
 		nResult;
 	static int bInit = 0,
@@ -87,7 +87,7 @@ date_join(int from_tbl, int from_col, ds_key_t join_count, int nYear)
 		jToday = dttoj(&TempDate);
 		bInit = 1;
 	}
-	
+
 	switch(from_tbl)
 	{
 	case STORE_SALES:
@@ -97,7 +97,7 @@ date_join(int from_tbl, int from_col, ds_key_t join_count, int nYear)
 		break;
 
 	/*
-	 * returns are keyed to the sale date, with the lag between sale and return selected within a known range, based on 
+	 * returns are keyed to the sale date, with the lag between sale and return selected within a known range, based on
 	 * sales channel
 	 */
 	case STORE_RETURNS:
@@ -125,7 +125,7 @@ date_join(int from_tbl, int from_col, ds_key_t join_count, int nYear)
 		pick_distribution(&nDay, "calendar", 1, 1 + is_leap(nYear), from_col);
 		break;
 	}
-	
+
 	TempDate.year = nYear;
 	TempDate.month = 1;
 	TempDate.day = 1;
@@ -142,8 +142,8 @@ date_join(int from_tbl, int from_col, ds_key_t join_count, int nYear)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: Relies on existing RNG code, which isn't really 64bit; will probably requre a rework of the genrand_xx routines
@@ -153,7 +153,7 @@ time_join(int to_tbl, int to_col, ds_key_t join_count)
 {
 	int hour,
 		secs;
-	
+
 	switch(to_tbl)
 	{
 	case STORE_SALES:
@@ -171,8 +171,8 @@ time_join(int to_tbl, int to_col, ds_key_t join_count)
 		break;
 	}
 	genrand_integer(&secs, DIST_UNIFORM, 0, 3599, 0, to_col);
-	
-	
+
+
 	return((ds_key_t)(hour * 3600 + secs));
 }
 
@@ -183,8 +183,8 @@ time_join(int to_tbl, int to_col, ds_key_t join_count)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -208,7 +208,7 @@ cp_join(int tbl, int col, ds_key_t jDate)
 		dTemp = strtodate(DATA_START_DATE);
 		init = 1;
 	}
-	
+
 	nType = pick_distribution(&szTemp, "catalog_page_type", 1, 2, col);
 	genrand_integer(&nPage, DIST_UNIFORM, 1, nPagePerCatalog, 0, col);
 	nOffset = (int)jDate - dTemp->julian - 1;
@@ -234,15 +234,15 @@ cp_join(int tbl, int col, ds_key_t jDate)
 	return(res);
 }
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -266,7 +266,7 @@ getCatalogNumberFromPage(ds_key_t kPageNumber)
 
 /*
 * Routine: web_join(int col, ds_key_t join_key)
-* Purpose: create joins to web_site/web_page. These need to be handled together, since the date of transaction 
+* Purpose: create joins to web_site/web_page. These need to be handled together, since the date of transaction
 *	must fit within the lifetime of a particular page, which must fit within the lifetime of a particular site
 * Data Structures:
 *
@@ -275,8 +275,8 @@ getCatalogNumberFromPage(ds_key_t kPageNumber)
 *		1. the xxx_sk for a particular row in the dimension for which we need appropriate dates
 *		2. a julian date for which we need to pick a valid xxx_sk value
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -310,7 +310,7 @@ web_join(int col, ds_key_t join_key)
 		nOffset = (dSiteClose->julian - dSiteOpen->julian) / (2 * nSiteDuration) ;
 		init = 1;
 	}
-	
+
 	switch(col)
 	{
 /**************
@@ -329,7 +329,7 @@ web_join(int col, ds_key_t join_key)
 			}
 		}
 		break;
-	case WEB_CLOSE_DATE:		
+	case WEB_CLOSE_DATE:
 		dSiteOpen = strtodate(DATE_MINIMUM);
 		res = dSiteOpen->julian - ((join_key * WEB_DATE_STAGGER) % nSiteDuration / 2);
 		free(dSiteOpen);
@@ -369,7 +369,7 @@ web_join(int col, ds_key_t join_key)
 		break;
 	case WP_CREATION_DATE_SK:
 		/* page creation has to happen outside of the page window, to assure a constant number of pages,
-		 * so it occurs in the gap between site creation and the site's actual activity. For sites that are replaced 
+		 * so it occurs in the gap between site creation and the site's actual activity. For sites that are replaced
 		 * in the time span of the data set, this will depend on whether they are the first version or the second
 		 */
 		dSiteOpen = strtodate(DATE_MINIMUM);
@@ -392,21 +392,21 @@ web_join(int col, ds_key_t join_key)
 		res = genrand_integer(NULL, DIST_UNIFORM, 1, WEB_PAGES_PER_SITE, 0, col);
 		break;
 	}
-	
+
 	return(res);
 }
 
 /*
 * Routine: mk_join(int from_tbl, int to_tbl, int join_count)
 * Purpose: return a primary key for to_tbl, creating a join between from_tbl and to_tbl
-* Algorithm: all joins are currently uniformly distributed. The calling convention allows for each 
+* Algorithm: all joins are currently uniformly distributed. The calling convention allows for each
 *	join in the schema to be distributed differently
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: Relies on existing RNG code, which isn't really 64bit; will probably requre a rework of the genrand_xx routines
@@ -423,7 +423,7 @@ mk_join(int from_col, int to_tbl, ds_key_t join_count)
 	nFromTable = getTableFromColumn(from_col);
 
 	/*
-	 * if the table being joined to employs sparse keys, the join gets handled in sparse.c 
+	 * if the table being joined to employs sparse keys, the join gets handled in sparse.c
 	 */
 	pTdef = getSimpleTdefsByNumber(to_tbl);
 	if (pTdef->flags & FL_SPARSE)
@@ -442,9 +442,9 @@ mk_join(int from_col, int to_tbl, ds_key_t join_count)
 		return(date_join(nFromTable, from_col, join_count, nYear));
 	case TIME:
 		return(time_join(nFromTable, from_col, join_count));
-		/* the rest of the tables use standard, uniform joins */	
+		/* the rest of the tables use standard, uniform joins */
 	default:
-	/* 
+	/*
 	 * all TYPE2 tables (i.e., history keeping dimensions) need a special join algorithm
 	 */
 		if (pTdef->flags & FL_TYPE_2)
@@ -452,11 +452,11 @@ mk_join(int from_col, int to_tbl, ds_key_t join_count)
 
 		if (pTdef->flags & FL_SPARSE)
 			return(randomSparseKey(nTableIndex, from_col));
-		
+
 		genrand_key(&res, DIST_UNIFORM, (ds_key_t)1, get_rowcount(nTableIndex), (ds_key_t)0, from_col);
 		break;
 	}
 
-	
+
 	return((ds_key_t)res);
 }

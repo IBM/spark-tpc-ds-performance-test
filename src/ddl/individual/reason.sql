@@ -9,7 +9,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/reason")
 ;
 drop table if exists reason;
-create table reason 
+create table reason
 using parquet
 as (select * from reason_text)
 ;

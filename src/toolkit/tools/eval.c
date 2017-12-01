@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 
 #include "config.h"
 #include "porting.h"
@@ -58,18 +58,18 @@ extern StringBuffer_t *g_sbTemplateName;
 
 /*
 * Routine: void EvalArithmetic()
-* Purpose: 
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 */
-int 
+int
 EvalArithmetic(expr_t *pExpr, Expr_Val_t *pValue, Expr_Val_t *pParams)
 {
 	int nOp;
@@ -129,12 +129,12 @@ EvalArithmetic(expr_t *pExpr, Expr_Val_t *pValue, Expr_Val_t *pParams)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 */
-int 
+int
 EvalTextExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 {
 	int i,
@@ -142,7 +142,7 @@ EvalTextExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 		nWeightTotal = 0,
 		nModifierArg;
 	expr_t *pReplacement;
-	
+
 	switch (pExpr->nFlags & EXPR_FL_SUFFIX_MASK)
 	{
 	case EXPR_FL_LIST:	/* return a set of values */
@@ -177,25 +177,25 @@ EvalTextExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 		break;
 	default:
 		/* 1. find a substitution from the weighted distribtuion */
-		for (pReplacement = (expr_t *)getHead(pExpr->ArgList); 
-		pReplacement; 
+		for (pReplacement = (expr_t *)getHead(pExpr->ArgList);
+		pReplacement;
 		pReplacement = (expr_t *)getNext(pExpr->ArgList))
 			nWeightTotal += (int)pReplacement->Value.nValue;
 		i = genrand_integer(NULL, DIST_UNIFORM, 1, nWeightTotal, 0, 0);
-		for (pReplacement = (expr_t *)getHead(pExpr->ArgList); 
-		pReplacement; 
+		for (pReplacement = (expr_t *)getHead(pExpr->ArgList);
+		pReplacement;
 		pReplacement = (expr_t *)getNext(pExpr->ArgList))
 		{
 			if (i <= (int)pReplacement->Value.nValue)
 				break;
 			i -= (int)pReplacement->Value.nValue;
 		}
-		
+
 		/* 2. get the appropraite string */
 		AddBuffer(pBuf->pBuf, GetBuffer(pReplacement->Value.pBuf));
 		break;
 	}
-	
+
 	return(DT_STR);
 }
 
@@ -208,11 +208,11 @@ EvalTextExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 */
 int
 EvalRandomExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
@@ -225,7 +225,7 @@ EvalRandomExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsPara
 		i,
 		nDirection,
 		nDistribution;
-	
+
 	nMin = pParams->nValue;
 	nMax = pParams[1].nValue;
 	nDistribution = (int)pParams[2].nValue;
@@ -248,7 +248,7 @@ EvalRandomExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsPara
 			ReportError(QERR_MODIFIED_PARAM, NULL, 1);
 		nModifierArg = (int)pParams[3].nValue;
 		pExpr->pPermuteKey = makeKeyPermutation(pExpr->pPermuteKey, nMax - nMin + 1, 0);
-		/* 
+		/*
 		 * the permutation is controlled by the number of values that are needed
 		 * once it is populated, than adjust the returned result based on the range of values that is permissible
 		 */
@@ -262,18 +262,18 @@ EvalRandomExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsPara
 		if (bIsParam)
 			ReportError(QERR_MODIFIED_PARAM, NULL, 1);
 		nModifierArg = (int)pParams[3].nValue;
-		
+
 		genrand_key(&nTemp, DIST_UNIFORM, nMin, nMax, nDistribution, 0);
       pBuf->nValue = nTemp;
 		pBuf->bUseInt = 1;
 		pBuf[1].nValue = pBuf->nValue;
 		pBuf[1].bUseInt = 1;
-		
+
 		nDirection = 1;
 		nTotal = nMax - nMin;
 		nTotal *= nModifierArg;
 		nTotal /= 100;
-		
+
 		while (nTotal)
 		{
 			if (nDirection == 1)
@@ -314,11 +314,11 @@ EvalRandomExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsPara
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 */
 int
 EvalRownCountExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams)
@@ -329,7 +329,7 @@ EvalRownCountExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams)
 	int i;
 
 	szName = GetBuffer(pParams->pBuf);
-	
+
 	if (pExpr->nFlags & EXPR_FL_TABLENAME)
 	{
       for (i=1; i <= distsize("rowcounts"); i++)
@@ -345,7 +345,7 @@ EvalRownCountExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams)
 	else
 		sprintf(szBuf, "%d", distsize(szName));
 	AddBuffer(pBuf->pBuf, szBuf);
-	
+
 	return(DT_INT);
 }
 
@@ -357,11 +357,11 @@ EvalRownCountExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 */
 int
 EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
@@ -376,7 +376,7 @@ EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 		i, j,
 		nCount,
       nTemp;
-	
+
 	szName = GetBuffer(pParams->pBuf);
 	if (pParams[1].bUseInt)
 		nRow = (int)pParams[1].nValue;
@@ -386,11 +386,11 @@ EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 		nCol = (int)pParams[2].nValue;
 	else
 		nCol = DistNameIndex(szName, WEIGHT_NAME, GetBuffer(pParams[2].pBuf));
-	
+
 	switch(pExpr->Value.nValue)
 	{
 	case KW_DISTMEMBER:
-		nDataType = 
+		nDataType =
 			(dist_type(szName, nCol) == TKN_INT)?DT_INT:DT_STR;
 		if (nDataType == DT_STR)
 		{
@@ -404,7 +404,7 @@ EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 			pBuf->bUseInt = 1;
 		}
 		break;
-	case KW_DISTWEIGHT:	
+	case KW_DISTWEIGHT:
 		dist_weight(&nTemp, szName, nRow, nCol);
       pBuf->nValue = nTemp;
 		pBuf->bUseInt = 1;
@@ -440,7 +440,7 @@ EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 			if (bIsParam)
 				ReportError(QERR_MODIFIED_PARAM, NULL, 1);
 			nModifierArg = (int)pParams[3].nValue;
-			
+
 			/* pick n entries */
 			for (i=1; i <= nModifierArg; i++)
 			{
@@ -467,7 +467,7 @@ EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 				ReportError(QERR_RANGE_ERROR, "", 1);
 			if (!(pExpr->pPermute = makePermutation(pExpr->pPermute, distsize(szName), 0)))
 				ReportError(QERR_RANGE_ERROR, NULL, 1);
-			
+
 			/* get n unique entries */
          		nCount = 0;
          		i = 1;
@@ -492,7 +492,7 @@ EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
                				while (nCount && (j < nCount))
                				{
                   				for (j=0; j < nCount; j++)
-                     				if (strcmp(GetBuffer(pBuf[j].pBuf), pChar) == 0) 
+                     				if (strcmp(GetBuffer(pBuf[j].pBuf), pChar) == 0)
                      				{
                         				dist_member(&pChar, szName, getPermutationEntry(pExpr->pPermute, i++), nRow);
                         				break;
@@ -524,11 +524,11 @@ EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 		}	/* end of generic DIST() switch case */
 		break;
 	}
-	
+
 	return(nDataType);
 }
-	
-	
+
+
 /*
 * Routine: void EvalDateExpr(expr_t *pExpr, StringBuffer_t *pBuf)
 * Purpose: set the values to be used to replace a given tag for this query generation
@@ -537,11 +537,11 @@ EvalDistExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 */
 int
 EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
@@ -557,7 +557,7 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 		*pPermute = NULL,
 		nTotal = 0,
 		nDirection;
-	
+
 	/* pull the parameters from pParams */
 	strtodt(&dBegin, GetBuffer(pParams->pBuf));
 	strtodt(&dEnd, GetBuffer(pParams[1].pBuf));
@@ -605,16 +605,16 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 		if (bIsParam)
 			ReportError(QERR_MODIFIED_PARAM, NULL, 1);
 		nModifierArg = pParams[3].nValue;
-		
+
 		for (i=dBegin.julian; i < dEnd.julian; i++)
 			nTotal += getDateWeightFromJulian(i, nDistributionType);
 		nTotal *= nModifierArg;
 		nTotal /= 100;
-		
+
 		genrand_date(&dResult, nDistributionType, &dBegin, &dEnd, NULL, 0);
 		nDay = dResult.julian;
 		nDay2 = nDay;
-		
+
 		nDirection = 1;
 		while (nTotal > 0)
 		{
@@ -631,7 +631,7 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 				nTotal -= getDateWeightFromJulian(nDay, nDistributionType);
 			}
 		}
-		
+
 		jtodt(&dResult, nDay);
 		AddBuffer(pBuf->pBuf, dttostr(&dResult));
 		jtodt(&dResult, nDay2);
@@ -649,11 +649,11 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 		pBuf->bUseInt = 0;
 		break;
 	}
-	
-	
+
+
 	return(DT_DATE);
 }
-	
+
 	/*
 	* Routine: void EvalKeywordExpr(expr_t *pExpr, StringBuffer_t *pBuf)
 	* Purpose: set the values to be used to replace a given tag for this query generation
@@ -662,19 +662,19 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 	*
 	* Params:
 	* Returns:
-	* Called By: 
-	* Calls: 
+	* Called By:
+	* Calls:
 	* Assumptions:
 	* Side Effects:
-	* TODO: 
+	* TODO:
 	*/
 	int
 	EvalKeywordExpr(expr_t *pExpr, Expr_Val_t *pV)
-	{		
+	{
 		char szMessage[1024];
 		char *cp;
 		substitution_t *pSub;
-		
+
 		switch (pExpr->Value.nValue)
 		{
 		case KW_QUERY:
@@ -697,7 +697,7 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 			pV->nValue = DIST_SALES;
 			pV->bUseInt = 1;
 			break;
-		case KW_RETURNS: 
+		case KW_RETURNS:
 			pV->nValue = DIST_RETURNS;
 			pV->bUseInt = 1;
 			break;
@@ -730,11 +730,11 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 			ReportError(QERR_SYNTAX, NULL, 1);
 			break;
 		}
-		
+
 		return((pV->bUseInt)?EXPR_FL_INT:EXPR_FL_CHAR);
 	}
-	
-	
+
+
 	/*
 	* Routine: EvalExpr(expr_t *)
 	* Purpose: return the value of the expression as a string
@@ -743,13 +743,13 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 	*
 	* Params:
 	* Returns:
-	* Called By: 
-	* Calls: 
+	* Called By:
+	* Calls:
 	* Assumptions:
 	* Side Effects:
 	* TODO: None
 	*/
-	int 
+	int
 	EvalExpr(expr_t *pExpr, Expr_Val_t *pValue, int bIsParam, int nQueryNumber)
 	{
 		int i,
@@ -766,10 +766,10 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 			memset(&arParams[i], 0, sizeof(struct EXPR_VAL_T));
 			arParams[i].pBuf = InitBuffer(10, 10);
 		}
-		
+
 		if (pExpr->Value.pBuf == NULL)
 			pExpr->Value.pBuf = InitBuffer(15, 15);
-		
+
 		/* handle the constants */
 		if (pExpr->nFlags & EXPR_FL_CONST)
 		{
@@ -793,7 +793,7 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 				fprintf(stderr, "INTERNAL ERROR: unknown constant type %d\n", i);
 				exit(1);
 			}
-			
+
 			pValue->nQueryNumber = nQueryNumber;
 			return(nDataType);
 		}
@@ -802,7 +802,7 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
       */
 		if (pValue->nQueryNumber == nQueryNumber)
 			return(pValue->bUseInt?DT_INT:DT_STR);
-		
+
 		/* handle the parameterized expressions */
 		switch(pExpr->nFlags & EXPR_FUNC_MASK)
 		{
@@ -832,8 +832,8 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 			pSub->nQueryNumber = nQueryNumber;
 			break;
 		case EXPR_FL_FUNC:
-		/* walk the argument list and put them in the appropriate arXXXArgs location 
-		* based on data type 
+		/* walk the argument list and put them in the appropriate arXXXArgs location
+		* based on data type
 			*/
 			nArgCnt = 0;
 			for (pArg = (expr_t *)getHead(pExpr->ArgList); pArg; pArg = (expr_t *)getNext(pExpr->ArgList))
@@ -844,9 +844,9 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 				if (EvalExpr(pArg, &arParams[nArgCnt], 1, nQueryNumber) == DT_INT)
 					arParams[nArgCnt].bUseInt = 1;
 				nArgCnt += 1;
-				
+
 			}
-			
+
 			/* invoke each function */
 			switch(pExpr->Value.nValue)
 			{
@@ -879,8 +879,8 @@ EvalDateExpr(expr_t *pExpr, Expr_Val_t *pBuf, Expr_Val_t *pParams, int bIsParam)
 				fprintf(stderr, "INTERNAL ERROR: unknown expression type %x\n", pExpr->nFlags);
 				exit(1);
 		}
-		
+
 		pValue->nQueryNumber = nQueryNumber;
 		return(nDataType);
-		
+
 }

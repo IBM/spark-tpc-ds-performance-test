@@ -10,7 +10,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/inventory")
 ;
 drop table if exists inventory;
-create table inventory 
+create table inventory
 using parquet
 as (select * from inventory_text)
 ;

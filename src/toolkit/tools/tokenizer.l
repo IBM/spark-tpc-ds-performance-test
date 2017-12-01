@@ -1,36 +1,36 @@
 %{
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
  */
@@ -89,8 +89,8 @@ int yylook(void);
 
 %}
 
-%{ 
-/* macro definitions go here */ 
+%{
+/* macro definitions go here */
 %}
 INT	-?[0-9]+
 DECIMAL   -?[0-9]*\.[0-9]+
@@ -110,18 +110,18 @@ SUB_ID	[a-zA-Z_]*
 %}
 <NORMAL>{WS}			nCharCount += strlen(yytext); /* ignore whitespace */
 <NORMAL>--[^\n]*		nCharCount += strlen(yytext); /* ignore comments */
-<NORMAL>{DECIMAL}	{ 
-				nCharCount += strlen(yytext); 
-				bFirstWord = 0; 
-				RETURN(TOK_DECIMAL); 
+<NORMAL>{DECIMAL}	{
+				nCharCount += strlen(yytext);
+				bFirstWord = 0;
+				RETURN(TOK_DECIMAL);
 				}
-<NORMAL>{INT}			{ 
-				nCharCount += strlen(yytext); 
-				bFirstWord = 0; 
+<NORMAL>{INT}			{
+				nCharCount += strlen(yytext);
+				bFirstWord = 0;
 				yylval.intval = atoi(yytext);
-				RETURN(TOK_INT); 
+				RETURN(TOK_INT);
 				}
-<NORMAL>{ID}			{ 
+<NORMAL>{ID}			{
 				if ((nKeyword = FindKeyword(yytext)) >= 0)
 					{
 					bFirstWord = 0;
@@ -138,27 +138,27 @@ SUB_ID	[a-zA-Z_]*
 					else
 						{
 						yylval.strval = strdup(yytext);
-						RETURN(TOK_ID); 
+						RETURN(TOK_ID);
 						}
 				}
-<NORMAL>\"[^\n\"]*\" { 
-				nCharCount += strlen(yytext); 
+<NORMAL>\"[^\n\"]*\" {
+				nCharCount += strlen(yytext);
 				bFirstWord = 0;
 				yytext[yyleng - 1] = '\0';
 				yylval.strval = strdup(yytext+1);
-				RETURN(TOK_LITERAL); 
+				RETURN(TOK_LITERAL);
 				}
 <NORMAL>\n			{ nCharCount = 1; pCurrentFile->line_number += 1; bFirstWord = 1; }
 <NORMAL>"["	{
 			nOldState = NORMAL;
-					nCharCount += 1; 
-				STATE(SUBST); 
-				BEGIN(SUBST); 
-				RETURN(yytext[0]); 
+					nCharCount += 1;
+				STATE(SUBST);
+				BEGIN(SUBST);
+				RETURN(yytext[0]);
 			}
-<NORMAL>.			{ nCharCount += strlen(yytext); 
-				bFirstWord = 0; 
-				RETURN(yytext[0]); 
+<NORMAL>.			{ nCharCount += strlen(yytext);
+				bFirstWord = 0;
+				RETURN(yytext[0]);
 			}
 
 <SUBST>{SUB_ID}		{
@@ -169,7 +169,7 @@ SUB_ID	[a-zA-Z_]*
 				else
 						{
 						yylval.strval = strdup(yytext);
-						RETURN(TOK_ID); 
+						RETURN(TOK_ID);
 						}
 				}
 
@@ -185,23 +185,23 @@ SUB_ID	[a-zA-Z_]*
 					RETURN(yytext[0]);
 					}
 <SQLTEXT>[^;\[\]\n]*\n	{
-						nCharCount += strlen(yytext); 
+						nCharCount += strlen(yytext);
 						yylval.strval = strdup(yytext);
 						nCharCount = 1; pCurrentFile->line_number += 1;
 						if (strlen(yylval.strval))
-							RETURN(TOK_SQL); 
+							RETURN(TOK_SQL);
 						}
 <SQLTEXT>[^;\[\]\n]*	{
-						nCharCount += strlen(yytext); 
+						nCharCount += strlen(yytext);
 						yylval.strval = strdup(yytext);
-						RETURN(TOK_SQL); 
+						RETURN(TOK_SQL);
 						}
 <SQLTEXT>"["		{
 					nOldState = SQLTEXT;
-					nCharCount += 1; 
-					STATE(SUBST); 
-					BEGIN(SUBST); 
-					RETURN(yytext[0]); 
+					nCharCount += 1;
+					STATE(SUBST);
+					BEGIN(SUBST);
+					RETURN(yytext[0]);
 				}
 <SQLTEXT>;		{ STATE(NORMAL);BEGIN(NORMAL);nCharCount += 1;  RETURN(yytext[0]); }
 <SQLTEXT>.		{ nCharCount += 1;  RETURN(yytext[0]); }
@@ -210,7 +210,7 @@ extern template_t *pCurrentQuery;
 
 /*
  * Routine: yywrap()
- * Purpose: manage the hand off between multiple input files, include files, 
+ * Purpose: manage the hand off between multiple input files, include files,
  *			etc.
  * Algorithm:
  * 		MKS lex has special buffer handlers that aren't exposed, so this needs to be included in the LEX source
@@ -218,8 +218,8 @@ extern template_t *pCurrentQuery;
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -234,7 +234,7 @@ yywrap(void)
 		printf("STATUS: CLOSE(%s)\n", pCurrentFile->name);
 	fclose(pCurrentFile->file);
 
-    if (pCurrentFile->pNext) 
+    if (pCurrentFile->pNext)
     	{
 #ifdef MKS
 		yyRestoreScan(pCurrentFile->pLexState);

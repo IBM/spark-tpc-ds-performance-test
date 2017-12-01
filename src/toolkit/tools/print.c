@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -60,7 +60,7 @@ static int current_table = -1;
 
 int print_jdate (FILE *pFile, ds_key_t kValue);
 
-void 
+void
 print_close(int tbl)
 {
    tdef *pTdef = getSimpleTdefsByNumber(tbl);
@@ -84,13 +84,13 @@ print_separator (int sep)
 	int res = 0;
 	static char *pDelimiter;
 	static int init = 0;
-	
+
 	if (!init)
 	{
         pDelimiter = get_str ("DELIMITER");
         init = 1;
 	}
-	
+
 	if (sep)
 	{
 		if (fwrite(pDelimiter, 1, 1, fpOutfile) != 1)
@@ -99,20 +99,20 @@ print_separator (int sep)
 			exit(-1);
 		}
 	}
-	   
+
 	return (res);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -131,8 +131,8 @@ print_prep (int table, int update)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: 20000113 need better separator handling
@@ -153,7 +153,7 @@ print_integer (int nColumn, int val, int sep)
 		else fwrite("NULL", 1, 4, fpOutfile);
 #endif
 	print_separator (sep);
-	
+
 	return;
 }
 
@@ -165,7 +165,7 @@ print_varchar (int nColumn, char *val, int sep)
 	if (!nullCheck(nColumn) && (val != NULL))
 	{
       nLength = strlen(val);
-		
+
 #ifdef STR_QUOTES
 		if ((fwrite ("\"", 1, 1, fpOutfile) != 1) ||
 			(fwrite (val, 1, nLength, fpOutfile) != nLength) ||
@@ -182,7 +182,7 @@ print_varchar (int nColumn, char *val, int sep)
 		else fwrite("NULL", 1, 4, fpOutfile);
 #endif
 	print_separator (sep);
-	
+
    return;
 }
 
@@ -203,7 +203,7 @@ print_delete (int * val)
    if (is_set("TERMINATE"))
 	   fprintf(fpDeleteFile, get_str("DELIMITER"));
    fprintf(fpDeleteFile, "\n");
-   
+
    return;
 }
 
@@ -213,19 +213,19 @@ print_cp_delete (int nCatalog, int nPage)
 {
    static int bInit = 0;
    static char *cp;
-   
+
    if (!bInit)
    {
       cp = strdup(get_str("DELIMITER"));
       bInit = 1;
    }
-   
+
    if (fprintf (fpDeleteFile, "%d%s%d\n", nCatalog, cp, nPage) < 0)
 	{
       fprintf(stderr, "ERROR: Failed to write delete key\n");
       exit(-1);
 	}
-   
+
    return;
 }
 */
@@ -260,18 +260,18 @@ print_date (int nColumn, ds_key_t val, int sep)
 				fprintf(stderr, "ERROR: Failed to write output for column %d\n", nColumn);
 				exit(-1);
 			}
-			
+
 		}
 #ifdef _MYSQL
 		else fwrite("NULL", 1, 4, fpOutfile);
 #endif
 	}
-	
+
 #ifdef _MYSQL
 		else fwrite("NULL", 1, 4, fpOutfile);
 #endif
 	print_separator (sep);
-	   
+
 	return;
 }
 
@@ -285,7 +285,7 @@ print_time (int nColumn, ds_key_t val, int sep)
 	nMinutes = (int)(val / 60);
 	val -= 60 * nMinutes;
 	nSeconds = (int)(val % 60);
-	
+
 	if (!nullCheck(nColumn))
 	{
 		if (val != -1)
@@ -299,9 +299,9 @@ print_time (int nColumn, ds_key_t val, int sep)
 #ifdef _MYSQL
 		else fwrite("NULL", 1, 4, fpOutfile);
 #endif
-	
+
 	print_separator (sep);
-	   
+
 	return;
 }
 
@@ -333,7 +333,7 @@ print_decimal (int nColumn, decimal_t * val, int sep)
 		else fwrite("NULL", 1, 4, fpOutfile);
 #endif
 	print_separator (sep);
-	
+
 	return;
 }
 
@@ -358,7 +358,7 @@ print_key (int nColumn, ds_key_t val, int sep)
 		else fwrite("NULL", 1, 4, fpOutfile);
 #endif
 	print_separator (sep);
-	
+
 	return;
 }
 
@@ -366,7 +366,7 @@ void
 print_id (int nColumn, ds_key_t val, int sep)
 {
    char szID[RS_BKEY + 1];
-   
+
    if (!nullCheck(nColumn))
    {
       if (val != (ds_key_t) -1) /* -1 is a special value, indicating NULL */
@@ -392,7 +392,7 @@ print_id (int nColumn, ds_key_t val, int sep)
 		else fwrite("NULL", 1, 4, fpOutfile);
 #endif
   print_separator (sep);
-   
+
    return;
 }
 
@@ -429,8 +429,8 @@ print_boolean (int nColumn, int val, int sep)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -454,9 +454,9 @@ print_start (int tbl)
 		   if (is_set("PARALLEL"))
 			   sprintf (path, "%s%c%s_%d_%d%s",
 			   get_str ("DIR"),
-			   PATH_SEP, getTableNameByID (tbl), 
+			   PATH_SEP, getTableNameByID (tbl),
 			   get_int("CHILD"), get_int("PARALLEL"), (is_set("VALIDATE"))?get_str ("VSUFFIX"):get_str ("SUFFIX"));
-		   else 
+		   else
 		   {
 			   if (is_set("UPDATE"))
 				   sprintf (path, "%s%c%s_%d%s",
@@ -481,7 +481,7 @@ print_start (int tbl)
 #endif
 	   }
    }
-   
+
    fpOutfile = pTdef->outfile;
    res = (fpOutfile != NULL);
 
@@ -503,15 +503,15 @@ print_start (int tbl)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -550,8 +550,8 @@ print_end (int tbl)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -561,7 +561,7 @@ openDeleteFile(int bOpen)
 {
    int res = 0;
    char path[256];
-   
+
    if (!bOpen)
       fclose(fpDeleteFile);
    else
@@ -581,9 +581,9 @@ openDeleteFile(int bOpen)
 #else
       fpDeleteFile = fopen (path, "w");
 #endif
-      
+
       res = (fpDeleteFile != NULL);
-      
+
       if (!res)                    /* open failed! */
       {
          INTERNAL ("Failed to open output file!");
@@ -595,7 +595,7 @@ openDeleteFile(int bOpen)
       }
 #endif
    }
-   
+
    return (0);
 }
 
@@ -607,8 +607,8 @@ openDeleteFile(int bOpen)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 */
@@ -632,8 +632,8 @@ print_string (char *szMessage, ds_key_t val)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 */
@@ -656,15 +656,15 @@ print_jdate (FILE *pFile, ds_key_t kValue)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -680,7 +680,7 @@ print_validation(ds_key_t kRowNumber)
 		sprintf(szValidateFormat, "Row #%s: ", HUGE_FORMAT);
 		bInit = 1;
 	}
-	
+
 	if (is_set("VALIDATE"))
 	{
 		print_string(szValidateFormat, kRowNumber);
