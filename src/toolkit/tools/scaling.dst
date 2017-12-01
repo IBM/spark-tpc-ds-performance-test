@@ -37,8 +37,8 @@
 --
 ------
 -- rowcount
--- This distribution defines the rowcounts for each table at 
--- 6 discrete scaling levels the first (scale=1G) is intended 
+-- This distribution defines the rowcounts for each table at
+-- 6 discrete scaling levels the first (scale=1G) is intended
 -- for validation testing
 -- other values are not valid for publication, but are generated using
 -- the interpolation method defined for each table

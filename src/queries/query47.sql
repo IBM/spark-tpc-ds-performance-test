@@ -42,7 +42,7 @@
        v1.rn = v1_lead.rn - 1)
   select  *
  from v2
- where  d_year = 1999 and    
+ where  d_year = 1999 and
         avg_monthly_sales > 0 and
         case when avg_monthly_sales > 0 then abs(sum_sales - avg_monthly_sales) / avg_monthly_sales else null end > 0.1
  order by sum_sales - avg_monthly_sales, 3

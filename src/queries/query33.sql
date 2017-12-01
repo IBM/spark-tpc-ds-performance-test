@@ -18,7 +18,7 @@ where i_category in ('Electronics'))
  and     d_year                  = 1998
  and     d_moy                   = 5
  and     ss_addr_sk              = ca_address_sk
- and     ca_gmt_offset           = -5 
+ and     ca_gmt_offset           = -5
  group by i_manufact_id),
  cs as (
  select
@@ -39,7 +39,7 @@ where i_category in ('Electronics'))
  and     d_year                  = 1998
  and     d_moy                   = 5
  and     cs_bill_addr_sk         = ca_address_sk
- and     ca_gmt_offset           = -5 
+ and     ca_gmt_offset           = -5
  group by i_manufact_id),
  ws as (
  select
@@ -63,9 +63,9 @@ where i_category in ('Electronics'))
  and     ca_gmt_offset           = -5
  group by i_manufact_id)
   select  i_manufact_id ,sum(total_sales) total_sales
- from  (select * from ss 
+ from  (select * from ss
         union all
-        select * from cs 
+        select * from cs
         union all
         select * from ws) tmp1
  group by i_manufact_id

@@ -1,5 +1,5 @@
 -- start query 53 in stream 0 using template query53.tpl and seed QUALIFICATION
- select  * from 
+ select  * from
 (select i_manufact_id,
 sum(ss_sales_price) sum_sales,
 avg(sum(ss_sales_price)) over (partition by i_manufact_id) avg_quarterly_sales
@@ -17,8 +17,8 @@ i_class in ('accessories','classical','fragrances','pants') and
 i_brand in ('amalgimporto #1','edu packscholar #1','exportiimporto #1',
 		'importoamalg #1')))
 group by i_manufact_id, d_qoy ) tmp1
-where case when avg_quarterly_sales > 0 
-	then abs (sum_sales - avg_quarterly_sales)/ avg_quarterly_sales 
+where case when avg_quarterly_sales > 0
+	then abs (sum_sales - avg_quarterly_sales)/ avg_quarterly_sales
 	else null end > 0.1
 order by avg_quarterly_sales,
 	 sum_sales,

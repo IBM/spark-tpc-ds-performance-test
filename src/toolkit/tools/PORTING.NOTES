@@ -1,35 +1,35 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
  */
@@ -48,10 +48,10 @@
 
 1. General
 ============
-Porting of DBGEN is intended to be very straightforward. The code is written 
+Porting of DBGEN is intended to be very straightforward. The code is written
 in C. Any required changes should be limited to the files outlined below. If
-you encounter any problems porting the code to a new environment (i.e., one 
-not mentioned in section 2, please contact Jack Stephens 
+you encounter any problems porting the code to a new environment (i.e., one
+not mentioned in section 2, please contact Jack Stephens
 (jms@gradientsystems.com).
 
 1.1 Makefile.suite
@@ -59,10 +59,10 @@ Copy Makefile.suite to Makefile in the installation directory.
 The changes to the Makefile should be limited to the variable
 definitions in the first few lines of the file.
 	CC:	ANSI compiler
-	OS: one of LINUX, WIN32, AIX, SOLARIS, HPUX. 
+	OS: one of LINUX, WIN32, AIX, SOLARIS, HPUX.
 
-OS-specific changes are detailed in section 2, below. Once any required 
-changes have been made, it should be possible to create the required 
+OS-specific changes are detailed in section 2, below. Once any required
+changes have been made, it should be possible to create the required
 executables by executing 'make'.
 
 1.2 Executables and usage
@@ -109,7 +109,7 @@ executables to be built without further change. The test configuration
 stored the source files in c:\tpc\tpcds, but the internal paths appear to
 be relative, and should allow rellocation.
 
-Most windows installations do not include Lex or Yacc, the compiler-generation tools. The 
+Most windows installations do not include Lex or Yacc, the compiler-generation tools. The
 distribution includes files that they would generate (tokenizer.c, qgen.c, y.tab.h). Should
 it be necessary to regenerate these files, build the grammar project within the DBGEN2 workspace.
 
@@ -121,7 +121,7 @@ resolved with minor corrections to config.h or porting.h. Please forward
 any problem reports, and any suggested corrections, to the subcommittee
 and Jack.
 
-3.1 Manifest 
+3.1 Manifest
 Build files
 ----------------------
 Makefile.suite: make input file
@@ -191,7 +191,7 @@ streets.dst: distribution definitions; included in tpcds.dst
 tpcds.dst: distribution definitions
 
 3.2 Make Depend
-The dependecies in Makefile.suite have been hand coded, to aid in portability. If you have trouble compliling for 
+The dependecies in Makefile.suite have been hand coded, to aid in portability. If you have trouble compliling for
 a  particular platform, and makedend is available, then 'make depend' should introduce any required,
 platform-specific dependencies.
 

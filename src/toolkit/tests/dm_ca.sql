@@ -15,7 +15,7 @@ BEGIN
                        ,CA_GMT_OFFSET
                        ,CA_LOCATION_TYPE
                  from cadrv) LOOP
-    update customer_address set 
+    update customer_address set
  CA_STREET_NUMBER=ca_rec.CA_STREET_NUMBER
 ,CA_STREET_NAME=ca_rec.CA_STREET_NAME
 ,CA_STREET_TYPE=ca_rec.CA_STREET_TYPE

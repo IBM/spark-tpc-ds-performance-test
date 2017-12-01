@@ -1,13 +1,13 @@
 -- start query 62 in stream 0 using template query62.tpl and seed QUALIFICATION
- select  
+ select
    substr(w_warehouse_name,1,20)
   ,sm_type
   ,web_name
-  ,sum(case when (ws_ship_date_sk - ws_sold_date_sk <= 30 ) then 1 else 0 end)  as 30_days 
-  ,sum(case when (ws_ship_date_sk - ws_sold_date_sk > 30) and 
-                 (ws_ship_date_sk - ws_sold_date_sk <= 60) then 1 else 0 end )  as 31_60_days 
-  ,sum(case when (ws_ship_date_sk - ws_sold_date_sk > 60) and 
-                 (ws_ship_date_sk - ws_sold_date_sk <= 90) then 1 else 0 end)  as 61_90_days 
+  ,sum(case when (ws_ship_date_sk - ws_sold_date_sk <= 30 ) then 1 else 0 end)  as 30_days
+  ,sum(case when (ws_ship_date_sk - ws_sold_date_sk > 30) and
+                 (ws_ship_date_sk - ws_sold_date_sk <= 60) then 1 else 0 end )  as 31_60_days
+  ,sum(case when (ws_ship_date_sk - ws_sold_date_sk > 60) and
+                 (ws_ship_date_sk - ws_sold_date_sk <= 90) then 1 else 0 end)  as 61_90_days
   ,sum(case when (ws_ship_date_sk - ws_sold_date_sk > 90) and
                  (ws_ship_date_sk - ws_sold_date_sk <= 120) then 1 else 0 end)  as 91_120_days
   ,sum(case when (ws_ship_date_sk - ws_sold_date_sk  > 120) then 1 else 0 end)  as above120_days

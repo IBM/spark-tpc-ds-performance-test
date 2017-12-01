@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -61,9 +61,9 @@ char arBKeys[MAX_TABLE][17];
 *
 * Params: 1 if there is a new id; 0 otherwise
 * Returns:
-* Called By: 
-* Calls: 
-* Assumptions: Table indexs (surrogate keys) are 1-based. This assures that the arBKeys[] entry for each table is 
+* Called By:
+* Calls:
+* Assumptions: Table indexs (surrogate keys) are 1-based. This assures that the arBKeys[] entry for each table is
 *	initialized. Otherwise, parallel generation would be more difficult.
 * Side Effects:
 * TODO: None
@@ -91,10 +91,10 @@ setSCDKeys(int nColumnID, ds_key_t kIndex, char *szBKey, ds_key_t *pkBeginDateKe
 		jH1DataDate = jMinimumDataDate + (jMaximumDataDate - jMinimumDataDate) / 2;
 		jT2DataDate = (jMaximumDataDate - jMinimumDataDate) / 3;
 		jT1DataDate = jMinimumDataDate + jT2DataDate;
-		jT2DataDate += jT1DataDate; 
+		jT2DataDate += jT1DataDate;
 		bInit = 1;
 	}
-	
+
 	nTableID = getTableFromColumn(nColumnID);
 	nModulo = (int)(kIndex % 6);
 	switch(nModulo)
@@ -137,9 +137,9 @@ setSCDKeys(int nColumnID, ds_key_t kIndex, char *szBKey, ds_key_t *pkBeginDateKe
 	/* can't have a revision in the future, per bug 114 */
 	if (*pkEndDateKey > jMaximumDataDate)
 		*pkEndDateKey = -1;
-	
+
 	strcpy(szBKey, arBKeys[nTableID]);
-	
+
 	return(bNewBKey);
 }
 
@@ -150,8 +150,8 @@ setSCDKeys(int nColumnID, ds_key_t kIndex, char *szBKey, ds_key_t *pkBeginDateKe
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -178,7 +178,7 @@ scd_join(int tbl, int col, ds_key_t jDate)
 		jH1DataDate = jMinimumDataDate + (jMaximumDataDate - jMinimumDataDate) / 2;
 		jT2DataDate = (jMaximumDataDate - jMinimumDataDate) / 3;
 		jT1DataDate = jMinimumDataDate + jT2DataDate;
-		jT2DataDate += jT1DataDate; 
+		jT2DataDate += jT1DataDate;
 		bInit = 1;
 	}
 
@@ -189,20 +189,20 @@ scd_join(int tbl, int col, ds_key_t jDate)
 	/* can't have a revision in the future, per bug 114 */
 	if (jDate > jMaximumDataDate)
 		res = -1;
-	
+
 	return((res > get_rowcount(tbl))?-1:res);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -218,7 +218,7 @@ matchSCDSK(ds_key_t kUnique, ds_key_t jDate, int nTable)
 		jT1DataDate,
 		jT2DataDate;
 	date_t dtTemp;
-	
+
 	if (!bInit)
 	{
 		strtodt(&dtTemp, DATA_START_DATE);
@@ -228,10 +228,10 @@ matchSCDSK(ds_key_t kUnique, ds_key_t jDate, int nTable)
 		jH1DataDate = jMinimumDataDate + (jMaximumDataDate - jMinimumDataDate) / 2;
 		jT2DataDate = (jMaximumDataDate - jMinimumDataDate) / 3;
 		jT1DataDate = jMinimumDataDate + jT2DataDate;
-		jT2DataDate += jT1DataDate; 
+		jT2DataDate += jT1DataDate;
 		bInit = 1;
 	}
-	
+
 	switch(kUnique % 3)	/* number of revisions for the ID */
 	{
 	case 1:	/* only one occurrence of this ID */
@@ -256,20 +256,20 @@ matchSCDSK(ds_key_t kUnique, ds_key_t jDate, int nTable)
 
 	if (kReturn > get_rowcount(nTable))
       kReturn = get_rowcount(nTable);
-   
+
    return(kReturn);
 }
 
 /*
-* Routine: 
+* Routine:
 * Purpose: map from a unique ID to a random SK
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -310,8 +310,8 @@ getSKFromID(ds_key_t kID, int nColumn)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -345,15 +345,15 @@ getFirstSK(ds_key_t kID)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -361,7 +361,7 @@ getFirstSK(ds_key_t kID)
 void
 changeSCD(int nDataType, void *pNewData, void *pOldData, int *nFlags, int bFirst)
 {
-   
+
   /**
    * if nFlags is odd, then this value will be retained
    */
@@ -369,7 +369,7 @@ changeSCD(int nDataType, void *pNewData, void *pOldData, int *nFlags, int bFirst
    {
 
       /*
-       * the method to retain the old value depends on the data type 
+       * the method to retain the old value depends on the data type
        */
       switch(nDataType)
       {
@@ -393,7 +393,7 @@ changeSCD(int nDataType, void *pNewData, void *pOldData, int *nFlags, int bFirst
    else {
 
       /*
-       * the method to set the old value depends on the data type 
+       * the method to set the old value depends on the data type
        */
       switch(nDataType)
       {
@@ -414,9 +414,9 @@ changeSCD(int nDataType, void *pNewData, void *pOldData, int *nFlags, int bFirst
          break;
       }
    }
-  
+
    *nFlags /= 2;
-   
-   
+
+
    return;
 }

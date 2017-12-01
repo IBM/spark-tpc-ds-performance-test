@@ -10,15 +10,15 @@
           ,count(*) cnt
     from store_sales,date_dim,store,household_demographics
     where store_sales.ss_sold_date_sk = date_dim.d_date_sk
-    and store_sales.ss_store_sk = store.s_store_sk  
+    and store_sales.ss_store_sk = store.s_store_sk
     and store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
     and (date_dim.d_dom between 1 and 3 or date_dim.d_dom between 25 and 28)
     and (household_demographics.hd_buy_potential = '>10000' or
          household_demographics.hd_buy_potential = 'Unknown')
     and household_demographics.hd_vehicle_count > 0
-    and (case when household_demographics.hd_vehicle_count > 0 
-	then household_demographics.hd_dep_count/ household_demographics.hd_vehicle_count 
-	else null 
+    and (case when household_demographics.hd_vehicle_count > 0
+	then household_demographics.hd_dep_count/ household_demographics.hd_vehicle_count
+	else null
 	end)  > 1.2
     and date_dim.d_year in (1999,1999+1,1999+2)
     and store.s_county in ('Williamson County','Williamson County','Williamson County','Williamson County',

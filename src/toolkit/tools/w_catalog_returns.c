@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -60,11 +60,11 @@ extern struct W_CATALOG_SALES_TBL g_w_catalog_sales;
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 * 20020902 jms Need to link call center to date/time of return
 * 20031023 jms removed ability for stand alone generation
 */
@@ -72,9 +72,9 @@ int
 mk_w_catalog_returns (void * row, ds_key_t index)
 {
 	int res = 0;
-	
+
 	static decimal_t dHundred;
-	int nTemp;	
+	int nTemp;
 	struct W_CATALOG_RETURNS_TBL *r;
 	struct W_CATALOG_SALES_TBL *sale = &g_w_catalog_sales;
 	static int bInit = 0;
@@ -87,11 +87,11 @@ mk_w_catalog_returns (void * row, ds_key_t index)
 		r = row;
 
 	if (!bInit)
-	{        
+	{
 		strtodec(&dHundred, "100.00");
 	}
-	
-	/* if we were not called from the parent table's mk_xxx routine, then 
+
+	/* if we were not called from the parent table's mk_xxx routine, then
 	 * move to a parent row that needs to be returned, and generate it
 	 */
 	nullSet(&pTdef->kNullBitMap, CR_NULLS);
@@ -105,7 +105,7 @@ mk_w_catalog_returns (void * row, ds_key_t index)
 		}
 		mk_w_catalog_sales(&g_w_catalog_sales, index);
 	}
-	
+
 	/*
 	* Some of the information in the return is taken from the original sale
 	* which has been regenerated
@@ -121,7 +121,7 @@ mk_w_catalog_returns (void * row, ds_key_t index)
 	r->cr_call_center_sk = sale->cs_call_center_sk;
 
 	/*
-	 * some of the fields are conditionally taken from the sale 
+	 * some of the fields are conditionally taken from the sale
 	 */
 	r->cr_returning_customer_sk =
 		mk_join (CR_RETURNING_CUSTOMER_SK, CUSTOMER, 2);
@@ -131,7 +131,7 @@ mk_w_catalog_returns (void * row, ds_key_t index)
 		mk_join (CR_RETURNING_HDEMO_SK, HOUSEHOLD_DEMOGRAPHICS, 2);
 	r->cr_returning_addr_sk =
 		mk_join (CR_RETURNING_ADDR_SK, CUSTOMER_ADDRESS, 2);
-	if (genrand_integer(NULL, DIST_UNIFORM, 0, 99, 0, CR_RETURNING_CUSTOMER_SK) 
+	if (genrand_integer(NULL, DIST_UNIFORM, 0, 99, 0, CR_RETURNING_CUSTOMER_SK)
 		< CS_GIFT_PCT)
 	{
 	r->cr_returning_customer_sk = sale->cs_ship_customer_sk;
@@ -164,15 +164,15 @@ mk_w_catalog_returns (void * row, ds_key_t index)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -216,22 +216,22 @@ pr_w_catalog_returns(void *row)
 	print_decimal(CR_PRICING_REVERSED_CHARGE, &r->cr_pricing.reversed_charge, 1);
 	print_decimal(CR_PRICING_STORE_CREDIT, &r->cr_pricing.store_credit, 1);
 	print_decimal(CR_PRICING_NET_LOSS, &r->cr_pricing.net_loss, 0);
-	
+
 	print_end(CATALOG_RETURNS);
 
 	return(0);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None

@@ -16,7 +16,7 @@ BEGIN
                        ,W_COUNTRY
                        ,W_GMT_OFFSET
                    FROM wrhsv) LOOP
-    update warehouse set 
+    update warehouse set
             W_WAREHOUSE_NAME=w_rec.W_WAREHOUSE_NAME
            ,W_WAREHOUSE_SQ_FT=w_rec.W_WAREHOUSE_SQ_FT
            ,W_STREET_NUMBER=w_rec.W_STREET_NUMBER

@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 
 #define DECLARER
 #include "config.h"
@@ -66,28 +66,28 @@ file_ref_t *pCurrentFile;
 
 /*
  * Routine: WriteIndex()
- * Purpose: traverse the distributions list and create the binary 
+ * Purpose: traverse the distributions list and create the binary
  *		version of distribution output
  * Algorithm:
  * Data Structures:
  *
  * Params: (list_t)
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
- * TODO: 
+ * TODO:
  * 	19990311 add data file format to header
  * 	20000112 need to allow for changes to an existing index file
  * 	20000112 need to allow for multiple index files
  */
-int 
+int
 WriteIndex(distindex_t *t)
 {
    d_idx_t *idx = NULL;
    dist_t *d;
-   int32_t i, j, 
+   int32_t i, j,
       nDist,
       *pSet,
       err_cnt = 0,
@@ -100,7 +100,7 @@ WriteIndex(distindex_t *t)
 
 	if ((ofp = fopen(get_str("OUTPUT"), "wb")) == NULL)
 	{
-		printf("ERROR: Cannot open output file '%s'\n", 
+		printf("ERROR: Cannot open output file '%s'\n",
 		get_str("OUTPUT"));
 		usage(NULL, NULL);
 	}
@@ -109,7 +109,7 @@ WriteIndex(distindex_t *t)
 	if ((fpHeader = fopen(get_str("HEADER"), "w")) == NULL)
 		return(99);
 	fprintf(fpHeader, "/*\nTHIS IS AN AUTOMATICALLY GENERATED FILE\nDO NOT EDIT\n\nSee distcomp.c for details\n*/\n");
-	
+
 	/* output the number of distributions in the file */
 	temp = htonl(pDistIndex->nDistCount);
 	if (fwrite(&temp, 1, sizeof(int32_t), ofp) < 0)
@@ -140,7 +140,7 @@ WriteIndex(distindex_t *t)
 			temp = htonl(data_type);
 			if (fwrite(&temp, 1, sizeof(int32_t), ofp) < 0)
 				err_cnt = 12;
-			else 
+			else
 				offset += sizeof(int32_t);
 			}
 
@@ -153,7 +153,7 @@ WriteIndex(distindex_t *t)
 				temp = htonl(pSet[j]);
 				if (fwrite(&temp, 1, sizeof(int32_t), ofp) < 0)
 					err_cnt = 6;
-				else 
+				else
 					offset += sizeof(int32_t);
 				}
 			}
@@ -167,7 +167,7 @@ WriteIndex(distindex_t *t)
 				temp = htonl(pSet[j]);
 				if (fwrite(&temp, 1, sizeof(int32_t), ofp) < 0)
 					err_cnt = 8;
-				else 
+				else
 					offset += sizeof(int32_t);
 				}
 			}
@@ -178,9 +178,9 @@ WriteIndex(distindex_t *t)
 		{
 			if (fwrite(d->names, 1, idx->name_space, ofp) < (size_t)idx->name_space)
 				err_cnt = 8;
-			else 
+			else
 				offset += idx->name_space;
-			
+
 			cp = d->names;
 			for (i=0; i < idx->v_width + idx->w_width; i++)
 			{
@@ -197,7 +197,7 @@ WriteIndex(distindex_t *t)
 		/* output the strings themselves */
 		if (fwrite(d->strings, 1, idx->str_space, ofp) < (size_t)idx->str_space)
 			err_cnt = 8;
-		else 
+		else
 			offset += idx->str_space;
 
     	}
@@ -235,7 +235,7 @@ WriteIndex(distindex_t *t)
 	fclose(fpHeader);
 
    return(err_cnt);
-}    
+}
 
  /*
  * Routine: main()
@@ -245,8 +245,8 @@ WriteIndex(distindex_t *t)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: jms 20041013: rework as version/option of qgen
@@ -270,8 +270,8 @@ int main(int argc, char* argv[])
 		set_str("HEADER", szHeader);
 	}
 
-	
-	
+
+
 	/* setup the dist index */
 	pDistIndex = (distindex_t *)malloc(sizeof(struct DISTINDEX_T));
 	MALLOC_CHECK(pDistIndex);
@@ -287,13 +287,13 @@ int main(int argc, char* argv[])
 	for (i=0; i < 100; i++)
 		memset(pDistIndex->pEntries + i, 0, sizeof(struct D_IDX_T));
 	*/
-		
+
 
 	SetTokens(dcomp_tokens);
 
 	if ((i = ParseFile(get_str("INPUT"))) != 0)
 	{
-		printf("ERROR: Parse failed for %s\n", 
+		printf("ERROR: Parse failed for %s\n",
 			get_str("INPUT"));
 		ReportError(i, NULL, 1);
 		exit(1);
@@ -316,9 +316,9 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	if ((i = WriteIndex(pDistIndex)) > 0)		
+	if ((i = WriteIndex(pDistIndex)) > 0)
 		{
-		sprintf(szPath, "WriteDist returned %d writing to %s", 
+		sprintf(szPath, "WriteDist returned %d writing to %s",
 			i, get_str("OUTPUT"));
 		ReportError(QERR_WRITE_FAILED, szPath, 1);
 		}

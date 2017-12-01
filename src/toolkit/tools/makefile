@@ -3,13 +3,13 @@
 #
 #  This document and associated source code (the "Work") is a part of a
 #  benchmark specification maintained by the TPC.
-# 
+#
 #  The TPC reserves all right, title, and interest to the Work as provided
 #  under U.S. and international laws, including without limitation all patent
 #  and trademark rights therein.
-# 
+#
 #  No Warranty
-# 
+#
 #  1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
 #      CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
 #      AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
@@ -29,10 +29,10 @@
 #      OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
 #      RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
 #      ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
-# 
+#
 #  Contributors:
 #  Gradient Systems
-# 
+#
 #
 #
 ################
@@ -57,20 +57,20 @@ CC		= $($(OS)_CC)
 AIX_CFLAGS		= -q64 -O3 -D_LARGE_FILES
 HPUX_CFLAGS		= -O3 -Wall
 LINUX_CFLAGS	= -g -Wall
-NCR_CFLAGS		= -g 
+NCR_CFLAGS		= -g
 MACOS_CFLAGS		= -g -Wall
 SOLARIS_CFLAGS	= -O3 -Wall
-SOL86_CFLAGS	= -O3 
-BASE_CFLAGS    	= -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG #-maix64 -DMEM_TEST 
+SOL86_CFLAGS	= -O3
+BASE_CFLAGS    	= -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG #-maix64 -DMEM_TEST
 CFLAGS			= $(BASE_CFLAGS) -D$(OS) $($(OS)_CFLAGS)
 # EXE
-AIX_EXE		= 
-HPUX_EXE	= 
-LINUX_EXE	= 
-NCR_EXE		= 
-MACOS_EXE		= 
-SOLARIS_EXE	= 
-SOL86_EXE	= 
+AIX_EXE		=
+HPUX_EXE	=
+LINUX_EXE	=
+NCR_EXE		=
+MACOS_EXE		=
+SOLARIS_EXE	=
+SOL86_EXE	=
 EXE			= $($(OS)_EXE)
 # LEX
 AIX_LEX		= flex
@@ -125,8 +125,8 @@ COMMON_HDR = address.h build_support.h config.h constants.h date.h \
 	permute.h porting.h pricing.h print.h qgen_params.h query_handler.h \
 	release.h r_params.h StringBuffer.h tdef_functions.h \
 	tdefs.h template.h scd.h mathops.h scd.h sparse.h validate.h
-DISTCOMP_HDR = dcgram.h dcomp.h dcomp_params.h grammar.h nulls.h 
-QGEN_HDR = eval.h substitution.h  keywords.h permute.h qgen_params.h 
+DISTCOMP_HDR = dcgram.h dcomp.h dcomp_params.h grammar.h nulls.h
+QGEN_HDR = eval.h substitution.h  keywords.h permute.h qgen_params.h
 S_HDR = s_brand.h s_customer_address.h scaling.h s_call_center.h s_catalog.h \
 	s_catalog_order.h s_catalog_order_lineitem.h s_catalog_page.h \
 	s_catalog_promotional_item.h s_catalog_returns.h s_category.h \
@@ -153,7 +153,7 @@ COMMON_SRC = address.c build_support.c date.c \
 	nulls.c parallel.c permute.c pricing.c print.c r_params.c StringBuffer.c \
 	tdef_functions.c tdefs.c text.c scd.c scaling.c release.c scd.c sparse.c \
 	porting.c validate.c
-DISTCOMP_SRC = dcgram.c dcomp.c grammar.c 
+DISTCOMP_SRC = dcgram.c dcomp.c grammar.c
 QGEN_SRC = tokenizer.l substitution.c QgenMain.c qgen.y query_handler.c \
 	eval.c keywords.c
 S_SRC = s_brand.c s_customer_address.c scaling.c s_call_center.c s_catalog.c \
@@ -180,12 +180,12 @@ DBGEN_OBJ = address.o build_support.o date.o \
 	join.o list.o load.o misc.o \
 	nulls.o parallel.o permute.o pricing.o print.o r_params.o StringBuffer.o \
 	tdef_functions.o tdefs.o text.o scd.o scaling.o release.o sparse.o validate.o
-DISTCOMP_OBJ = dcgram.o dcomp.o grammar.o error_msg.o StringBuffer.o r_params.o 
+DISTCOMP_OBJ = dcgram.o dcomp.o grammar.o error_msg.o StringBuffer.o r_params.o
 QGEN_OBJ = address.o date.o decimal.o dist.o error_msg.o expr.o \
 	eval.o genrand.o grammar_support.o keywords.o list.o \
 	nulls.o permute.o print.o QgenMain.o query_handler.o r_params.o \
 	scaling.o StringBuffer.o substitution.o tdefs.o text.o tokenizer.o w_inventory.o y.tab.o \
-	release.o scd.o build_support.o parallel.o 
+	release.o scd.o build_support.o parallel.o
 S_OBJ = s_brand.o s_customer_address.o s_call_center.o s_catalog.o \
 	s_catalog_order.o s_catalog_order_lineitem.o s_catalog_page.o \
 	s_catalog_promotional_item.o s_catalog_returns.o s_category.o \
@@ -211,7 +211,7 @@ OBJ4 =	mkheader.o
 OBJ5 =	checksum.o
 OBJ = $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5)
 #
-IDX 	=	tpcds.idx 
+IDX 	=	tpcds.idx
 IDXSRC =	calendar.dst cities.dst english.dst fips.dst names.dst \
 			streets.dst tpcds.dst items.dst scaling.dst
 #
@@ -224,7 +224,7 @@ WIN_MAKE=dbgen2.vcproj distcomp.vcproj qgen2.vcproj mkheader.vcproj \
 #
 FQD =		query_templates/*
 VARIANTS =	query_variants/*
-TESTS =		tests/*.sh tests/*.sql 
+TESTS =		tests/*.sh tests/*.sql
 ANS = 		answer_sets/*.ans
 QUERY_SRC = $(FQD) $(VARIANTS)
 TREE_DOC =
@@ -234,7 +234,7 @@ DBGENSRC	= $(SRC) $(HDR) $(OTHER) $(DOC) $(DDL) $(IDXSRC) $(WIN_MAKE) $(QUERY_SR
 GENERATED	= tables.h streams.h columns.h
 DATE_STAMP	= `date '+%Y%m%d'`
 #
-all: .ctags_updated $(PROGS) $(IDX) 
+all: .ctags_updated $(PROGS) $(IDX)
 
 $(PROG1): $(OBJ1) $(IDX)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $(PROG1) $(OBJ1) $(LIBS)
@@ -279,7 +279,7 @@ data_set: /data/dbgen_version.dat
 	./$(PROG1) -f -sc 1 -dir /data -update 1
 sum: $(PROG1) data_set
 	sum /data/*.dat > tpcds_`date '+%Y%m%d'`.sum
-test_build: 
+test_build:
 	(cd tests; sh -x test_list.sh `date '+%Y%m%d'` 1 1)
 ####
 # Dependencies. Partially hand coded, partially generated by makedepend
@@ -301,7 +301,7 @@ qgen:
 	@make qgen2$(EXE)
 join.o: tpcds.idx.h
 driver.o: tpcds.idx.h
-mkheader.o: mkheader.c 
+mkheader.o: mkheader.c
 $(OBJ1) $(OBJ2) $(OBJ3): $(GENERATED)
 # DO NOT DELETE
 

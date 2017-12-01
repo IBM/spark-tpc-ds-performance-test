@@ -3,7 +3,7 @@ DBGEN=".."
 DATA="/data"
 
 hard_compare() {
-case $1 in 
+case $1 in
 1)
 	validate_data="$DATA/${2}_${1}.vld"
 	base_data="$DATA/${2}_${1}.dat"
@@ -26,7 +26,7 @@ return
 fi
 rm -f d
 line_number=1
-while read l 
+while read l
 do
    grep "^$l\$" $base_data >> d
    if [ ! -s d ]
@@ -43,7 +43,7 @@ echo "$table is OK"
 }
 
 compare() {
-case $1 in 
+case $1 in
 1)
 	validate_data="$DATA/${2}_${1}.vld"
 	base_data="$DATA/${2}_${1}.dat"
@@ -64,7 +64,7 @@ then
 echo "No base data for $table"
 return
 fi
-while read l 
+while read l
 do
 lnum=`echo $l | cut -f1 -d\| `
 sed -n ${lnum}p $base_data | tr "|" "\012" > d
@@ -163,7 +163,7 @@ if [ -z "$build" ]
 then echo "USING PREGENERATED dat FILES"
 fi
 
-case $# in 
+case $# in
 0)
 do_table $build cc call_center
 do_table $build cp catalog_page
@@ -188,18 +188,18 @@ do_table $build no_tag ws web_sales web_returns
 do_table $build web web_site
 do_table $build update s_ca s_customer_address
 do_table $build update s_cc s_call_center
-do_table $build update s_cord s_catalog_order s_catalog_order_lineitem 
+do_table $build update s_cord s_catalog_order s_catalog_order_lineitem
 do_table no_build update no_tag s_cr s_catalog_returns
 do_table $build update s_cp s_catalog_page
 do_table $build update s_cu s_customer
 do_table $build update s_in s_inventory
 do_table $build update s_it s_item
 do_table $build update s_pm s_promotion
-do_table $build update s_pu s_purchase s_purchase_lineitem 
+do_table $build update s_pu s_purchase s_purchase_lineitem
 do_table no_build no_tag update s_sr s_store_returns
 do_table $build update s_st s_store
 do_table $build update s_wh s_warehouse
-do_table $build update s_wo s_web_order s_web_order_lineitem 
+do_table $build update s_wo s_web_order s_web_order_lineitem
 do_table no_build no_tag update s_wr s_web_returns
 do_table $build update s_wp s_web_page
 do_table $build update s_ws s_web_site

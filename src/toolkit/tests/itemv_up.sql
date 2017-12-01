@@ -11,7 +11,7 @@ create table s_item as
        ,i_units item_units
        ,i_container item_container
  from item
- where i_rec_end_date is null 
+ where i_rec_end_date is null
    and rownum < 1000);
 -- I need the following statement because of a bug in dbgen that generates some duplicates in item
 delete from s_item where item_item_id in (select ITEM_ITEM_ID from (select ITEM_ITEM_ID ,count(*) cnt from s_item group by ITEM_ITEM_ID) where cnt > 1);

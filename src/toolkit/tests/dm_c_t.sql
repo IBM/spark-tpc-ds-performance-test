@@ -17,15 +17,15 @@ select   cust_customer_id c_customer_id
         ,cust_login_id c_login
         ,cust_email_address c_email_address
         ,cust_last_review_date c_last_review_date
-from    
-        s_customer_m left outer join customer on (c_customer_id=cust_customer_id) 
+from
+        s_customer_m left outer join customer on (c_customer_id=cust_customer_id)
                      left outer join customer_address on (c_current_addr_sk = ca_address_sk)
         ,customer_demographics
         ,household_demographics
         ,income_band ib
         ,date_dim d1
         ,date_dim d2
-where   
+where
         cust_gender = cd_gender
         and cust_marital_status = cd_marital_status
         and cust_educ_status = cd_education_status

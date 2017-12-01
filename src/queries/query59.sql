@@ -1,5 +1,5 @@
 -- start query 59 in stream 0 using template query59.tpl and seed QUALIFICATION
- with wss as 
+ with wss as
  (select d_week_seq,
         ss_store_sk,
         sum(case when (d_day_name='Sunday') then ss_sales_price else null end) sun_sales,
@@ -25,7 +25,7 @@
         ,fri_sales fri_sales1,sat_sales sat_sales1
   from wss,store,date_dim d
   where d.d_week_seq = wss.d_week_seq and
-        ss_store_sk = s_store_sk and 
+        ss_store_sk = s_store_sk and
         d_month_seq between 1212 and 1212 + 11) y,
  (select s_store_name s_store_name2,wss.d_week_seq d_week_seq2
         ,s_store_id s_store_id2,sun_sales sun_sales2
@@ -34,7 +34,7 @@
         ,fri_sales fri_sales2,sat_sales sat_sales2
   from wss,store,date_dim d
   where d.d_week_seq = wss.d_week_seq and
-        ss_store_sk = s_store_sk and 
+        ss_store_sk = s_store_sk and
         d_month_seq between 1212+ 12 and 1212 + 23) x
  where s_store_id1=s_store_id2
    and d_week_seq1=d_week_seq2-52

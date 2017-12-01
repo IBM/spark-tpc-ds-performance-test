@@ -20,7 +20,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/web_page")
 ;
 drop table if exists web_page;
-create table web_page 
+create table web_page
 using parquet
 as (select * from web_page_text)
 ;

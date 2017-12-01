@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 
 /*** includes ***/
 #include "config.h"
@@ -59,13 +59,13 @@ static char *qtr_start[5] = {NULL, "01-01", "04-01", "07-01", "10-01"};
 char *weekday_names[8] = {NULL, "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 /*
  * Routine: mk_date(void)
- * Purpose: initialize a date_t 
+ * Purpose: initialize a date_t
  * Algorithm:
  * Data Structures:
- * Params:	
+ * Params:
  * Returns: date_t *
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -88,13 +88,13 @@ mk_date(void)
 }
 /*
  * Routine: strtotime(char *str)
- * Purpose: convert a string from the time to the number of seconds since midnight 
+ * Purpose: convert a string from the time to the number of seconds since midnight
  * Algorithm:
  * Data Structures:
- * Params:	
+ * Params:
  * Returns: int
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -127,13 +127,13 @@ strtotime(char *str)
 
 /*
  * Routine: strtodate(char *str)
- * Purpose: initialize a date_t 
+ * Purpose: initialize a date_t
  * Algorithm:
  * Data Structures:
- * Params:	
+ * Params:
  * Returns: date_t *
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -161,11 +161,11 @@ strtodate(char *str)
  *
  * Params: source integer: days since big bang
  * Returns: date_t *; NULL on failure
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
- * TODO: 
+ * TODO:
  */
 int
 jtodt(date_t *dest, int src)
@@ -177,7 +177,7 @@ jtodt(date_t *dest, int src)
 
 	if (src < 0)
 		return(-1);
-	
+
 	dest->julian = src;
 	l = src + 68569 ;
 	n = (int)floor((4*l)/146097) ;
@@ -201,8 +201,8 @@ jtodt(date_t *dest, int src)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -236,8 +236,8 @@ dttoj(date_t *dt)
  *
  * Params: char *s, date_t *dest
  * Returns: int; 0 on success
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: Need to allow for date formats other than Y4MD-
@@ -246,19 +246,19 @@ int
 strtodt(date_t *dest, char *s)
 {
 	int nRetCode = 0;
-	
+
 	if (s == NULL)
 		{
 		dest = NULL;
 		return(-1);
 		}
-	
+
 	if (sscanf(s, "%4d-%d-%d", &dest->year, &dest->month, &dest->day) != 3)
 		{
 		fprintf(stderr, "ERROR: Invalid string to date conversion in strtodt\n");
-		nRetCode = -1;	
+		nRetCode = -1;
 		}
-	
+
 	dest->julian = dttoj(dest);
 
 	return(nRetCode);
@@ -270,10 +270,10 @@ strtodt(date_t *dest, char *s)
  * Algorithm:
  * Data Structures:
  *
- * Params: 
+ * Params:
  * Returns: char *; NULL on failure
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: 20000110 Need to handle more than Y4MD-
@@ -283,19 +283,19 @@ dttostr(date_t *d)
 {
 	static char 	*res;
 	static int init = 0;
-	
+
 	if (!init)
 		{
 		res = (char *)malloc(sizeof(char) * 11);
 		MALLOC_CHECK(res);
 		init = 1;
 		}
-		
+
 	if (d == NULL)
 		return(NULL);
-	
+
 	sprintf(res, "%4d-%02d-%02d", d->year, d->month, d->day);
-	
+
 	return(res);
 }
 
@@ -307,8 +307,8 @@ dttostr(date_t *d)
  *
  * Params: None
  * Returns: int; 0 on success
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -329,11 +329,11 @@ date_init(void)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
- * TODO: 
+ * TODO:
  *	20010806 jms	Return code is meaningless
  */
 int
@@ -421,13 +421,13 @@ date_t_op(date_t *dest, int op, date_t *d1, date_t *d2)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
  */
-int 
+int
 itodt(date_t *dest, int src)
 {
 
@@ -444,11 +444,11 @@ itodt(date_t *dest, int src)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
- * TODO: 
+ * TODO:
  */
 static int doomsday[4] = {3, 2, 0, 5};
 static int known[13] = { 0, 3, 0, 0, 4, 9, 6, 11, 8, 5, 10, 7, 12 };
@@ -456,7 +456,7 @@ int
 set_dow(date_t *d)
 {
 
-	static int last_year = -1, 
+	static int last_year = -1,
 		dday;
 	int res,
 		q, r, s;
@@ -498,7 +498,7 @@ set_dow(date_t *d)
 		res += 7;
 	while (res > 6)
 		res -= 7;
-	
+
 	res += dday;
 	res %= 7;
 
@@ -508,14 +508,14 @@ set_dow(date_t *d)
 
 /*
  * Routine: is_leap(year)
- * Purpose: 
+ * Purpose:
  * Algorithm:
  * Data Structures:
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -529,15 +529,15 @@ is_leap(int year)
 
 /*
  * Routine: day_number(date_t *)
- * Purpose: 
- * Algorithm: NOTE: this is NOT the ordinal day in the year, but the ordinal reference into the 
+ * Purpose:
+ * Algorithm: NOTE: this is NOT the ordinal day in the year, but the ordinal reference into the
  *	calendar distribution for the day; in particular, this needs to skip over the leap day
  * Data Structures:
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -556,8 +556,8 @@ day_number(date_t *d)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -577,14 +577,14 @@ getDateWeightFromJulian(jDay, nDistribution)
 
 /*
  * Routine: date_part(date_t *, int part)
- * Purpose: 
+ * Purpose:
  * Algorithm:
  * Data Structures:
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -597,7 +597,7 @@ date_part(date_t *d, int part)
 	case 1:	return(d->year);
 	case 2:	return(d->month);
 	case 3:	return(d->day);
-	default: 
+	default:
 		INTERNAL("Invalid call to date_part()");
 		return(-1);
 	}

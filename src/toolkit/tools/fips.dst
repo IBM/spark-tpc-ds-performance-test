@@ -75,7 +75,7 @@
 ------
 create fips_county;
 set types = (int, varchar, varchar, varchar, varchar, int);
-set weights = 6; 
+set weights = 6;
 set names = (fips, county, st, state, zone, gmt:uniform, population, tz, tz90, tz9, tz1);
 add (47187,"Williamson County", "TN", "Tennesee", "3", -5:1, 117569, 1387, 1, 0, 0);
 add (46137,"Ziebach County", "SD", "South Dakota", "5", -6:1, 2176, 1148, 1, 0, 0);

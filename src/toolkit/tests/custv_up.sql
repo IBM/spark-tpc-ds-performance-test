@@ -42,7 +42,7 @@ from customer
     ,date_dim d1
     ,date_dim d2
     ,date_dim d3
-where c_current_addr_sk = ca_address_sk 
+where c_current_addr_sk = ca_address_sk
   and d1.d_date_sk = C_FIRST_SHIPTO_DATE_SK
   and d2.d_date_sk = C_FIRST_SALES_DATE_SK
   and extract (day from d3.d_date) = c_birth_day

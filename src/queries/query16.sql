@@ -1,5 +1,5 @@
 -- start query 16 in stream 0 using template query16.tpl and seed QUALIFICATION
- select  
+ select
    count(distinct cs_order_number) as order_count
   ,sum(cs_ext_ship_cost) as total_shipping_cost
   ,sum(cs_net_profit) as total_net_profit
@@ -9,7 +9,7 @@ from
   ,customer_address
   ,call_center
 where
-    d_date between cast('2002-2-01' as date) and 
+    d_date between cast('2002-2-01' as date) and
            date_add(cast('2002-2-01' as date), 60 )
 and cs1.cs_ship_date_sk = d_date_sk
 and cs1.cs_ship_addr_sk = ca_address_sk

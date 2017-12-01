@@ -1,5 +1,5 @@
 drop table s_web_page;
-create table s_web_page as 
+create table s_web_page as
 (select WP_WEB_PAGE_ID WPAG_WEB_PAGE_ID
        ,d1.d_date WPAG_CREATE_DATE
        ,d2.d_date WPAG_ACCESS_DATE

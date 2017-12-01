@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -62,16 +62,16 @@ static ds_key_t jDate;
 static int nTicketItemBase = 1;
 static int *pItemPermutation;
 static int nItemCount;
-                                                              
-                                                              
-/*                                                            
+
+
+/*
  * the validation process requires generating a single lineitem
- * so the main mk_xxx routine has been split into a master record portion   
- * and a detail/lineitem portion.                             
- */                                                           
-static void                                                   
-mk_master (void *row, ds_key_t index)                         
-{                                      
+ * so the main mk_xxx routine has been split into a master record portion
+ * and a detail/lineitem portion.
+ */
+static void
+mk_master (void *row, ds_key_t index)
+{
 	static decimal_t dZero,
 		dHundred,
 		dOne, dOneHalf;
@@ -105,19 +105,19 @@ mk_master (void *row, ds_key_t index)
 
 	/***
 	 * some attributes remain the same for each lineitem in an order; others are different
-	 * for each lineitem. 
+	 * for each lineitem.
     *
     * Parallel generation causes another problem, since the values that get seeded may come from a prior row.
     * If we are seeding at the start of a parallel chunk, hunt backwards in the RNG stream to find the most
     * recent values that were used to set the values of the orderline-invariant columns
  	 */
-   
+
 		r->cs_sold_date_sk = jDate;
-		r->cs_sold_time_sk = mk_join (CS_SOLD_TIME_SK, TIME, 
+		r->cs_sold_time_sk = mk_join (CS_SOLD_TIME_SK, TIME,
 			r->cs_call_center_sk);
 		r->cs_call_center_sk =
 			(r->cs_sold_date_sk == -1)?-1:mk_join (CS_CALL_CENTER_SK, CALL_CENTER, r->cs_sold_date_sk);
-		
+
 		r->cs_bill_customer_sk =
 			mk_join (CS_BILL_CUSTOMER_SK, CUSTOMER, 1);
 		r->cs_bill_cdemo_sk =
@@ -146,7 +146,7 @@ mk_master (void *row, ds_key_t index)
 			r->cs_ship_cdemo_sk =	r->cs_bill_cdemo_sk;
 			r->cs_ship_hdemo_sk =	r->cs_bill_hdemo_sk;
 			r->cs_ship_addr_sk =	r->cs_bill_addr_sk;
-		}	
+		}
 
       r->cs_order_number = index;
 	  genrand_integer(&nTicketItemBase, DIST_UNIFORM, 1, nItemCount, 0, CS_SOLD_ITEM_SK);
@@ -160,7 +160,7 @@ mk_detail(void *row, int bPrint)
 	static decimal_t dZero,
 		dHundred,
 		dOne, dOneHalf;
-	int nShipLag, 
+	int nShipLag,
 		nTemp;
    ds_key_t kItem;
 	static ds_key_t kNewDateIndex = 0;
@@ -190,14 +190,14 @@ mk_detail(void *row, int bPrint)
    nullSet(&pTdef->kNullBitMap, CS_NULLS);
 
 	/* orders are shipped some number of days after they are ordered */
-	genrand_integer (&nShipLag, DIST_UNIFORM, 
+	genrand_integer (&nShipLag, DIST_UNIFORM,
 		CS_MIN_SHIP_DELAY, CS_MAX_SHIP_DELAY, 0, CS_SHIP_DATE_SK);
 	r->cs_ship_date_sk = (r->cs_sold_date_sk == -1)?-1:r->cs_sold_date_sk + nShipLag;
 
 
-	/* 
+	/*
 	 * items need to be unique within an order
-	 * use a sequence within the permutation 
+	 * use a sequence within the permutation
     * NB: Permutations are 1-based
 	 */
 	if (++nTicketItemBase > nItemCount)
@@ -214,7 +214,7 @@ mk_detail(void *row, int bPrint)
 	r->cs_promo_sk = mk_join (CS_PROMO_SK, PROMOTION, 1);
 	set_pricing(CS_PRICING, &r->cs_pricing);
 
-	/** 
+	/**
 	* having gone to the trouble to make the sale, now let's see if it gets returned
 	*/
 	genrand_integer(&nTemp, DIST_UNIFORM, 0, 99, 0, CR_IS_RETURNED);
@@ -236,17 +236,17 @@ mk_detail(void *row, int bPrint)
 
 /*
 * Routine: mk_catalog_sales()
-* Purpose: build rows for the catalog sales table 
+* Purpose: build rows for the catalog sales table
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
-* TODO: 
+* TODO:
 * 20020902 jms Need to link order date/time to call center record
 * 20020902 jms Should promos be tied to item id?
 */
@@ -275,15 +275,15 @@ mk_w_catalog_sales (void* row, ds_key_t index)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -339,15 +339,15 @@ pr_w_catalog_sales(void *row)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -366,15 +366,15 @@ ld_w_catalog_sales(void *row)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -388,7 +388,7 @@ vld_w_catalog_sales(int nTable, ds_key_t kRow, int *Permutation)
 
 	row_skip(nTable, kRow - 1);
 	row_skip(CATALOG_RETURNS, (kRow - 1) );
-	jDate = skipDays(CATALOG_SALES, &kNewDateIndex);		
+	jDate = skipDays(CATALOG_SALES, &kNewDateIndex);
 	mk_master(NULL, kRow);
 	genrand_integer(&nMaxLineitem, DIST_UNIFORM, 4, 14, 9, CS_ORDER_NUMBER);
 	genrand_integer(&nLineitem, DIST_UNIFORM, 1, nMaxLineitem, 0, CS_PRICING_QUANTITY);

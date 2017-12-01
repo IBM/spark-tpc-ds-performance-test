@@ -25,7 +25,7 @@
      date_dim,
      store
  where date_sk = d_date_sk
-       and d_date between cast('2000-08-23' as date) 
+       and d_date between cast('2000-08-23' as date)
                   and date_add(cast('2000-08-23' as date), 14 )
        and store_sk = s_store_sk
  group by s_store_id)
@@ -98,7 +98,7 @@
         , sum(sales) as sales
         , sum(returns) as returns
         , sum(profit) as profit
- from 
+ from
  (select 'store channel' as channel
         , concat('store', s_store_id) as id
         , sales

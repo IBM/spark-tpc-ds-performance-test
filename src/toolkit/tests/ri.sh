@@ -17,7 +17,7 @@ fi
 . ~jms/db2profile
 if [ -n "$1" ]
 then
-awk "\$3 == \"$1\"" tpcds_ri.sql | 
+awk "\$3 == \"$1\"" tpcds_ri.sql |
 	tr -d ";" |
 	while read ri
 	do
@@ -31,7 +31,7 @@ while read t
 do
 db2 db2stop
 db2 db2start
-awk "\$3 == \"$t\"" tpcds_ri.sql | 
+awk "\$3 == \"$t\"" tpcds_ri.sql |
 	tr -d ";" |
 	while read ri
 	do

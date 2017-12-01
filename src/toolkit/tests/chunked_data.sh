@@ -9,7 +9,7 @@ validate() {
    f1=`head -1 foo`
    f2=`tail -1 foo`
    if [ "$f1" != "$f2" ]
-   then 
+   then
       echo $1 failed at scale $sc
       exit -1
    fi
@@ -23,8 +23,8 @@ then
 exit
 fi
 
-# read in the tables that might be parallelized, scaling up 
-# as required 
+# read in the tables that might be parallelized, scaling up
+# as required
 while read tbl sc p chld
 do
    c1=`expr $p / 2`

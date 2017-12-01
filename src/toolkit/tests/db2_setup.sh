@@ -9,7 +9,7 @@ db2batch -d $1 -f $2 || exit -1
 
 load_table()
 {
-db2 "load from $2 of del modified by coldel| replace into $1" 2>&1 | 
+db2 "load from $2 of del modified by coldel| replace into $1" 2>&1 |
    grep -i rejected
 }
 

@@ -41,11 +41,11 @@
 -- -----------------------
 --	1. name			1. uniform
 --	2. class dist name
---  3. Use Size? 
+--  3. Use Size?
 ------
 create categories;
 set types = (varchar, varchar, int);
-set weights = 1; 
+set weights = 1;
 add ("Women", "women_class", 1: 1);
 add ("Men", "men_class", 1: 1);
 add ("Children", "children_class", 1: 1);
@@ -63,7 +63,7 @@ add ("Electronics", "electronic_class", 0: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create women_class;
 set types = (varchar, int);
@@ -79,7 +79,7 @@ add ("swimwear", 2: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create men_class;
 set types = (varchar, int);
@@ -95,7 +95,7 @@ add ("sports-apparel", 2: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create children_class;
 set types = (varchar, int);
@@ -111,7 +111,7 @@ add ("school-uniforms", 2: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create shoe_class;
 set types = (varchar, int);
@@ -127,7 +127,7 @@ add ("athletic", 2: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create music_class;
 set types = (varchar, int);
@@ -143,7 +143,7 @@ add ("classical", 2: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create jewelry_class;
 set types = (varchar, int);
@@ -171,7 +171,7 @@ add ("consignment", 8: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create home_class;
 set types = (varchar, int);
@@ -199,7 +199,7 @@ add ("furniture", 10: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create sport_class;
 set types = (varchar, int);
@@ -227,7 +227,7 @@ add ("golf", 10: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create book_class;
 set types = (varchar, int);
@@ -255,7 +255,7 @@ add ("mystery", 12: 1);
 -- values			weights
 -- -----------------------
 --	1. class name	1. uniform
---  2. brand count 
+--  2. brand count
 ------
 create electronic_class;
 set types = (varchar, int);
@@ -282,13 +282,13 @@ add ("wireless", 17: 1);
 --   size of a particular item, if applicable (based on category)
 -- values			weights
 -- -----------------------
---	1. size		1. uniform	
+--	1. size		1. uniform
 --				2. for non-sized categories
---				3. size distributtion 
+--				3. size distributtion
 ------
 create sizes;
 set types = (varchar);
-set weights = 3; 
+set weights = 3;
 add ("petite": 1, 0, 17);
 add ("small": 1, 0, 17);
 add ("medium": 1, 0, 35);
@@ -301,11 +301,11 @@ add ("N/A": 1, 1, 4);
 -- units
 -- values			weights
 -- -----------------------
---	1. unit name	1. uniform	
+--	1. unit name	1. uniform
 ------
 create units;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 add ("Unknown": 400);
 add ("Each": 400);
 add ("Dozen": 400);
@@ -333,7 +333,7 @@ add ("N/A", 400);
 ------
 create container;
 set types = (varchar);
-set weights = 1; 
+set weights = 1;
 add ("Unknown": 4);
 
 
@@ -341,15 +341,15 @@ add ("Unknown": 4);
 -- colors
 -- values			weights
 -- -----------------------
---	1. color	1. uniform	
+--	1. color	1. uniform
 --				2. skewed dist (used by dbgen)
---				3. low likelihood (used by qgen) 
---				4. medium likelihood (used by qgen) 
---				5. high likelihood (used by qgen) 
+--				3. low likelihood (used by qgen)
+--				4. medium likelihood (used by qgen)
+--				5. high likelihood (used by qgen)
 ------
 create colors;
 set types = (varchar);
-set weights = 5; 
+set weights = 5;
 set names = (name:uniform, skewed, low, medium, high);
 add ("almond": 1, 1, 1, 0, 0);
 add ("antique": 1, 1, 1, 0, 0);
@@ -448,7 +448,7 @@ add ("yellow": 1, 9, 0, 0, 1);
 -- brand_syllables
 -- values			weights
 -- -----------------------
---	1. syllable	1. uniform	
+--	1. syllable	1. uniform
 ------
 create brand_syllables;
 set types = (varchar);
@@ -468,7 +468,7 @@ add ("maxi":1);
 -- i_current_price
 -- values			weights
 -- -----------------------
---	1. min	1. unified	
+--	1. min	1. unified
 --	2. max	2. low
 --			3. medium
 --			4. high
@@ -486,7 +486,7 @@ add (3, "10.00",	"99.99":10, 0, 0, 1);
 -- i_manufact_id
 -- values			weights
 -- -----------------------
---	1. ind	1. unified	
+--	1. ind	1. unified
 --	2. min	2. low
 --	3. max	3. medium
 --		4. high
@@ -502,7 +502,7 @@ add (3, 667,	1000:	10, 0, 0, 1);
 -- i_manager_id
 -- values			weights
 -- -----------------------
---	1. index	1. unified	
+--	1. index	1. unified
 --	2. min		2. low
 --      3. max		3. medium
 --			4. high

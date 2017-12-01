@@ -18,7 +18,7 @@ BEGIN
                       ,C_EMAIL_ADDRESS
                       ,C_LAST_REVIEW_DATE
                  from custv) LOOP
-    update customer set 
+    update customer set
  C_CUSTOMER_ID=c_rec.C_CUSTOMER_ID
 ,C_CURRENT_CDEMO_SK=c_rec.C_CURRENT_CDEMO_SK
 ,C_CURRENT_HDEMO_SK=c_rec.C_CURRENT_HDEMO_SK

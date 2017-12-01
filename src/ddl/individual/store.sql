@@ -35,7 +35,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store")
 ;
 drop table if exists store;
-create table store 
+create table store
 using parquet
 as (select * from store_text)
 ;

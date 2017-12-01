@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -73,15 +73,15 @@ void setUpdateScaling(int table);
 int	row_skip(int tbl, ds_key_t count);
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -104,9 +104,9 @@ getScaleSlot(int nTargetGB)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
-* Assumptions: 
+* Called By:
+* Calls:
+* Assumptions:
 * Side Effects: arRowcounts are set to the appropriate number of rows for the target scale factor
 * TODO: None
 */
@@ -139,9 +139,9 @@ LogScale(int nTable, int nTargetGB)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
-* Assumptions: 
+* Called By:
+* Calls:
+* Assumptions:
 * Side Effects: arRowcounts are set to the appropriate number of rows for the target scale factor
 * TODO: None
 */
@@ -159,9 +159,9 @@ StaticScale(int nTable, int nTargetGB)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
-* Assumptions: scale factors defined in rowcounts distribution define 1/10/100/1000/... GB 
+* Called By:
+* Calls:
+* Assumptions: scale factors defined in rowcounts distribution define 1/10/100/1000/... GB
 *	with sufficient accuracy
 * Side Effects: arRowcounts are set to the appropriate number of rows for the target scale factor
 * TODO: None
@@ -171,11 +171,11 @@ LinearScale(int nTable, int nTargetGB)
 {
 	int i;
 	ds_key_t hgRowcount = 0;
-	
+
 	for (i=8; i >= 0; i--)	/* work from large scales down)*/
 	{
 		/*
-		 * use the defined rowcounts to build up the target GB volume 
+		 * use the defined rowcounts to build up the target GB volume
 		 */
 		while (nTargetGB >= arScaleVolume[i])
 		{
@@ -187,15 +187,15 @@ LinearScale(int nTable, int nTargetGB)
 	return(hgRowcount);
 }
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -206,7 +206,7 @@ getIDCount(int nTable)
    ds_key_t kRowcount,
       kUniqueCount;
    tdef *pTdef;
-   
+
    kRowcount = get_rowcount(nTable);
    if (nTable >= PSEUDO_TABLE_START)
       return(kRowcount);
@@ -238,14 +238,14 @@ getIDCount(int nTable)
 
 /*
 * Routine: get_rowcount(int table)
-* Purpose: 
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: 20040820 jms Need to address special case scaling in a more general fashion
@@ -262,9 +262,9 @@ get_rowcount(int table)
 		nBadScale = 0,
 		nRowcountOffset = 0;
 	tdef *pTdef;
-	
+
 	if (!bScaleSet)
-	{		
+	{
 		nScale = get_int("SCALE");
 		if (nScale > 100000)
 			ReportErrorNoLine(QERR_BAD_SCALE, NULL, 1);
@@ -335,13 +335,13 @@ get_rowcount(int table)
 
       } /* for each table */
 
-		
+
 		if (nBadScale && !is_set("QUIET"))
 			ReportErrorNoLine(nBadScale, NULL, 0);
 
 		bScaleSet = 1;
 	}
-	
+
 	if ((table == INVENTORY))
 		return(sc_w_inventory(nScale));
 	if ((table == S_INVENTORY))
@@ -359,8 +359,8 @@ get_rowcount(int table)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -385,8 +385,8 @@ setUpdateDates(void)
       else
          arUpdateDates[1] = arUpdateDates[0] - 1;
 
-      /* 
-       * pick the related Thursdays for inventory 
+      /*
+       * pick the related Thursdays for inventory
        * 1. shift first date to the Thursday in the current update week
        * 2. move forward/back to get into correct comparability zone
        * 3. set next date to next/prior Thursday based on comparability zone
@@ -408,7 +408,7 @@ setUpdateDates(void)
       dist_weight(&nDay, "calendar", day_number(&dtTemp) + 1, calendar_low);
       if (!nDay)
             arInventoryUpdateDates[1] -= 14;
-     
+
       /* repeat for medium calendar zone */
       arUpdateDates[2] = getSkewedJulianDate(calendar_medium, 0);
       jtodt(&dtTemp, arUpdateDates[2]);
@@ -436,7 +436,7 @@ setUpdateDates(void)
       if (!nDay)
             arInventoryUpdateDates[3] -= 14;
 
-      
+
       /* repeat for high calendar zone */
       arUpdateDates[4] = getSkewedJulianDate(calendar_high, 0);
       jtodt(&dtTemp, arUpdateDates[4]);
@@ -466,9 +466,9 @@ setUpdateDates(void)
 
 
    }
-   
+
    /*
-   * output the update dates for this update set 
+   * output the update dates for this update set
    */
    openDeleteFile(1);
    for (i=0; i < 6; i += 2)
@@ -486,15 +486,15 @@ setUpdateDates(void)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -511,7 +511,7 @@ getUpdateDate(int nTable, ds_key_t kRowcount)
       get_rowcount(nTable);
       nIndex = 0;
    }
-   
+
    for (nIndex = 0; kRowcount > arRowcount[nTable].kDayRowcount[nIndex]; nIndex++)
       if (nIndex == 5) break;
 
@@ -533,8 +533,8 @@ getUpdateDate(int nTable, ds_key_t kRowcount)
 *
 * Params:
 * Returns: 1 if the row is new, 0 if it is reusing an existing ID
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: 20040326 jms getUpdateID() this MUST be updated for 64bit -- all usages use casts today
@@ -546,7 +546,7 @@ getUpdateID(ds_key_t *pDest, int nTable, int nColumn)
 {
 	int bIsUpdate = 0,
 		nTemp;
-	
+
 	if (genrand_integer(NULL, DIST_UNIFORM, 0, 99, 0, nColumn) < arRowcount[nTable].nUpdatePercentage)
 	{
 		bIsUpdate = 1;
@@ -571,8 +571,8 @@ getUpdateID(ds_key_t *pDest, int nTable, int nColumn)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -582,7 +582,7 @@ getSkewedJulianDate(int nWeight, int nColumn)
 {
    int i;
    date_t Date;
-   
+
    pick_distribution(&i, "calendar", 1, nWeight, nColumn);
    genrand_integer(&Date.year, DIST_UNIFORM, YEAR_MINIMUM, YEAR_MAXIMUM, 0, nColumn);
    dist_member(&Date.day, "calendar", i, 3);
@@ -598,8 +598,8 @@ getSkewedJulianDate(int nWeight, int nColumn)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -616,7 +616,7 @@ initializeOrderUpdates(int nParent, int nChild, int nIDColumn, int nDateColumn, 
 
 
 		*pnOrderNumber = 0;
-      
+
       for (i=0; i < (get_int("UPDATE") - 1); i++)
 		{
 			nRowsRemaining = (int)get_rowcount(nParent);
@@ -645,8 +645,8 @@ initializeOrderUpdates(int nParent, int nChild, int nIDColumn, int nDateColumn, 
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -674,7 +674,7 @@ dateScaling(int nTable, ds_key_t jDate)
 	}
 
 	jtodt(&Date, (int)jDate);
-	
+
 	switch(nTable)
 	{
 	case STORE_SALES:
@@ -730,8 +730,8 @@ dateScaling(int nTable, ds_key_t jDate)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -743,15 +743,15 @@ getUpdateBase(int nTable)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -781,7 +781,7 @@ setUpdateScaling(int nTable)
       exit(1);
       break;
    }
-   
+
    arRowcount[nTable].kNextInsertValue = arRowcount[nTable].kBaseRowcount;
 
    for (i=0; i < 6; i++)

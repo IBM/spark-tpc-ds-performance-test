@@ -1,18 +1,18 @@
 # Explore Spark SQL and its performance using TPC-DS workload
 
-[Apache Spark](https://spark.apache.org) is a popular distributed data processing engine that is built around speed, ease of use and sophisticated analytics, with APIs in Java, Scala, Python, R, and SQL. Like other data processing engines, Spark has a unified optimization engine that computes the optimal way to execute a workload with the main purpose of reducing the disk IO and CPU usage.   
+[Apache Spark](https://spark.apache.org) is a popular distributed data processing engine that is built around speed, ease of use and sophisticated analytics, with APIs in Java, Scala, Python, R, and SQL. Like other data processing engines, Spark has a unified optimization engine that computes the optimal way to execute a workload with the main purpose of reducing the disk IO and CPU usage.
 
 We can evaluate and measure the performance of Spark SQL using the TPC-DS benchmark. [TPC-DS](http://www.tpc.org/tpcds) is a widely used industry standard decision support benchmark that is used to evaluate performance of data processing engines. Given that TPC-DS exercises some key data warehouse features, running TPC-DS successfully reflects the readiness of Spark in terms of addressing the need of a data warehouse application. Apache Spark v2.0 supports all the ninety-nine decision support queries that is part of this TPC-DS benchmark.
 
-This Code Pattern is aimed at helping Spark developers quickly setup and run the TPC-DS benchmark in their own development setup. 
+This Code Pattern is aimed at helping Spark developers quickly setup and run the TPC-DS benchmark in their own development setup.
 
 When the reader has completed this Code Pattern, they will understand the following:
 
-* How to setup the TPC-DS toolkit 
-* How to generate TPC-DS datasets at different scale factor 
-* How to create Spark database artifacts 
-* How to run TPC-DS benchmark queries on Spark in local mode and see the results 
-* Things to consider when increasing the data scale and run against a spark cluster 
+* How to setup the TPC-DS toolkit
+* How to generate TPC-DS datasets at different scale factor
+* How to create Spark database artifacts
+* How to run TPC-DS benchmark queries on Spark in local mode and see the results
+* Things to consider when increasing the data scale and run against a spark cluster
 
 ![Architecture diagram](doc/source/images/architecture.png)
 
@@ -25,7 +25,7 @@ When the reader has completed this Code Pattern, they will understand the follow
   1. Create the spark tables with pre-generated dataset.
   2. Run the entire query set or individual query.
   3. View the query results or performance summary.
-  4. View the performance graph. 
+  4. View the performance graph.
 
 ## Included components
 
@@ -57,24 +57,24 @@ There are two modes of exercising this Code Pattern:
 
 Clone the `spark-tpc-ds-performance-test` repo locally. In a terminal, run:
 
-``` 
-$ git clone https://github.com/IBM/spark-tpc-ds-performance-test 
+```
+$ git clone https://github.com/IBM/spark-tpc-ds-performance-test
 ```
 
 ### 2. Setup development tools
 
 Make sure the required development tools are installed in your platform. This Code Pattern is supported on Mac and Linux platforms only. Depending on your platform, run the following command to install the necessary development tools:
 
-* **Ubuntu:**  
+* **Ubuntu:**
 ``` $ sudo apt-get install gcc make flex bison byacc git ```
-* **CentOS/RHEL:**  
+* **CentOS/RHEL:**
 ``` $ sudo yum install gcc make flex bison byacc git ```
-* **MacOS:**  
+* **MacOS:**
 ``` $ xcode-select --install ```
 
 ### 3. Install Spark
 
-To successfully run the TPC-DS tests, Spark must be installed and pre-configured to work with an [Apache Hive](https://hive.apache.org/) metastore. 
+To successfully run the TPC-DS tests, Spark must be installed and pre-configured to work with an [Apache Hive](https://hive.apache.org/) metastore.
 
 Perform 1 or more of the following options to ensure that Spark is installed and configured correctly. Once completed, modify ```bin/tpcdsenv.sh``` to set `SPARK_HOME` pointing to your Spark installation directory.
 
@@ -94,25 +94,25 @@ $ bin/spark-shell
 
 If the prompt returns `String = hive`, then your installation is properly configured.
 
-**Option 2** - If you don't have an installed Spark version, or your current installation is not properly configured, we suggest trying to pull down version 2.2.0 from the Spark [downloads page](https://spark.apache.org/downloads.html). This version should be configured to work with Apache Hive, but please run the test in the previous option to make sure. 
+**Option 2** - If you don't have an installed Spark version, or your current installation is not properly configured, we suggest trying to pull down version 2.2.0 from the Spark [downloads page](https://spark.apache.org/downloads.html). This version should be configured to work with Apache Hive, but please run the test in the previous option to make sure.
 
 **Option 3** - The last option available is it to download and build it yourself. The first step is to clone the Spark repo:
 ```
 $ git clone https://github.com/apache/spark.git
 ```
 Then build it using these [instructions](https://spark.apache.org/docs/latest/building-spark.html). Please make sure to build Spark with Hive support by following the `Building With Hive and JDBC Support` section.
- 
+
 ### 4. Run the script
 
 *Note:* Verify that the `bin/tpcdsenv.sh` script has `SPARK_HOME` setup correctly.
 
-Now that we have Spark setup and the TPC-DS scripts downloaded, we are ready to setup and start running the TPC-DS queries using the `bin/tpcdsspark.sh` utility script. This driver script will allow you to compile the TPC-DS toolkit to produce the data and the queries, and then run them to collect results.  
+Now that we have Spark setup and the TPC-DS scripts downloaded, we are ready to setup and start running the TPC-DS queries using the `bin/tpcdsspark.sh` utility script. This driver script will allow you to compile the TPC-DS toolkit to produce the data and the queries, and then run them to collect results.
 
 Perform the following steps to complete the execution of the script:
 
 ```
  $ cd spark-tpc-ds-performance-test
- $ bin/tpcdsspark.sh 
+ $ bin/tpcdsspark.sh
 
 ==============================================
 TPC-DS On Spark Menu
@@ -129,14 +129,14 @@ CLEANUP
  (7) Cleanup toolkit
  (Q) Quit
 ----------------------------------------------
-Please enter your choice followed by [ENTER]: 
+Please enter your choice followed by [ENTER]:
 ```
 
 #### Setup Option: "(1) - Compile TPC-DS toolkit"
 
 The most recent toolkit can be downloaded from http://www.tpc.org/tpcds/. To make it easier for users, a toolkit based on `v2.4` is available locally in [src/toolkit](src/toolkit). If you download the newer toolkit from the official tpc-ds site, then make sure you overlay the code in src/toolkit before proceeding with this option.
 
-This option compiles the toolkit to produce the data generation (dsdgen) and query generation (dsqgen) binaries. 
+This option compiles the toolkit to produce the data generation (dsdgen) and query generation (dsqgen) binaries.
 
 Below is the screen-shot when this option is chosen.
 
@@ -167,9 +167,9 @@ Press any key to continue
 
 #### Setup Option: "(2) - Generate TPC-DS data with 1GB scale"
 
-This option uses the data generation binary produced in the previous step to generate the test data at a 1GB scale factor. The data is generated in the directory `TPCDS_GENDATA_DIR`. The default location of `TPCDS_GENDATA_DIR` is the local directory `gendata`. This can be changed by modifying the script `bin/tpcdsenv.sh`.  
+This option uses the data generation binary produced in the previous step to generate the test data at a 1GB scale factor. The data is generated in the directory `TPCDS_GENDATA_DIR`. The default location of `TPCDS_GENDATA_DIR` is the local directory `gendata`. This can be changed by modifying the script `bin/tpcdsenv.sh`.
 
-Technically, this option can be used to generate data at a different scale. However, since this Code Pattern is targeted towards the developer environment, the scale has been fixed at 1GB. To modify this script to generate data at a different scale factor, see the discussion in the `scaling upto 100TB` section below. 
+Technically, this option can be used to generate data at a different scale. However, since this Code Pattern is targeted towards the developer environment, the scale has been fixed at 1GB. To modify this script to generate data at a different scale factor, see the discussion in the `scaling upto 100TB` section below.
 
 Below is the screenshot when this option is chosen.
 
@@ -196,13 +196,13 @@ INFO: Starting to generate data. Will take a few minutes ...
 INFO: Progress : [########################################] 100%
 INFO: TPCDS data is generated successfully at spark-tpc-ds-performance-test/gendata
 Press any key to continue
-``` 
+```
 
 #### Setup Option: "(3) - Create Spark Tables"
 
-After data generation has completed, this option creates the tables in the database name specified by `TPCDS_DBNAME` defined in `bin/tpcdsenv.sh`. The default name is `TPCDS` but can be changed if needed. 
+After data generation has completed, this option creates the tables in the database name specified by `TPCDS_DBNAME` defined in `bin/tpcdsenv.sh`. The default name is `TPCDS` but can be changed if needed.
 
-The SQL statements to create the tables can be found in `src/ddl/create_tables.sql`, and are created in parquet format.  
+The SQL statements to create the tables can be found in `src/ddl/create_tables.sql`, and are created in parquet format.
 
 Below is the screenshot when this option is chosen.
 
@@ -233,7 +233,7 @@ Press any key to continue
 
 #### Setup Option: "(4) - Generate TPC-DS queries"
 
-This option uses the query generation binary (dsqgen) produced in "option (1)" to generate the 99 TPC-DS queries. The queries are generated in the `TPCDS_GEN_QUERIES_DIR`, with a default location of `genqueries`. This can be changed my modifying the `bin/tpcdsenv.sh' script. 
+This option uses the query generation binary (dsqgen) produced in "option (1)" to generate the 99 TPC-DS queries. The queries are generated in the `TPCDS_GEN_QUERIES_DIR`, with a default location of `genqueries`. This can be changed my modifying the `bin/tpcdsenv.sh' script.
 
 Below is the screenshot when this option is chosen.
 
@@ -260,12 +260,12 @@ INFO: Generating TPC-DS qualification queries.
 INFO: Completed generating TPC-DS qualification queries.
 Press any key to continue
 ```
- 
+
 #### Run Option: "(5) - Run a subset of TPC-DS queries"
 
-A comma separated list of queries can be specified in this option. The result of each query in the supplied list is generated in `TPCDS_WORK_DIR`, with a default directory location of `work`. The format of the result file is `query<number>.res`. 
+A comma separated list of queries can be specified in this option. The result of each query in the supplied list is generated in `TPCDS_WORK_DIR`, with a default directory location of `work`. The format of the result file is `query<number>.res`.
 
-A summary file named `run_summary.txt` is also generated. It contains information about query number, execution time and number of rows returned. 
+A summary file named `run_summary.txt` is also generated. It contains information about query number, execution time and number of rows returned.
 
 *Note:*  The query number is a two digit number, so for query 1 the results will be in `query01.res`.
 
@@ -294,7 +294,7 @@ Enter a comma separated list of queries to run (ex: 1, 2), followed by [ENTER]:
 1,2
 INFO: Checking pre-reqs for running TPC-DS queries. May take a few seconds..
 INFO: Checking pre-reqs for running TPC-DS queries is successful.
-INFO: Running TPCDS queries. Will take a few minutes depending upon the number of queries specified.. 
+INFO: Running TPCDS queries. Will take a few minutes depending upon the number of queries specified..
 INFO: Progress : [########################################] 100%
 INFO: TPCDS queries ran successfully. Below are the result details
 INFO: Individual result files: spark-tpc-ds-performance-test/work/query<number>.res
@@ -328,7 +328,7 @@ Please enter your choice followed by [ENTER]: 6
 ----------------------------------------------
 INFO: Checking pre-reqs for running TPC-DS queries. May take a few seconds..
 INFO: Checking pre-reqs for running TPC-DS queries is successful.
-INFO: Running TPCDS queries. Will take a few minutes depending upon the number of queries specified.. 
+INFO: Running TPCDS queries. Will take a few minutes depending upon the number of queries specified..
 INFO: Progress : [########################################] 100%
 INFO: TPCDS queries ran successfully. Below are the result details
 INFO: Individual result files: spark-tpc-ds-performance-test/work/query<number>.res
@@ -357,7 +357,7 @@ Sign up for IBM's [Data Science Experience](http://datascience.ibm.com/). By sig
 
 To create these services:
 * Login to your [Bluemix](http://bluemix.net) account.
-* Create your Spark service by selecting the service type [Apache Spark](https://console.bluemix.net/catalog/services/apache-spark). If not already used, name your service ``DSX-Spark``. 
+* Create your Spark service by selecting the service type [Apache Spark](https://console.bluemix.net/catalog/services/apache-spark). If not already used, name your service ``DSX-Spark``.
 * Create your Object Storage service by selecting the service type [Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/object-storage-group). If not already used, name your service ``DSX-ObjectStorage``.
 
 > Note: When creating your Object Storage service, select the ``Swift`` storage type in order to avoid having to pay an upgrade fee.
@@ -369,7 +369,7 @@ Take note of your service names as you will need to select them in the following
 First you must create a new Project:
 * From the [IBM Data Science Experience page](https://apsportal.ibm.com/analytics) either click the ``Get Started`` tab at the top or scroll down to ``Recently updated projects``.
 * Click on ``New project`` under ``Recently updated projects``.
-* Enter a ``Name`` and optional ``Description``. 
+* Enter a ``Name`` and optional ``Description``.
 * For ``Spark Service``, select your Apache Spark service name.
 * For ``Storage Type``, select the ``Object Storage (Swift API)`` option.
 * For ``Target Object Storage Instance``, select your Object Storage service name.
@@ -440,8 +440,8 @@ options to specify exactly what you want shared from your notebook:
 * A variety of `download as` options are also available in the menu.
 
 ## Considerations while increasing the scale factor.
-This Code Pattern walks us through the steps that need to be performed to run the TPC-DS 
-benchmark with the qualification scale factor(1GB). Since this is a performance benchmark, typically 
+This Code Pattern walks us through the steps that need to be performed to run the TPC-DS
+benchmark with the qualification scale factor(1GB). Since this is a performance benchmark, typically
 we need to run the benchmark with varying scale factors to gauge the throughput of the underlying data
 processing engine. In the section below, we will briefly touch on things to be considered while increasing
 the data and running the workload against a production cluster.
@@ -457,7 +457,7 @@ the data and running the workload against a production cluster.
   Additionally we may consider to partition the fact tables for better performance.
 * We need to tune several spark configs to get optimal performance. Some of them are discussed in the following
   links.
-     * [Troubleshooting and Tuning spark for heavy work loads](https://developer.ibm.com/hadoop/2016/07/18/troubleshooting-and-tuning-spark-for-heavy-workloads) 
+     * [Troubleshooting and Tuning spark for heavy work loads](https://developer.ibm.com/hadoop/2016/07/18/troubleshooting-and-tuning-spark-for-heavy-workloads)
      * [Scaling up to 100TB](https://developer.ibm.com/hadoop/2017/02/07/experiences-comparing-big-sql-and-spark-sql-at-100tb)
 
 # Learn more

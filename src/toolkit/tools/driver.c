@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #define DECLARER
 #include "config.h"
 #include "porting.h"
@@ -79,15 +79,15 @@ file_ref_t *pCurrentFile;
 
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -109,12 +109,12 @@ skipDays(int nTable, ds_key_t *pRemainder)
       bInit = 1;
       *pRemainder = 0;
    }
-	
+
    // set initial conditions
    jDate = BaseDate.julian;
   *pRemainder = dateScaling(nTable, jDate) + index;
 
-  // now check to see if we need to move to the 
+  // now check to see if we need to move to the
   // the next peice of a parallel build
   // move forward one day at a time
   split_work(nTable, &kFirstRow, &kRowCount);
@@ -129,7 +129,7 @@ skipDays(int nTable, ds_key_t *pRemainder)
   {
      jDate -= 1;
   }
-	
+
 	return(jDate);
 }
 
@@ -142,8 +142,8 @@ skipDays(int nTable, ds_key_t *pRemainder)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -156,10 +156,10 @@ find_table(char *szParamName, char *tname)
 		nNotSure = -1;
    tdef *pT;
    tdef *pN;
-	
+
 	if (!strcmp(tname, "ALL"))
 		return(0);
-	
+
 	for (i=0; i <= MAX_TABLE; i++)
 	{
       pT = getSimpleTdefsByNumber(i);
@@ -168,7 +168,7 @@ find_table(char *szParamName, char *tname)
 			/* if we match the name exactly, then return the result */
 			if (!strcasecmp(tname, pT->name))
 				return(i);
-			
+
 			/* otherwise, look for sub-string matches */
 			if (!strncasecmp(tname, pT->name, strlen(tname)) )
 			{
@@ -184,10 +184,10 @@ find_table(char *szParamName, char *tname)
 				return(i);
 		}
 	}
-	
+
 	if (res == -1)
 	{
-		fprintf(stdout, 
+		fprintf(stdout,
 			"ERROR: No match found for table name '%s'\n", tname);
 		exit(1);
 	}
@@ -196,28 +196,28 @@ find_table(char *szParamName, char *tname)
 	if ((nNotSure != -1) && !(pT->flags & FL_DUP_NAME))
 	{
       pN = getSimpleTdefsByNumber(nNotSure);
-		fprintf(stdout, 
-		"WARNING: Table name '%s' not unique. Could be '%s' or '%s'. Assuming '%s'\n", 
+		fprintf(stdout,
+		"WARNING: Table name '%s' not unique. Could be '%s' or '%s'. Assuming '%s'\n",
 		tname, pT->name, pN->name, pT->name);
 		pT->flags |= FL_DUP_NAME;
 	}
-	
+
 	return(res);
-	
+
 }
 /*
-* re-set default output file names 
+* re-set default output file names
 */
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -227,7 +227,7 @@ set_files (int i)
 {
 	char line[80], *new_name;
    tdef *pT = getSimpleTdefsByNumber(i);
-	
+
 	printf ("Enter new destination for %s data: ",
 		pT->name);
 	if (fgets (line, sizeof (line), stdin) == NULL)
@@ -240,7 +240,7 @@ set_files (int i)
 	MALLOC_CHECK (new_name);
 	strcpy (new_name, line);
 	pT->name = new_name;
-	
+
 	return (0);
 }
 
@@ -248,15 +248,15 @@ set_files (int i)
 * generate a particular table
 */
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: 20011217 JMS need to build date-correlated (i.e. fact) tables in proper order
@@ -274,7 +274,7 @@ gen_tbl (int tabid, ds_key_t kFirstRow, ds_key_t kRowCount)
    tdef *pT = getSimpleTdefsByNumber(tabid);
    tdef *pC;
    table_func_t *pF = getTdefFunctionsByNumber(tabid);
-	
+
 	kTotalRows = kRowCount;
 	direct = is_set("DBLOAD");
 	bIsVerbose = is_set("VERBOSE") && !is_set("QUIET");
@@ -295,27 +295,27 @@ gen_tbl (int tabid, ds_key_t kFirstRow, ds_key_t kRowCount)
       {
          nChild = pT->nParam;
          pC = getSimpleTdefsByNumber(nChild);
-			fprintf(stderr, "%s %s and %s ... ", 
-			(direct)?"Loading":"Writing", 
+			fprintf(stderr, "%s %s and %s ... ",
+			(direct)?"Loading":"Writing",
 			pT->name, pC->name);
       }
 		else
-			fprintf(stderr, "%s %s ... ", 
-			(direct)?"Loading":"Writing", 
+			fprintf(stderr, "%s %s ... ",
+			(direct)?"Loading":"Writing",
 			pT->name);
 	}
-		
+
 	/*
     * small tables use a constrained set of geography information
     */
    if (pT->flags & FL_SMALL)
       resetCountCount();
-   
+
    for (i=kFirstRow; kRowCount; i++,kRowCount--)
 	{
 		if (bIsVerbose && i && (i % nLifeFreq) == 0)
 			fprintf(stderr, "%3d%%\b\b\b\b",(int)(((kTotalRows - kRowCount)*100)/kTotalRows));
-		
+
 		/* not all rows that are built should be printed. Use return code to deterine output */
 		if (!pF->builder(NULL, i))
 			if (pF->loader[direct](NULL))
@@ -326,22 +326,22 @@ gen_tbl (int tabid, ds_key_t kFirstRow, ds_key_t kRowCount)
 			row_stop(tabid);
 	}
 	if (bIsVerbose)
-			fprintf(stderr, "Done    \n");	
+			fprintf(stderr, "Done    \n");
 	print_close(tabid);
 
 	return;
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -366,19 +366,19 @@ validate_options(void)
 /*
 * MAIN
 *
-* assumes the existance of getopt() to clean up the command 
+* assumes the existance of getopt() to clean up the command
 * line handling
 */
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -398,7 +398,7 @@ main (int ac, char **av)
 	struct timeb t;
    tdef *pT;
    table_func_t *pF;
-	
+
 	process_options (ac, av);
 	validate_options();
 	init_rand();
@@ -426,13 +426,13 @@ main (int ac, char **av)
       setUpdateScaling(S_CATALOG_ORDER);
       setUpdateScaling(S_INVENTORY);
    }
-	
+
 	/* if we are using shared memory to pass parameters to/from peers, then read additional
 	* parameters here.
 	*/
 	if (is_set("SHMKEY"))
-		load_params();	 
-		
+		load_params();
+
 	if (!is_set("QUIET"))
 	{
 		fprintf (stderr,
@@ -444,7 +444,7 @@ main (int ac, char **av)
 	/**
 	** actual data generation section starts here
 	**/
-	
+
 	/*
 	* do any global (non-worker thread) initialization
 	*/
@@ -452,11 +452,11 @@ main (int ac, char **av)
 	if (is_set("DBLOAD"))
 		load_init();
 #endif /* NOLOAD */
-	
-	
-	
+
+
+
 	/***
-	* traverse the tables, invoking the appropriate data generation routine 
+	* traverse the tables, invoking the appropriate data generation routine
 	* for any to be built; skip any non-op tables or any child tables (their
 	* generation routines are called when the parent is built
 	*/
@@ -484,18 +484,18 @@ main (int ac, char **av)
 		{
 			if (tabid == i)
 				ReportErrorNoLine(QERR_TABLE_NOP, pT->name, 1);
-			continue;	/* skip any tables that are not implemented */	
+			continue;	/* skip any tables that are not implemented */
 		}
 		if (pT->flags & FL_CHILD)
 		{
 			if (tabid == i)
 				ReportErrorNoLine(QERR_TABLE_CHILD, pT->name, 1);
-			continue;	/* children are generated by the parent call */	
+			continue;	/* children are generated by the parent call */
 		}
 		if ((tabid != -1) && (i != tabid))
 			continue;	/* only generate a table that is explicitly named */
 
-	/* 
+	/*
  	 * all source tables require the -update option to be set
 	 */
 	if ((pT->flags & FL_SOURCE_DDL) && (is_set("UPDATE") == 0))
@@ -504,9 +504,9 @@ main (int ac, char **av)
 		continue;	/* update tables require update option */
 	}
 
-		
+
 		/*
-		 * data validation is a special case 
+		 * data validation is a special case
 		 */
 		if (is_set("VALIDATE"))
 		{
@@ -532,7 +532,7 @@ main (int ac, char **av)
 
 			for (; kValidateCount; kValidateCount--)
 			{
-				genrand_key(&kRandomRow, DIST_UNIFORM, 1, kRowCount, 0, VALIDATE_STREAM); 
+				genrand_key(&kRandomRow, DIST_UNIFORM, 1, kRowCount, 0, VALIDATE_STREAM);
 				pF->validate(i, kRandomRow, NULL);
             if (!(pT->flags & FL_VPRINT))
                printValidation(i, kRandomRow);
@@ -548,7 +548,7 @@ main (int ac, char **av)
 		 */
          split_work(i, &kFirstRow, &kRowCount);
          /*
-         * if there are rows to skip then skip them 
+         * if there are rows to skip then skip them
          */
          if (kFirstRow != 1)
          {
@@ -556,7 +556,7 @@ main (int ac, char **av)
             if (pT->flags & FL_PARENT)
                row_skip(pT->nParam, (int)(kFirstRow - 1));
          }
-         
+
          /*
          * now build the actual rows
          */
@@ -568,7 +568,7 @@ main (int ac, char **av)
 	if (is_set("DBLOAD"))
 		load_close();
 #endif
-	
+
 	return (0);
 }
 

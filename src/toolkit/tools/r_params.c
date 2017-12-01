@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 /*
  * parameter handling functions
  */
@@ -54,13 +54,13 @@ extern char *params[];
 #else
 option_t options[] =
 {
-{"PROG", OPT_STR|OPT_HIDE, 0, NULL, NULL, "tester"}, 
-{"PARAMS", OPT_STR, 1, "read parameters from file <s>", read_file, ""}, 
-{"DISTRIBUTIONS", OPT_STR, 2, "read distributions from file <s>", NULL, "tester_dist.idx"}, 
-{"OUTDIR", OPT_STR, 3, "generate files in directory <s>", NULL, "./"}, 
-{"VERBOSE", OPT_FLG, 4, "enable verbose output", NULL, "N"}, 
-{"HELP", OPT_FLG, 5, "display this message", usage, "N"}, 
-{"scale", OPT_INT, 6, "set scale to <i>", NULL, "1"}, 
+{"PROG", OPT_STR|OPT_HIDE, 0, NULL, NULL, "tester"},
+{"PARAMS", OPT_STR, 1, "read parameters from file <s>", read_file, ""},
+{"DISTRIBUTIONS", OPT_STR, 2, "read distributions from file <s>", NULL, "tester_dist.idx"},
+{"OUTDIR", OPT_STR, 3, "generate files in directory <s>", NULL, "./"},
+{"VERBOSE", OPT_FLG, 4, "enable verbose output", NULL, "N"},
+{"HELP", OPT_FLG, 5, "display this message", usage, "N"},
+{"scale", OPT_INT, 6, "set scale to <i>", NULL, "1"},
 NULL
 };
 char *params[9];
@@ -81,17 +81,17 @@ void  print_params(void);
 
 /*
  * Routine:  load_params()
- * Purpose:  
+ * Purpose:
  * Algorithm:
  * Data Structures:
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
- * TODO: 
+ * TODO:
  * 20010621 JMS shared memory not yet implemented
  */
 void
@@ -117,8 +117,8 @@ load_params()
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -144,8 +144,8 @@ set_flg(char *flag)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -171,8 +171,8 @@ clr_flg(char *flag)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -182,7 +182,7 @@ is_set(char *flag)
 {
    int nParam,
       bIsSet = 0;
-   
+
    init_params();
    nParam = fnd_param(flag);
    if (nParam >= 0)
@@ -192,7 +192,7 @@ is_set(char *flag)
       else
          bIsSet = (options[nParam].flags & OPT_SET) || (strlen(options[nParam].dflt) > 0);
    }
-   
+
    return(bIsSet );	/* better a false negative than a false positive ? */
 }
 
@@ -204,13 +204,13 @@ is_set(char *flag)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
  */
-void 
+void
 set_int(char *var, char *val)
 {
 	int nParam;
@@ -233,13 +233,13 @@ set_int(char *var, char *val)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
  */
-int 
+int
 get_int(char *var)
 {
 	int nParam;
@@ -260,17 +260,17 @@ get_int(char *var)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
  */
-void 
+void
 set_str(char *var, char *val)
 {
 	int nParam;
-	
+
 	init_params();
 	nParam = fnd_param(var);
 	if (nParam >= 0)
@@ -291,8 +291,8 @@ set_str(char *var, char *val)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -318,8 +318,8 @@ get_str(char *var)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -345,7 +345,7 @@ init_params(void)
 
 	init = 1;
 	param_init = 1;
-	
+
 	return(0);
 }
 
@@ -357,8 +357,8 @@ init_params(void)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -374,7 +374,7 @@ print_options(struct OPTION_T *o, int bShowOptional)
 	for (i=0; options[i].name != NULL; i++)
 	{
 		/*
-		 * options come in two groups, general and "hidden". Decide which group to show 
+		 * options come in two groups, general and "hidden". Decide which group to show
 		 * in this pass, and ignore others
 		 */
 		bShow = 0;
@@ -417,8 +417,8 @@ print_options(struct OPTION_T *o, int bShowOptional)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -433,7 +433,7 @@ save_file(char *path)
 
 	init_params();
 	time(&timestamp);
-	
+
 	if ((ofp = fopen(path, "w")) == NULL)
 		return(-1);
 
@@ -441,7 +441,7 @@ save_file(char *path)
 		get_str("PROG"), ctime(&timestamp));
 	fprintf(ofp, "--\n-- Each entry is of the form: '<parameter> = <value> -- optional comment'\n");
 	fprintf(ofp, "-- Refer to benchmark documentation for more details\n--\n");
-	
+
 	for (i=0; options[i].name != NULL; i++)
 	{
 		if (options[i].flags & OPT_HIDE)		/* hidden option */
@@ -479,8 +479,8 @@ save_file(char *path)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -489,7 +489,7 @@ int
 usage (char *param_name, char *msg)
 {
 	init_params();
-	
+
 	fprintf (stderr,
 		"%s Population Generator (Version %d.%d.%d%s)\n",
 		get_str("PROG"), VERSION, RELEASE, MODIFICATION, PATCH);
@@ -497,11 +497,11 @@ usage (char *param_name, char *msg)
 
 	if (msg != NULL)
 		printf("\nERROR: %s\n\n", msg);
-	
+
 	printf("\n\nUSAGE: %s [options]\n", get_str("PROG"));
 	printf("\nNote: When defined in a parameter file (using -p), parmeters should\n");
 	printf("use the form below. Each option can also be set from the command\n");
-	printf("line, using a form of '%cparam [optional argument]'\n", 
+	printf("line, using a form of '%cparam [optional argument]'\n",
 		OPTION_START);
 	printf("Unique anchored substrings of options are also recognized, and \n");
 	printf("case is ignored, so '%csc' is equivalent to '%cSCALE'\n\n",
@@ -525,8 +525,8 @@ usage (char *param_name, char *msg)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -540,11 +540,11 @@ set_option(char *name, char *param)
 	char *cp;
 
 	init_params();
-	
+
 	res = fnd_param(name);
 	if (res == -1)
 		return(res);
-	
+
 	o = &options[res];
 
 	if (o->flags & OPT_NOP)
@@ -604,7 +604,7 @@ set_option(char *name, char *param)
 		res = 2;
 		break;
 	default:
-		fprintf(stderr, "Invalid option/type (%d/%s)\n", 
+		fprintf(stderr, "Invalid option/type (%d/%s)\n",
 		    o->flags & TYPE_MASK, o->name);
 		exit(0);
 		break;
@@ -623,8 +623,8 @@ set_option(char *name, char *param)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: 20000309 need to return integer to allow processing of left-over args
@@ -644,13 +644,13 @@ process_options (int count, char **vector)
 			if (option_num == (count - 1))
 				res = set_option(vector[option_num] + 1, NULL);
 			else
-				res = set_option(vector[option_num] + 1, 
+				res = set_option(vector[option_num] + 1,
 				    vector[option_num + 1]);
 		}
 
 		if (res < 0)
 		{
-			printf ("ERROR: option '%s' or its argument unknown.\n", 
+			printf ("ERROR: option '%s' or its argument unknown.\n",
 			    (vector[option_num] + 1));
 			usage (NULL, NULL);
 			exit (1);
@@ -675,8 +675,8 @@ process_options (int count, char **vector)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -691,7 +691,7 @@ read_file(char *param_name, char *optarg)
 	int index;
 
 	init_params();
-	
+
 	if ((fp = fopen(optarg, "r")) == NULL)
 		return(-1);
 	while (fgets(line, MAX_LINE_LEN, fp) != NULL)
@@ -745,19 +745,19 @@ read_file(char *param_name, char *optarg)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
  */
-void 
+void
 print_params(void)
 {
 	int i;
 
 	init_params();
-	
+
 	for (i=0; options[i].name != NULL; i++)
 		if (options[i].name != NULL)
 		{
@@ -782,13 +782,13 @@ print_params(void)
 /*
  * Routine: fnd_param(char *name, int *type, char *value)
  * Purpose: traverse the defined parameters, looking for a match
- * Algorithm: 
+ * Algorithm:
  * Data Structures:
  *
  * Params:
  * Returns: index of option
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -821,8 +821,8 @@ fnd_param(char *name)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -831,7 +831,7 @@ char *
 GetParamName(int nParam)
 {
 	init_params();
-	
+
 	return(options[nParam].name);
 }
 
@@ -844,8 +844,8 @@ GetParamName(int nParam)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -854,7 +854,7 @@ char *
 GetParamValue(int nParam)
 {
 	init_params();
-	
+
 	return(params[options[nParam].index]);
 }
 
@@ -866,8 +866,8 @@ GetParamValue(int nParam)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -876,7 +876,7 @@ int
 load_param(int nParam, char *szValue)
 {
 	init_params();
-	
+
 	if (options[nParam].flags & OPT_SET)		/* already set from the command line */
 		return(0);
 	else
@@ -893,8 +893,8 @@ load_param(int nParam, char *szValue)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None
@@ -918,8 +918,8 @@ IsIntParam(char *szParam)
  *
  * Params:
  * Returns:
- * Called By: 
- * Calls: 
+ * Called By:
+ * Calls:
  * Assumptions:
  * Side Effects:
  * TODO: None

@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdlib.h>
@@ -97,15 +97,15 @@ int ValidateParams(int nFunc, expr_t *pExpr);
 extern template_t *pCurrentQuery;
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -114,7 +114,7 @@ static int
 canCast(int nFromDataType, int nToDataType)
 {
 	int nValidSourceDataType = 0;
-	
+
 	switch (nToDataType)
 	{
 	case EXPR_FL_INT:
@@ -135,14 +135,14 @@ canCast(int nFromDataType, int nToDataType)
 
 /*
 * Routine: expr_t *makeExpr(void)
-* Purpose: 
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -172,14 +172,14 @@ makeExpr(void)
 
 /*
 * Routine: MakeReplacement(char *szText, int nValue)
-* Purpose: 
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -206,8 +206,8 @@ MakeReplacement(char *szText, int nValue)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -250,8 +250,8 @@ MakeListExpr(int nModifier, expr_t *pExpr, int nArg)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -277,8 +277,8 @@ MakeStringConstant(char *szText)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -317,8 +317,8 @@ makeArithmeticExpr(int nOp, expr_t *pArg1, expr_t *pArg2)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -340,14 +340,14 @@ MakeVariableReference(char *szText, int nSuffix)
 }
 /*
 * Routine: MakeIntConstant(int nValue)
-* Purpose: 
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -368,14 +368,14 @@ MakeIntConstant(ds_key_t nValue)
 
 /*
 * Routine: MakeFunctionCall(int nKeyword, expr_t *pArgList)
-* Purpose: 
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -416,13 +416,13 @@ MakeFunctionCall(int nKeyword, list_t *pArgList)
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
 */
-void 
+void
 PrintExpr(expr_t *pExpr)
 {
 	int i,
@@ -450,7 +450,7 @@ PrintExpr(expr_t *pExpr)
 		}
 		return;
 	}
-	
+
 	/* handle the parameterized expressions */
 	switch(pExpr->nFlags & EXPR_FUNC_MASK)
 	{
@@ -479,37 +479,37 @@ PrintExpr(expr_t *pExpr)
 		fprintf(stderr, "INTERNAL ERROR: unknown expression type %x\n", pExpr->nFlags);
 		exit(1);
 	}
-	
+
 	return;
-	
+
 }
 
 /*
 * Routine: ValidateParams(int nFunc, expr_t *pArgs)
-* Purpose: 
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
 */
-int 
+int
 ValidateParams(int nFunc, expr_t *pArgs)
 {
 	int i = 0,
 		nArgs;
 	expr_t *pCurrentArg;
 	char msg[80];
-	
+
 	pCurrentArg = getHead(pArgs->ArgList);
 	if (pCurrentArg)
 	{
-		
+
 		if (pCurrentArg->nFlags & EXPR_FL_REPL)	/* replacement sets can be arbitrarily long */
 			return(0);
 	}
@@ -517,20 +517,20 @@ ValidateParams(int nFunc, expr_t *pArgs)
 	nArgs = length(pArgs->ArgList);
 	if (nArgs != arFuncInfo[nFunc].nParams)
 	{
-		
+
 		sprintf(msg, "wanted %d args, found %d", arFuncInfo[nFunc].nParams, nArgs);
 		ReportError(QERR_BAD_PARAMS, msg, 0);
 		return(1);
 	}
-	
+
 	for (pCurrentArg = (expr_t *)getHead(pArgs->ArgList); pCurrentArg; pCurrentArg = (expr_t *)getNext(pArgs->ArgList))
 	{
-		if (!canCast(pCurrentArg->nFlags & EXPR_TYPE_MASK,arFuncArgs[nFunc][i]) && 
+		if (!canCast(pCurrentArg->nFlags & EXPR_TYPE_MASK,arFuncArgs[nFunc][i]) &&
 			(arFuncArgs[nFunc][i] != EXPR_FL_TYPESHIFT))
 		{
-			sprintf(msg, "type mismatch in call to %s() on parameter %d (%d/%d)", 
-				KeywordText(arFuncInfo[nFunc].nKeyword), 
-				i + 1, 
+			sprintf(msg, "type mismatch in call to %s() on parameter %d (%d/%d)",
+				KeywordText(arFuncInfo[nFunc].nKeyword),
+				i + 1,
 				(pCurrentArg->nFlags & EXPR_TYPE_MASK), arFuncArgs[nFunc][i]);
 			ReportErrorNoLine(QERR_BAD_PARAMS, msg, 0);
 			return(1);

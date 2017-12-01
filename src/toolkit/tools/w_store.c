@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -68,7 +68,7 @@ mk_w_store (void* row, ds_key_t index)
 	int32_t res = 0,
 		nFieldChangeFlags,
 		bFirstRecord = 0;
-	
+
 	/* begin locals declarations */
 	static decimal_t dRevMin,
 		dRevMax;
@@ -95,8 +95,8 @@ mk_w_store (void* row, ds_key_t index)
 		r = &g_w_store;
 	else
 		r = row;
-	
-	
+
+
 if (!bInit)
 	{
         nHierarchyTotal = (int) get_rowcount (DIVISIONS);
@@ -108,24 +108,24 @@ if (!bInit)
         strtodec (&dRevMax, "1000000.00");
         strtodec (&dMinTaxPercentage, STORE_MIN_TAX_PERCENTAGE);
         strtodec (&dMaxTaxPercentage, STORE_MAX_TAX_PERCENTAGE);
-				
+
 		/* columns that should be dynamic */
 		r->rec_end_date_id = -1;
     }
-	
+
 	nullSet(&pT->kNullBitMap, W_STORE_NULLS);
 	r->store_sk = index;
 
-	/* if we have generated the required history for this business key and generate a new one 
+	/* if we have generated the required history for this business key and generate a new one
 	 * then reset associate fields (e.g., rec_start_date minimums)
 	 */
 	if (setSCDKeys(S_STORE_ID, index, r->store_id, &r->rec_start_date_id, &r->rec_end_date_id))
 	{
 		bFirstRecord = 1;
 	}
-	
+
  /*
-  * this is  where we select the random number that controls if a field changes from 
+  * this is  where we select the random number that controls if a field changes from
   * one record to the next.
   */
 	nFieldChangeFlags = next_random(W_STORE_SCD);
@@ -133,7 +133,7 @@ if (!bInit)
 
 	/* the rest of the record in a history-keeping dimension can either be a new data value or not;
 	 * use a random number and its bit pattern to determine which fields to replace and which to retain
-	 */	
+	 */
 	nPercentage = genrand_integer (NULL, DIST_UNIFORM, 1, 100, 0, W_STORE_CLOSED_DATE_ID);
 	nDaysOpen =
 		genrand_integer (NULL, DIST_UNIFORM, STORE_MIN_DAYS_OPEN, STORE_MAX_DAYS_OPEN, 0,
@@ -148,7 +148,7 @@ if (!bInit)
 
 	mk_word (r->store_name, "syllables", (long)index, 5, W_STORE_NAME);
 	changeSCD(SCD_CHAR, &r->store_name, &rOldValues->store_name,  &nFieldChangeFlags,  bFirstRecord);
-	
+
 	/*
     * use the store type to set the parameters for the rest of the attributes
     */
@@ -209,20 +209,20 @@ if (!bInit)
 	changeSCD(SCD_INT, &r->address.street_num, &rOldValues->address.street_num,  &nFieldChangeFlags,  bFirstRecord);
 	changeSCD(SCD_INT, &r->address.zip, &rOldValues->address.zip,  &nFieldChangeFlags,  bFirstRecord);
 
-	
+
 	return (res);
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -276,35 +276,35 @@ pr_w_store(void *row)
 	print_integer(W_STORE_ADDRESS_GMT_OFFSET, r->address.gmt_offset, 1);
    print_decimal(W_STORE_TAX_PERCENTAGE,&r->dTaxPercentage, 0);
 	print_end(STORE);
-	
+
 	return(0);
 }
 
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
 */
-int 
+int
 ld_w_store(void *pSrc)
 {
 	struct W_STORE_TBL *r;
-		
+
 	if (pSrc == NULL)
 		r = &g_w_store;
 	else
 		r = pSrc;
-	
+
 	return(0);
 }
 

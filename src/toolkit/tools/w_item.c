@@ -1,38 +1,38 @@
-/* 
- * Legal Notice 
- * 
- * This document and associated source code (the "Work") is a part of a 
- * benchmark specification maintained by the TPC. 
- * 
- * The TPC reserves all right, title, and interest to the Work as provided 
- * under U.S. and international laws, including without limitation all patent 
- * and trademark rights therein. 
- * 
- * No Warranty 
- * 
- * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION 
- *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE 
- *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER 
- *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY, 
- *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES, 
- *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR 
- *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF 
- *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE. 
- *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT, 
- *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT 
- *     WITH REGARD TO THE WORK. 
- * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO 
- *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE 
- *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS 
- *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT, 
+/*
+ * Legal Notice
+ *
+ * This document and associated source code (the "Work") is a part of a
+ * benchmark specification maintained by the TPC.
+ *
+ * The TPC reserves all right, title, and interest to the Work as provided
+ * under U.S. and international laws, including without limitation all patent
+ * and trademark rights therein.
+ *
+ * No Warranty
+ *
+ * 1.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE INFORMATION
+ *     CONTAINED HEREIN IS PROVIDED "AS IS" AND WITH ALL FAULTS, AND THE
+ *     AUTHORS AND DEVELOPERS OF THE WORK HEREBY DISCLAIM ALL OTHER
+ *     WARRANTIES AND CONDITIONS, EITHER EXPRESS, IMPLIED OR STATUTORY,
+ *     INCLUDING, BUT NOT LIMITED TO, ANY (IF ANY) IMPLIED WARRANTIES,
+ *     DUTIES OR CONDITIONS OF MERCHANTABILITY, OF FITNESS FOR A PARTICULAR
+ *     PURPOSE, OF ACCURACY OR COMPLETENESS OF RESPONSES, OF RESULTS, OF
+ *     WORKMANLIKE EFFORT, OF LACK OF VIRUSES, AND OF LACK OF NEGLIGENCE.
+ *     ALSO, THERE IS NO WARRANTY OR CONDITION OF TITLE, QUIET ENJOYMENT,
+ *     QUIET POSSESSION, CORRESPONDENCE TO DESCRIPTION OR NON-INFRINGEMENT
+ *     WITH REGARD TO THE WORK.
+ * 1.2 IN NO EVENT WILL ANY AUTHOR OR DEVELOPER OF THE WORK BE LIABLE TO
+ *     ANY OTHER PARTY FOR ANY DAMAGES, INCLUDING BUT NOT LIMITED TO THE
+ *     COST OF PROCURING SUBSTITUTE GOODS OR SERVICES, LOST PROFITS, LOSS
+ *     OF USE, LOSS OF DATA, OR ANY INCIDENTAL, CONSEQUENTIAL, DIRECT,
  *     INDIRECT, OR SPECIAL DAMAGES WHETHER UNDER CONTRACT, TORT, WARRANTY,
- *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT 
- *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD 
- *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES. 
- * 
+ *     OR OTHERWISE, ARISING IN ANY WAY OUT OF THIS OR ANY OTHER AGREEMENT
+ *     RELATING TO THE WORK, WHETHER OR NOT SUCH AUTHOR OR DEVELOPER HAD
+ *     ADVANCE NOTICE OF THE POSSIBILITY OF SUCH DAMAGES.
+ *
  * Contributors:
  * Gradient Systems
- */ 
+ */
 #include "config.h"
 #include "porting.h"
 #include <stdio.h>
@@ -64,10 +64,10 @@ struct W_ITEM_TBL g_w_item,
 int
 mk_w_item (void* row, ds_key_t index)
 {
-	
+
 	int32_t res = 0;
 	/* begin locals declarations */
-	decimal_t dMinPrice, 
+	decimal_t dMinPrice,
 		dMaxPrice,
 		dMarkdown;
 	static decimal_t dMinMarkdown, dMaxMarkdown;
@@ -91,8 +91,8 @@ mk_w_item (void* row, ds_key_t index)
 		r = &g_w_item;
 	else
 		r = row;
-	
-	
+
+
 	if (!bInit)
 	{
 		/* some fields are static throughout the data set */
@@ -101,7 +101,7 @@ mk_w_item (void* row, ds_key_t index)
 
 		bInit = 1;
 	}
-	
+
 	memset(r, 0, sizeof(struct W_ITEM_TBL));
 
 	/* build the new value */
@@ -110,27 +110,27 @@ mk_w_item (void* row, ds_key_t index)
 
 	nIndex = pick_distribution(&nMin, "i_manager_id", 2, 1, I_MANAGER_ID);
 	dist_member(&nMax, "i_manager_id", nIndex, 3);
-	genrand_key(&r->i_manager_id, DIST_UNIFORM, 
-		(ds_key_t)nMin, 
-		(ds_key_t)nMax, 
+	genrand_key(&r->i_manager_id, DIST_UNIFORM,
+		(ds_key_t)nMin,
+		(ds_key_t)nMax,
 		0, I_MANAGER_ID);
 
 
 
-	/* if we have generated the required history for this business key and generate a new one 
+	/* if we have generated the required history for this business key and generate a new one
 	 * then reset associated fields (e.g., rec_start_date minimums)
 	 */
 	if (setSCDKeys(I_ITEM_ID, index, r->i_item_id, &r->i_rec_start_date_id, &r->i_rec_end_date_id))
 	{
-	/* 
-	 * some fields are not changed, even when a new version of the row is written 
+	/*
+	 * some fields are not changed, even when a new version of the row is written
 	 */
 		bFirstRecord = 1;
 	}
-	
+
 	 /*
-	  * this is  where we select the random number that controls if a field changes from 
-	  * one record to the next. 
+	  * this is  where we select the random number that controls if a field changes from
+	  * one record to the next.
 	  */
 	nFieldChangeFlags = next_random(I_SCD);
 
@@ -140,7 +140,7 @@ mk_w_item (void* row, ds_key_t index)
 	 */
 	gen_text (r->i_item_desc, 1, RS_I_ITEM_DESC, I_ITEM_DESC);
 	changeSCD(SCD_CHAR, &r->i_item_desc, &rOldValues->i_item_desc,  &nFieldChangeFlags,  bFirstRecord);
-	
+
 	nIndex = pick_distribution(&szMinPrice, "i_current_price", 2, 1, I_CURRENT_PRICE);
 	dist_member(&szMaxPrice, "i_current_price", nIndex, 3);
 	strtodec(&dMinPrice, szMinPrice);
@@ -178,9 +178,9 @@ mk_w_item (void* row, ds_key_t index)
    }
 
 	nIndex = pick_distribution(&nMin, "i_manufact_id", 2, 1, I_MANUFACT_ID);
-	genrand_integer(&nTemp, DIST_UNIFORM, 
-		nMin, 
-		dist_member(NULL, "i_manufact_id", nIndex, 3), 
+	genrand_integer(&nTemp, DIST_UNIFORM,
+		nMin,
+		dist_member(NULL, "i_manufact_id", nIndex, 3),
 		0, I_MANUFACT_ID);
 	r->i_manufact_id = nTemp;
 	changeSCD(SCD_KEY, &r->i_manufact_id, &rOldValues->i_manufact_id,  &nFieldChangeFlags,  bFirstRecord);
@@ -209,7 +209,7 @@ mk_w_item (void* row, ds_key_t index)
 	if (nTemp > I_PROMO_PERCENTAGE)
 		r->i_promo_sk = -1;
 
-/* 
+/*
  * if this is the first of a set of revisions, then baseline the old values
  */
  if (bFirstRecord)
@@ -222,15 +222,15 @@ mk_w_item (void* row, ds_key_t index)
 }
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
@@ -275,29 +275,29 @@ pr_w_item(void *row)
 
 
 /*
-* Routine: 
-* Purpose: 
+* Routine:
+* Purpose:
 * Algorithm:
 * Data Structures:
 *
 * Params:
 * Returns:
-* Called By: 
-* Calls: 
+* Called By:
+* Calls:
 * Assumptions:
 * Side Effects:
 * TODO: None
 */
-int 
+int
 ld_w_item(void *pSrc)
 {
 	struct W_ITEM_TBL *r;
-		
+
 	if (pSrc == NULL)
 		r = &g_w_item;
 	else
 		r = pSrc;
-	
+
 	return(0);
 }
 

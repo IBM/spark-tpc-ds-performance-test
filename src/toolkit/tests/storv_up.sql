@@ -1,6 +1,6 @@
 drop table s_store;
-create table s_store as 
-select * from 
+create table s_store as
+select * from
 (select s_store_id stor_store_id
        --,stor_address_id
        --,stor_divison_id

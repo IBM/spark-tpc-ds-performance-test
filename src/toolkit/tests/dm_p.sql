@@ -1,6 +1,6 @@
 
 select count(*) from promv;
-select count(*) 
+select count(*)
 from promv s,promotion d
 where s.P_PROMO_ID=d.P_PROMO_ID;
 
@@ -26,7 +26,7 @@ BEGIN
 ,P_PURPOSE
 ,P_DISCOUNT_ACTIVE
                    FROM promv) LOOP
-    update promotion set 
+    update promotion set
  P_END_DATE_SK=p_rec.P_END_DATE_SK
 ,P_COST=p_rec.P_COST
 ,P_RESPONSE_TARGET=p_rec.P_RESPONSE_TARGET

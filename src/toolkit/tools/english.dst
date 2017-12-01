@@ -36,7 +36,7 @@
 --
 --
 --
--- 
+--
 -- adjectives.dst based on the common word list
 create adjectives;
 set types = (varchar);
@@ -976,7 +976,7 @@ add ("abstract":1);
 add ("absent":1);
 add ("above":1);
 
--- 
+--
 -- adverbs
 -- from the common word list
 create adverbs;
@@ -1922,7 +1922,7 @@ add ("no":3);
 add ("every":1);
 
 --
--- nouns 
+-- nouns
 -- from the common word list
 create nouns;
 set types = (varchar);
@@ -3144,7 +3144,7 @@ add ("apropos":1);
 add ("addition to":1);
 add ("according":1);
 
--- 
+--
 -- verbs
 -- from the common word list
 create verbs;
@@ -4630,8 +4630,8 @@ add ("accord":1);
 add ("abuse":1);
 
 
--- 
--- auxiliary.dst sentence forms 
+--
+-- auxiliary.dst sentence forms
 create auxiliaries;
 set types = (varchar);
 set weights = 1;
@@ -4657,8 +4657,8 @@ add ("would": 2);
 add ("would not": 1);
 
 
--- 
--- terminator.dst 
+--
+-- terminator.dst
 create terminators;
 set types = (varchar);
 set weights = 1;
@@ -4668,8 +4668,8 @@ add (" --": 1);
 add (":": 1);
 
 
--- 
--- sentences.dst sentence forms 
+--
+-- sentences.dst sentence forms
 create sentences;
 set types = (varchar);
 set weights = 1;
@@ -4772,8 +4772,8 @@ add ("D J N X V D D J NT": 1);
 
 
 
--- 
--- syllables.dst 
+--
+-- syllables.dst
 create syllables;
 set types = (varchar);
 set weights = 1;

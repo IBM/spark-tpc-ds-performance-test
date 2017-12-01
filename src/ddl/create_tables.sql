@@ -49,7 +49,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/call_center.dat")
 ;
 drop table if exists call_center;
-create table call_center 
+create table call_center
 using parquet
 as (select * from call_center_text)
 ;
@@ -323,7 +323,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/income_band.dat")
 ;
 drop table if exists income_band;
-create table income_band 
+create table income_band
 using parquet
 as (select * from income_band_text)
 ;
@@ -341,7 +341,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/inventory.dat")
 ;
 drop table if exists inventory;
-create table inventory 
+create table inventory
 using parquet
 as (select * from inventory_text)
 ;
@@ -427,7 +427,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/reason.dat")
 ;
 drop table if exists reason;
-create table reason 
+create table reason
 using parquet
 as (select * from reason_text)
 ;
@@ -490,7 +490,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store.dat")
 ;
 drop table if exists store;
-create table store 
+create table store
 using parquet
 as (select * from store_text)
 ;
@@ -524,7 +524,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store_returns.dat")
 ;
 drop table if exists store_returns;
-create table store_returns 
+create table store_returns
 using parquet
 as (select * from store_returns_text)
 ;
@@ -641,7 +641,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/web_page.dat")
 ;
 drop table if exists web_page;
-create table web_page 
+create table web_page
 using parquet
 as (select * from web_page_text)
 ;

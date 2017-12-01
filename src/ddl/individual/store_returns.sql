@@ -26,7 +26,7 @@ USING csv
 OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store_returns")
 ;
 drop table if exists store_returns;
-create table store_returns 
+create table store_returns
 using parquet
 as (select * from store_returns_text)
 ;
