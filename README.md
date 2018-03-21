@@ -45,7 +45,7 @@ and integrate your systems more effectively.
 
 There are two modes of exercising this Code Pattern:
 * Run locally using a simple interactive command line shell script.
-* [Run using a Jupyter notebook in the IBM Data Science Experience](#run-using-a-jupyter-notebook-in-the-ibm-data-science-experience).
+* [Run using a Jupyter notebook in the IBM Watson Studio](#run-using-a-jupyter-notebook-in-the-ibm-data-science-experience).
 
 ## Run locally
 1. [Clone the repository](#1-clone-the-repo)
@@ -344,21 +344,21 @@ This will clean up all of the files generated during option steps 1, 2, 3, and 4
 
 This will exit the script.
 
-## Run using a Jupyter notebook in the IBM Data Science Experience
+## Run using a Jupyter notebook in the IBM Watson Studio
 
-1. [Sign up for the Data Science Experience](#1-sign-up-for-the-data-science-experience)
+1. [Sign up for the Watson Studio](#1-sign-up-for-the-data-science-experience)
 2. [Create the notebook](#2-create-the-notebook)
 3. [Run the notebook](#3-run-the-notebook)
 4. [Save and Share](#4-save-and-share)
 
-### 1. Sign up for the Data Science Experience
+### 1. Sign up for the Watson Studio
 
-Sign up for IBM's [Data Science Experience](http://datascience.ibm.com/). By signing up for the Data Science Experience, two services: ``DSX-Spark`` and ``DSX-ObjectStore`` will be created in your IBM Cloud account. If these services do not exist, or if you are already using them for some other application, you will need to create new instances.
+Sign up for IBM's [Watson Studio](http://datascience.ibm.com/). By signing up for the Watson Studio, two services: ``Watson Studio-Spark`` and ``Watson Studio-ObjectStore`` will be created in your IBM Cloud account. If these services do not exist, or if you are already using them for some other application, you will need to create new instances.
 
 To create these services:
 * Login to your [IBM Cloud](http://bluemix.net) account.
-* Create your Spark service by selecting the service type [Apache Spark](https://console.bluemix.net/catalog/services/apache-spark). If not already used, name your service ``DSX-Spark``. 
-* Create your Object Storage service by selecting the service type [Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/object-storage-group). If not already used, name your service ``DSX-ObjectStorage``.
+* Create your Spark service by selecting the service type [Apache Spark](https://console.bluemix.net/catalog/services/apache-spark). If not already used, name your service ``Watson Studio-Spark``. 
+* Create your Object Storage service by selecting the service type [Cloud Object Storage](https://console.bluemix.net/catalog/infrastructure/object-storage-group). If not already used, name your service ``Watson Studio-ObjectStorage``.
 
 > Note: When creating your Object Storage service, select the ``Swift`` storage type in order to avoid having to pay an upgrade fee.
 
@@ -367,7 +367,7 @@ Take note of your service names as you will need to select them in the following
 ### 2. Create the notebook
 
 First you must create a new Project:
-* From the [IBM Data Science Experience page](https://apsportal.ibm.com/analytics) either click the ``Get Started`` tab at the top or scroll down to ``Recently updated projects``.
+* From the [IBM Watson Studio page](https://apsportal.ibm.com/analytics) either click the ``Get Started`` tab at the top or scroll down to ``Recently updated projects``.
 * Click on ``New project`` under ``Recently updated projects``.
 * Enter a ``Name`` and optional ``Description``. 
 * For ``Spark Service``, select your Apache Spark service name.
@@ -464,7 +464,7 @@ the data and running the workload against a production cluster.
 
 * **Data Analytics Code Patterns**: Enjoyed this Code Pattern? Check out our other [Data Analytics Code Patterns](https://developer.ibm.com/code/technologies/data-science/)
 * **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
-* **Data Science Experience**: Master the art of data science with IBM's [Data Science Experience](https://datascience.ibm.com/)
+* **Watson Studio**: Master the art of data science with IBM's [Watson Studio](https://datascience.ibm.com/)
 * **Spark on IBM Cloud**: Need a Spark cluster? Create up to 30 Spark executors on IBM Cloud with our [Spark service](https://console.bluemix.net/catalog/services/apache-spark)
 
 # License
