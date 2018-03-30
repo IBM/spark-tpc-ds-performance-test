@@ -458,47 +458,55 @@ function create_spark_tables {
   fi
 }
 
-# read -n1 -s
-TEST_ROOT=`pwd`
-set_environment
-. $TPCDS_ROOT_DIR/bin/tpcdsenv.sh
-echo "SPARK_HOME is " $SPARK_HOME
-set_environment
-while :
-do
-    clear
-    cat<<EOF
+set_env() {
+  # read -n1 -s
+  TEST_ROOT=`pwd`
+  set_environment
+  . $TPCDS_ROOT_DIR/bin/tpcdsenv.sh
+  echo "SPARK_HOME is " $SPARK_HOME
+  set_environment
+}
+
+main() {
+  set_env
+  while :
+  do
+      clear
+      cat<<EOF
 ==============================================
 TPC-DS On Spark Menu
 ----------------------------------------------
 SETUP
- (1) Compile TPC-DS toolkit
- (2) Generate TPC-DS data with 1GB scale
- (3) Create spark tables
- (4) Generate TPC-DS queries
+(1) Compile TPC-DS toolkit
+(2) Generate TPC-DS data with 1GB scale
+(3) Create spark tables
+(4) Generate TPC-DS queries
 RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
+(5) Run a subset of TPC-DS queries
+(6) Run All (99) TPC-DS Queries
 CLEANUP
- (7) Cleanup toolkit
- (Q) Quit
+(7) Cleanup toolkit
+(Q) Quit
 ----------------------------------------------
 EOF
-    printf "%s" "Please enter your choice followed by [ENTER]: "
-    read option
-    printf "%s\n\n" "----------------------------------------------"
-    case "$option" in
-    "1")  download_and_build ;;
-    "2")  gen_data $TPCDS_ROOT_DIR '1G' ;;
-    "3")  create_spark_tables ;;
-    "4")  generate_queries ;;
-    "5")  run_subset_tpcds_queries ;;
-    "6")  run_tpcds_queries ;;
-    "7")  cleanup_toolkit ;;
-    "Q")  exit                      ;;
-    "q")  exit                      ;;
-     * )  echo "invalid option"     ;;
-    esac
-    echo "Press any key to continue"
-    read -n1 -s
-done
+      printf "%s" "Please enter your choice followed by [ENTER]: "
+      read option
+      printf "%s\n\n" "----------------------------------------------"
+      case "$option" in
+      "1")  download_and_build ;;
+      "2")  gen_data $TPCDS_ROOT_DIR '1G' ;;
+      "3")  create_spark_tables ;;
+      "4")  generate_queries ;;
+      "5")  run_subset_tpcds_queries ;;
+      "6")  run_tpcds_queries ;;
+      "7")  cleanup_toolkit ;;
+      "Q")  exit                      ;;
+      "q")  exit                      ;;
+       * )  echo "invalid option"     ;;
+      esac
+      echo "Press any key to continue"
+      read -n1 -s
+  done
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main
