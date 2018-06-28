@@ -47,6 +47,12 @@ validate_querynum() {
  return 0
 }
 
+cleanup_all() {
+  cleanup $TPCDS_WORK_DIR
+  cleanup $TPCDS_LOG_DIR
+  logInfo "Cleanup successful.."
+}
+
 check_compile() {
  if [ ! -f $TPCDS_ROOT_DIR/src/toolkit/tools/dsdgen ]; then
    logError "Toolkit has not been compiled. Please complete option 1"
@@ -80,7 +86,6 @@ check_genqueries() {
 }
 
 check_createtables() {
-  check_genqueries
   result=$?
   if [ "$result" -ne 0 ]; then
     return 1 
@@ -100,7 +105,7 @@ check_createtables() {
      return 0 
   else
     logError "The rowcounts for TPC-DS tables are not correct. Please make sure option 1"
-    echo     "through 4 are run before continuing with currently selected option"
+    echo     "is run before continuing with currently selected option"
     return 1
   fi
 }
@@ -109,14 +114,8 @@ check_prereq() {
   option=$1
   case $option in
     "2")
-        check_compile;;
-    "3")
-        check_gendata;;
-    "4")
-        check_compile;;
-    "5")
         check_createtables;;
-    "6")
+    "3")
         check_createtables;;
   esac
   return $?
@@ -203,95 +202,6 @@ function platformCheck {
   echo $osType
 }
 
-function cleanup_toolkit {
-  cd ${TPCDS_ROOT_DIR}/src/toolkit/tools
-  make clean > $TPCDS_WORK_DIR/make_clean.out 2>&1
-  cleanup $TPCDS_GENQUERIES_DIR
-  cleanup $TPCDS_WORK_DIR
-  cleanup $TPCDS_LOG_DIR
-  cleanup $TPCDS_GENDATA_DIR
-  logInfo "Cleanup successful.."
-}
-
-function download_and_build {
-  platform=$(platformCheck)
-  if [ "$platform" = "MACOS" ] ; then 
-    if type xcode-select >&- && xpath=$( xcode-select --print-path ) &&
-     test -d "${xpath}" && test -x "${xpath}" ; then
-     logInfo "Starting to compile.."
-    else
-     logError "Xcode is not installed in this system."\
-              "Install xcode and retry this step.."
-     exit 1
-    fi
-  fi
-  cd ${TPCDS_ROOT_DIR}/src/toolkit/tools
-  make clean > ${TPCDS_LOG_DIR}/toolkit_make.out 2>&1
-  logInfo "make OS=${platform}"
-  make OS=${platform} >> ${TPCDS_LOG_DIR}/toolkit_make.out 2>&1
-  export exit_code=$?
-  if [ $exit_code -ne 0 ] ; then
-    logError "Building of toolkit failed. Check ${TPCDS_LOG_DIR}/toolkit_make.out for errors.."
-  else
-    logInfo "Completed building toolkit successfully.."
-  fi
-  cd $TPCDS_ROOT_DIR
-}
-
-function gen_data {
-  trap 'handle_shutdown $$ $1/data; exit' SIGHUP SIGQUIT SIGINT SIGTERM
-  check_prereq "2"
-  result=$?
-  if [ "$result" -ne 1 ]; then 
-    cd ${TPCDS_ROOT_DIR}/src/toolkit/tools
-    cleanup $TPCDS_GENDATA_DIR
-    ./dsdgen -dir $TPCDS_GENDATA_DIR -scale $2  -verbose y -terminate n > ${TPCDS_WORK_DIR}/dsgen.out 2>&1 &
-    dsgen_pid=$!
-    logInfo "Starting to generate data. Will take a few minutes ..."
-    cont=1
-    error_code=0
-    while [  $cont -gt 0 ]; do
-      progress=`find ${TPCDS_GENDATA_DIR} -name "*.dat" | wc -l`
-      ProgressBar ${progress} 25
-
-      ps -p $dsgen_pid > /dev/null 
-      if [ $? == 1 ]; then
-       error_code=1
-      fi
-      if [ "$error_code" -gt 0 ] || [ "$progress" -gt 24 ] ; then 
-        cont=-1
-      fi
-      sleep 0.1
-    done 
-    progress=`ls ${TPCDS_GENDATA_DIR}/*.dat | wc -l`
-   
-    if [ "$progress" -lt 25 ] ; then 
-      echo ""
-      logError "Failed to generate the data. Look at ${TPCDS_WORK_DIR}/dsgen.out for error details."
-    else
-      echo ""
-      logInfo "TPCDS data is generated successfully at ${TPCDS_GENDATA_DIR}"
-    fi
-    cd $1
-  fi
-}
-
-function generate_queries {
-  check_prereq "4"
-  result=$?
-  if [ "$result" -ne 1 ]; then 
-    cleanup $TPCDS_WORK_DIR
-    cp ${TPCDS_ROOT_DIR}/src/toolkit/query_templates/* $TPCDS_WORK_DIR
-    cp $TPCDS_ROOT_DIR/src/query-templates/* $TPCDS_WORK_DIR
-    templDir=$TPCDS_WORK_DIR
-    outDir=${TPCDS_GEN_QUERIES_DIR}
-    logInfo "Generating TPC-DS qualification queries."
-    perl ${TPCDS_ROOT_DIR}/bin/qual.pl
-    logInfo "Completed generating TPC-DS qualification queries."
-    cd $TPCDS_ROOT_DIR
-  fi
-}
-
 function run_tpcds_common {
   output_dir=$TPCDS_WORK_DIR
   cp ${TPCDS_GENQUERIES_DIR}/*.sql $TPCDS_WORK_DIR
@@ -357,7 +267,7 @@ function run_subset_tpcds_queries {
     baseName="$(basename $i)"
     template $i > ${output_dir}/$baseName
   done 
-  check_prereq "5"
+  check_prereq "2"
   result=$?
   
   NUM_QUERIES=`cat ${TPCDS_WORK_DIR}/runlist.txt | wc -l`
@@ -389,7 +299,7 @@ function run_tpcds_queries {
   done 
   # 1 add to 99 queries to signal the end of the run to progress bar
   NUM_QUERIES=100
-  check_prereq "6"
+  check_prereq "3"
   result=$?
   if [ "$result" -ne 1 ]; then 
     logInfo "Running TPCDS queries. Will take a few hours.. "
@@ -420,7 +330,6 @@ function create_spark_tables {
     baseName="$(basename $i)"
     template $i > ${output_dir}/$baseName
   done 
-  check_prereq "3"
   result=$?
   if [ "$result" -ne 1 ]; then 
     current_dir=`pwd`
@@ -501,7 +410,7 @@ EOF
       "1")  create_spark_tables ;;
       "2")  run_subset_tpcds_queries ;;
       "3")  run_tpcds_queries ;;
-      "4")  cleanup ;;
+      "4")  cleanup_all ;;
       "Q")  exit                      ;;
       "q")  exit                      ;;
        * )  echo "invalid option"     ;;
