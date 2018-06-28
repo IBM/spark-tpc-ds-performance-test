@@ -20,9 +20,8 @@ When the reader has completed this Code Pattern, they will understand the follow
 
 ## Flow
 * Commandline
-  1. Compile the toolkit and generate the TPC-DS dataset by using the toolkit.
-  2. Create the spark tables and generate the TPC-DS queries.
-  3. Run the entire query set or a subset of queries and monitor the results.
+  1. Create the spark tables with pre-generated dataset.
+  2. Run the entire query set or a subset of queries and monitor the results.
 * Notebook
   1. Create the spark tables with pre-generated dataset.
   2. Run the entire query set or individual query.
@@ -63,7 +62,11 @@ Clone the `spark-tpc-ds-performance-test` repo locally. In a terminal, run:
 $ git clone https://github.com/IBM/spark-tpc-ds-performance-test 
 ```
 
-### 2. Setup development tools
+### 2. Setup development tools (Optional)
+
+Due to licensing restrictions, the TPCDS toolkit is not included as part of the code pattern. Instead, a pre-generated data set with 1GB scale factor is
+included in this pattern. If you want to work with a data set with larger scale factor or explore learning the full life sycle of setting up TPCDS, you can
+ download the tool kit from [TPC-DS](http://www.tpc.org/tpcds) and compile in your development environment.
 
 Make sure the required development tools are installed in your platform. This Code Pattern is supported on Mac and Linux platforms only. Depending on your platform, run the following command to install the necessary development tools:
 
@@ -73,6 +76,15 @@ Make sure the required development tools are installed in your platform. This Co
 ``` $ sudo yum install gcc make flex bison byacc git ```
 * **MacOS:**  
 ``` $ xcode-select --install ```
+
+To compile the toolkit you need to the following :
+
+```
+unzip <downloaded-tpc-ds-zipfile>
+cd <tpc-ds-toolkit-version>/tools
+make clean
+make OS=<platform>
+```
 
 ### 3. Install Spark
 
@@ -120,111 +132,65 @@ Perform the following steps to complete the execution of the script:
 TPC-DS On Spark Menu
 ----------------------------------------------
 SETUP
- (1) Compile TPC-DS toolkit
- (2) Generate TPC-DS data with 1GB scale
- (3) Create spark tables
- (4) Generate TPC-DS queries
+ (1) Create spark tables
 RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
+ (2) Run a subset of TPC-DS queries
+ (3) Run All (99) TPC-DS Queries
 CLEANUP
- (7) Cleanup toolkit
+ (4) Cleanup
  (Q) Quit
 ----------------------------------------------
 Please enter your choice followed by [ENTER]: 
 ```
 
-#### Setup Option: "(1) - Compile TPC-DS toolkit"
+#### Setup Option: "(1) - Create Spark Tables"
 
-The most recent toolkit can be downloaded from http://www.tpc.org/tpcds/. To make it easier for users, a toolkit based on `v2.4` is available locally in [src/toolkit](src/toolkit). If you download the newer toolkit from the official tpc-ds site, then make sure you overlay the code in src/toolkit before proceeding with this option.
+This option creates the tables in the database name specified by `TPCDS_DBNAME` defined in `bin/tpcdsenv.sh`. The default name is `TPCDS` but can be changed if needed. The created tables are based on the pre-generated data. 
 
-This option compiles the toolkit to produce the data generation (dsdgen) and query generation (dsqgen) binaries. 
+The SQL statements to create the tables can be found in `src/ddl/individual`, and are created in parquet format for efficient processing.  
 
-Below is the screen-shot when this option is chosen.
+> Due to licensing restrictions, the TPCDS toolkit is not included as part of the code pattern. Instead, a pre-generated data set with 1GB scale factor is
+  included in this pattern. If you want to work with a data set with larger scale factor or explore learning the full life sycle of setting up TPCDS, you can
+  download the tool kit from [TPC-DS](http://www.tpc.org/tpcds) and compile in your development environment. Here are the instructions that describes how
+  to compile the tool kit and generate data.
+
+```
+   1. Compile the toolkit
+      unzip <downloaded-tpc-ds-zipfile>
+      cd <tpc-ds-toolkit-version>/tools
+      make clean
+      make OS=<platform>
+      (platform can be 'macos' or 'linux').
+
+   2. Generate the data.
+      cd <tpc-ds-toolkit-version>/src/toolkit/tools
+      ./dsdgen -dir <data_gen_dir> -scale <scale_factor>  -verbose y -terminate n 
+        data_gen_dir => The output directory where data will be generated at.
+        scale_factor => The scale factor of data.
+
+   3. Generate the queries.
+      The `dsqgen` utility in the tpcds toolkit may be used to generate the queries. Appropiate options should be passed to this utility. A typical example
+      of its usage is :
+      cd <tpc-ds-toolkit-version>/tools
+      ./dsqgen -VERBOSE Y -DIALECT <dialectname> -DIRECTORY <query-template-dir> -SCALE <scale-factor> -OUTPUT_DIR <output-dir>
+```
+
+Below is the screenshot when this option is chosen.
 
 ```
 ==============================================
 TPC-DS On Spark Menu
 ----------------------------------------------
 SETUP
- (1) Compile TPC-DS toolkit
- (2) Generate TPC-DS data with 1GB scale
- (3) Create spark tables
- (4) Generate TPC-DS queries
+ (1) Create spark tables
 RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
+ (2) Run a subset of TPC-DS queries
+ (3) Run All (99) TPC-DS Queries
 CLEANUP
- (7) Cleanup toolkit
+ (4) Cleanup
  (Q) Quit
 ----------------------------------------------
 Please enter your choice followed by [ENTER]: 1
-----------------------------------------------
-
-INFO: Starting to compile..
-INFO: make OS=MACOS
-INFO: Completed building toolkit successfully..
-Press any key to continue
-```
-
-#### Setup Option: "(2) - Generate TPC-DS data with 1GB scale"
-
-This option uses the data generation binary produced in the previous step to generate the test data at a 1GB scale factor. The data is generated in the directory `TPCDS_GENDATA_DIR`. The default location of `TPCDS_GENDATA_DIR` is the local directory `gendata`. This can be changed by modifying the script `bin/tpcdsenv.sh`.  
-
-Technically, this option can be used to generate data at a different scale. However, since this Code Pattern is targeted towards the developer environment, the scale has been fixed at 1GB. To modify this script to generate data at a different scale factor, see the discussion in the `scaling upto 100TB` section below. 
-
-Below is the screenshot when this option is chosen.
-
-```
-==============================================
-TPC-DS On Spark Menu
-----------------------------------------------
-SETUP
- (1) Compile TPC-DS toolkit
- (2) Generate TPC-DS data with 1GB scale
- (3) Create spark tables
- (4) Generate TPC-DS queries
-RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
-CLEANUP
- (7) Cleanup toolkit
- (Q) Quit
-----------------------------------------------
-Please enter your choice followed by [ENTER]: 2
-----------------------------------------------
-
-INFO: Starting to generate data. Will take a few minutes ...
-INFO: Progress : [########################################] 100%
-INFO: TPCDS data is generated successfully at spark-tpc-ds-performance-test/gendata
-Press any key to continue
-``` 
-
-#### Setup Option: "(3) - Create Spark Tables"
-
-After data generation has completed, this option creates the tables in the database name specified by `TPCDS_DBNAME` defined in `bin/tpcdsenv.sh`. The default name is `TPCDS` but can be changed if needed. 
-
-The SQL statements to create the tables can be found in `src/ddl/create_tables.sql`, and are created in parquet format.  
-
-Below is the screenshot when this option is chosen.
-
-```
-==============================================
-TPC-DS On Spark Menu
-----------------------------------------------
-SETUP
- (1) Compile TPC-DS toolkit
- (2) Generate TPC-DS data with 1GB scale
- (3) Create spark tables
- (4) Generate TPC-DS queries
-RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
-CLEANUP
- (7) Cleanup toolkit
- (Q) Quit
-----------------------------------------------
-Please enter your choice followed by [ENTER]: 3
 ----------------------------------------------
 
 INFO: Creating tables. Will take a few minutes ...
@@ -232,38 +198,8 @@ INFO: Progress : [########################################] 100%
 INFO: Spark tables created successfully..
 Press any key to continue
 ```
-
-#### Setup Option: "(4) - Generate TPC-DS queries"
-
-This option uses the query generation binary (dsqgen) produced in "option (1)" to generate the 99 TPC-DS queries. The queries are generated in the `TPCDS_GEN_QUERIES_DIR`, with a default location of `genqueries`. This can be changed my modifying the `bin/tpcdsenv.sh' script. 
-
-Below is the screenshot when this option is chosen.
-
-```
-==============================================
-TPC-DS On Spark Menu
-----------------------------------------------
-SETUP
- (1) Compile TPC-DS toolkit
- (2) Generate TPC-DS data with 1GB scale
- (3) Create spark tables
- (4) Generate TPC-DS queries
-RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
-CLEANUP
- (7) Cleanup toolkit
- (Q) Quit
-----------------------------------------------
-Please enter your choice followed by [ENTER]: 4
-----------------------------------------------
-
-INFO: Generating TPC-DS qualification queries.
-INFO: Completed generating TPC-DS qualification queries.
-Press any key to continue
-```
  
-#### Run Option: "(5) - Run a subset of TPC-DS queries"
+#### Run Option: "(2) - Run a subset of TPC-DS queries"
 
 A comma separated list of queries can be specified in this option. The result of each query in the supplied list is generated in `TPCDS_WORK_DIR`, with a default directory location of `work`. The format of the result file is `query<number>.res`. 
 
@@ -278,18 +214,15 @@ A summary file named `run_summary.txt` is also generated. It contains informatio
 TPC-DS On Spark Menu
 ----------------------------------------------
 SETUP
- (1) Compile TPC-DS toolkit
- (2) Generate TPC-DS data with 1GB scale
- (3) Create spark tables
- (4) Generate TPC-DS queries
+ (1) Create spark tables
 RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
+ (2) Run a subset of TPC-DS queries
+ (3) Run All (99) TPC-DS Queries
 CLEANUP
- (7) Cleanup toolkit
+ (4) Cleanup toolkit
  (Q) Quit
 ----------------------------------------------
-Please enter your choice followed by [ENTER]: 5
+Please enter your choice followed by [ENTER]: 2
 ----------------------------------------------
 
 Enter a comma separated list of queries to run (ex: 1, 2), followed by [ENTER]:
@@ -304,7 +237,7 @@ INFO: Summary file: spark-tpc-ds-performance-test/work/run_summary.txt
 Press any key to continue
 ```
 
-#### Run Option: "(6) - Run all (99) TPC-DS queries"
+#### Run Option: "(3) - Run all (99) TPC-DS queries"
 
 The only difference between this and option `(5)` is that all 99 TPC-DS queries are run instead of a subset.
 
@@ -315,18 +248,15 @@ The only difference between this and option `(5)` is that all 99 TPC-DS queries 
 TPC-DS On Spark Menu
 ----------------------------------------------
 SETUP
- (1) Compile TPC-DS toolkit
- (2) Generate TPC-DS data with 1GB scale
- (3) Create spark tables
- (4) Generate TPC-DS queries
+ (1) Create spark tables
 RUN
- (5) Run a subset of TPC-DS queries
- (6) Run All (99) TPC-DS Queries
+ (2) Run a subset of TPC-DS queries
+ (3) Run All (99) TPC-DS Queries
 CLEANUP
- (7) Cleanup toolkit
+ (4) Cleanup toolkit
  (Q) Quit
 ----------------------------------------------
-Please enter your choice followed by [ENTER]: 6
+Please enter your choice followed by [ENTER]: 3
 ----------------------------------------------
 INFO: Checking pre-reqs for running TPC-DS queries. May take a few seconds..
 INFO: Checking pre-reqs for running TPC-DS queries is successful.
@@ -338,9 +268,9 @@ INFO: Summary file: spark-tpc-ds-performance-test/work/run_summary.txt
 Press any key to continue
 ```
 
-#### Cleanup option: "(7) - Cleanup toolkit"
+#### Cleanup option: "(4) - Cleanup"
 
-This will clean up all of the files generated during option steps 1, 2, 3, and 4. If you use this option, make sure to run the setup steps ( 1, 2, 3, 4) before running queries using option 5 and 6.
+This will clean up all of the files generated during option steps 1, 2, and 3. If you use this option, make sure to run the setup steps (1) before running queries using option 2 and 3.
 
 #### Cleanup option: "(Q) - Quit"
 

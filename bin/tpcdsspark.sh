@@ -144,10 +144,10 @@ set_environment() {
      TPCDS_DBNAME="TPCDS"
   fi  
   if [ -z "$TPCDS_GENDATA_DIR" ]; then
-     TPCDS_GENDATA_DIR=${TPCDS_ROOT_DIR}/gendata
+     TPCDS_GENDATA_DIR=${TPCDS_ROOT_DIR}/src/data
   fi  
   if [ -z "$TPCDS_GEN_QUERIES_DIR" ]; then
-     TPCDS_GENQUERIES_DIR=${TPCDS_ROOT_DIR}/genqueries
+     TPCDS_GENQUERIES_DIR=${TPCDS_ROOT_DIR}/src/queries
   fi  
   if [ -z "$TPCDS_WORK_DIR" ]; then
      TPCDS_WORK_DIR=${TPCDS_ROOT_DIR}/work
@@ -402,6 +402,14 @@ function create_spark_tables {
   output_dir=$TPCDS_WORK_DIR
   cleanup $TPCDS_WORK_DIR
   trap 'handle_shutdown $$ $output_dir; exit' SIGHUP SIGQUIT SIGINT SIGTERM
+  echo "USE ${TPCDS_DBNAME};" >> ${output_dir}/create_tables_temp.sql
+  for i in `ls ${TPCDS_ROOT_DIR}/src/ddl/individual/*.sql`
+  do
+     cat $i >> ${output_dir}/create_tables_temp.sql
+     echo "" >> ${output_dir}/create_tables_temp.sql
+  done
+  template ${output_dir}/create_tables_temp.sql > ${output_dir}/create_tables_work.sql
+
   for i in `ls ${TPCDS_ROOT_DIR}/src/ddl/*.sql`
   do
     baseName="$(basename $i)"
@@ -423,7 +431,7 @@ function create_spark_tables {
     ProgressBar 2 122
     bin/spark-sql ${DRIVER_OPTIONS} ${EXECUTOR_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/create_database.sql > ${TPCDS_WORK_DIR}/create_database.out 2>&1
     script_pid=$!
-    bin/spark-sql ${DRIVER_OPTIONS} ${EXECUTOR_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/create_tables.sql > ${TPCDS_WORK_DIR}/create_tables.out 2>&1 &
+    bin/spark-sql ${DRIVER_OPTIONS} ${EXECUTOR_OPTIONS} --conf spark.sql.catalogImplementation=hive -f ${TPCDS_WORK_DIR}/create_tables_work.sql > ${TPCDS_WORK_DIR}/create_tables.out 2>&1 &
     script_pid=$!
     cont=1
     error_code=0
@@ -477,15 +485,12 @@ main() {
 TPC-DS On Spark Menu
 ----------------------------------------------
 SETUP
-(1) Compile TPC-DS toolkit
-(2) Generate TPC-DS data with 1GB scale
-(3) Create spark tables
-(4) Generate TPC-DS queries
+(1) Create spark tables
 RUN
-(5) Run a subset of TPC-DS queries
-(6) Run All (99) TPC-DS Queries
+(2) Run a subset of TPC-DS queries
+(3) Run All (99) TPC-DS Queries
 CLEANUP
-(7) Cleanup toolkit
+(4) Cleanup
 (Q) Quit
 ----------------------------------------------
 EOF
@@ -493,13 +498,10 @@ EOF
       read option
       printf "%s\n\n" "----------------------------------------------"
       case "$option" in
-      "1")  download_and_build ;;
-      "2")  gen_data $TPCDS_ROOT_DIR '1G' ;;
-      "3")  create_spark_tables ;;
-      "4")  generate_queries ;;
-      "5")  run_subset_tpcds_queries ;;
-      "6")  run_tpcds_queries ;;
-      "7")  cleanup_toolkit ;;
+      "1")  create_spark_tables ;;
+      "2")  run_subset_tpcds_queries ;;
+      "3")  run_tpcds_queries ;;
+      "4")  cleanup ;;
       "Q")  exit                      ;;
       "q")  exit                      ;;
        * )  echo "invalid option"     ;;
