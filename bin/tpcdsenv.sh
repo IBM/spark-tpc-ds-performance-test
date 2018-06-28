@@ -17,6 +17,4 @@ export SPARK_HOME=
 export TPCDS_ROOT_DIR=
 export TPCDS_LOG_DIR=
 export TPCDS_DBNAME=
-export TPCDS_GENDATA_DIR=
-export TPCDS_GEN_QUERIES_DIR=
 export TPCDS_WORK_DIR=
