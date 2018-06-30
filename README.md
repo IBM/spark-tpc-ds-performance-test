@@ -154,28 +154,35 @@ The SQL statements to create the tables can be found in `src/ddl/individual`, an
   download the tool kit from [TPC-DS](http://www.tpc.org/tpcds) and compile in your development environment. Here are the instructions that describes how
   to compile the tool kit and generate data.
 
-```
-   1. Compile the toolkit
-      unzip <downloaded-tpc-ds-zipfile>
-      cd <tpc-ds-toolkit-version>/tools
-      make clean
-      make OS=<platform>
-      (platform can be 'macos' or 'linux').
 
-   2. Generate the data.
-      cd <tpc-ds-toolkit-version>/src/toolkit/tools
-      ./dsdgen -dir <data_gen_dir> -scale <scale_factor>  -verbose y -terminate n 
-        data_gen_dir => The output directory where data will be generated at.
-        scale_factor => The scale factor of data.
+1. Compile the toolkit
 
-   3. Generate the queries.
-      The `dsqgen` utility in the tpcds toolkit may be used to generate the queries. Appropiate options should be passed to this utility. A typical example
-      of its usage is :
-      cd <tpc-ds-toolkit-version>/tools
-      ./dsqgen -VERBOSE Y -DIALECT <dialectname> -DIRECTORY <query-template-dir> -SCALE <scale-factor> -OUTPUT_DIR <output-dir>
-```
+   ```
+   unzip <downloaded-tpc-ds-zipfile>
+   cd <tpc-ds-toolkit-version>/tools
+   make clean
+   make OS=<platform>
+   # (platform can be 'macos' or 'linux').
+   ```
 
-Below is the screenshot when this option is chosen.
+2. Generate the data.
+
+   ```
+   cd <tpc-ds-toolkit-version>/src/toolkit/tools
+   ./dsdgen -dir <data_gen_dir> -scale <scale_factor>  -verbose y -terminate n 
+   # data_gen_dir => The output directory where data will be generated at.
+   # scale_factor => The scale factor of data.
+
+3. Generate the queries.
+
+   The `dsqgen` utility in the tpcds toolkit may be used to generate the queries. Appropiate options should be passed to this utility. A typical example of its usage is:
+
+   ```
+   cd <tpc-ds-toolkit-version>/tools
+   ./dsqgen -VERBOSE Y -DIALECT <dialectname> -DIRECTORY <query-template-dir> -SCALE <scale-factor> -OUTPUT_DIR <output-dir>
+   ```
+
+Below is example output for when this option is chosen.
 
 ```
 ==============================================
