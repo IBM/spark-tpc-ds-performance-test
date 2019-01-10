@@ -30,8 +30,8 @@ When the reader has completed this Code Pattern, they will understand the follow
 
 ## Included components
 
-* [Apache Spark](http://spark.apache.org/): An open-source, fast and general-purpose cluster computing system
-* [Jupyter Notebook](http://jupyter.org/): An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.
+* [Apache Spark](https://spark.apache.org/): An open-source, fast and general-purpose cluster computing system
+* [Jupyter Notebook](https://jupyter.org/): An open-source web application that allows you to create and share documents that contain live code, equations, visualizations and explanatory text.
 
 ## Featured technologies
 
@@ -49,8 +49,8 @@ There are two modes of exercising this Code Pattern:
 * [Run using a Jupyter notebook in Watson Studio](#run-using-a-jupyter-notebook-in-watson-studio).
 
 ## Run locally
-1. [Clone the repository](#1-clone-the-repo)
-2. [Setup development tools](#2-setup-development-tools)
+1. [Clone the repository](#1-clone-the-repository)
+2. [Setup development tools (Optional)](#2-setup-development-tools-optional)
 3. [Install Spark](#3-install-spark)
 4. [Run the script](#4-run-the-script)
 
@@ -292,7 +292,7 @@ This will exit the script.
 
 ### 1. Sign up for Watson Studio
 
-Sign up for IBM's [Watson Studio](https://dataplatform.ibm.com). By creating a project in Watson Studio a free tier ``Object Storage`` service will be created in your IBM Cloud account.
+Sign up for IBM's [Watson Studio](https://dataplatform.cloud.ibm.com/). By creating a project in Watson Studio a free tier ``Object Storage`` service will be created in your IBM Cloud account.
 
 > Note: When creating your Object Storage service, select the ``Free`` storage type in order to avoid having to pay an upgrade fee.
 
@@ -300,7 +300,7 @@ Take note of your service names as you will need to select them in the following
 
 ### 2. Create the notebook
 
-* In [Watson Studio](https://dataplatform.ibm.com), click on `Create notebook` to create a notebook.
+* In [Watson Studio](https://dataplatform.cloud.ibm.com/), click on `Create notebook` to create a notebook.
 * Create a project if necessary, provisioning an object storage service if required.
 * In the `Assets` tab, select the `Create notebook` option.
 * Select the `From URL` tab.
@@ -387,10 +387,10 @@ the data and running the workload against a production cluster.
 
 # Learn more
 
-* **Data Analytics Code Patterns**: Enjoyed this Code Pattern? Check out our other [Data Analytics Code Patterns](https://developer.ibm.com/code/technologies/data-science/)
+* **Data Analytics Code Patterns**: Enjoyed this Code Pattern? Check out our other [Data Analytics Code Patterns](https://developer.ibm.com/technologies/data-science/)
 * **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
-* **Watson Studio**: Master the art of data science with IBM's [Watson Studio](https://dataplatform.ibm.com/)
-* **Spark on IBM Cloud**: Need a Spark cluster? Create up to 30 Spark executors on IBM Cloud with our [Spark service](https://console.bluemix.net/catalog/services/apache-spark)
+* **Watson Studio**: Master the art of data science with IBM's [Watson Studio](https://dataplatform.cloud.ibm.com/)
+* **Spark on IBM Cloud**: Need a Spark cluster? Create up to 30 Spark executors on IBM Cloud with our [Spark service](https://cloud.ibm.com/catalog/services/apache-spark)
 
 # License
 [Apache 2.0](LICENSE)
