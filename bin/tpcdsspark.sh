@@ -366,7 +366,7 @@ function create_spark_tables {
       logError "Failed to create spark tables. Please review the following logs"
       logError "${TPCDS_WORK_DIR}/create_tables.out"
       logError "${TPCDS_WORK_DIR}/temp/create_database.out"
-      logError "${TPCDS_LOG_DIR}/spark-tpcds-log"
+      logError "${TPCDS_LOG_DIR}/spark-tpcds.log"
     else
       echo ""
       logInfo "Spark tables created successfully.."
