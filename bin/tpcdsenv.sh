@@ -18,3 +18,5 @@ export TPCDS_ROOT_DIR=
 export TPCDS_LOG_DIR=
 export TPCDS_DBNAME=
 export TPCDS_WORK_DIR=
+
+export ADDITION_SPARK_OPTIONS=
