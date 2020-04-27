@@ -16,7 +16,7 @@ printf "%$width.${width}s\n" "$divider" >> ${OUTPUT_DIR}/run_summary.txt
 for i in `cat ${OUTPUT_DIR}/runlist.txt`;
 do
   num=`printf "%02d\n" $i`
-  bin/spark-sql ${DRIVER_OPTIONS} ${EXECUTOR_OPTIONS}  -database TPCDS -f ${OUTPUT_DIR}/query${num}.sql > ${OUTPUT_DIR}/query${num}.res 2>&1 
+  bin/spark-sql ${DRIVER_OPTIONS} ${EXECUTOR_OPTIONS} ${ADDITION_SPARK_OPTIONS} -database TPCDS -f ${OUTPUT_DIR}/query${num}.sql > ${OUTPUT_DIR}/query${num}.res 2>&1 
   lines=`cat ${OUTPUT_DIR}/query${num}.res | grep "Time taken:"`
   echo "$lines" | while read -r line; 
   do
